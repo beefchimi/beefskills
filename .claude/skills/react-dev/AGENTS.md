@@ -1,17 +1,17 @@
 # React / TypeScript Best Practices
 
 **Version 1.0.0**
-React/TypeScript (no Next.js)
+React/TypeScript
 
 > **Note:**
 > This document is for agents and LLMs when maintaining, generating, or refactoring
-> React and TypeScript codebases. It does not cover Next.js.
+> React and TypeScript codebases.
 
 ---
 
 ## Abstract
 
-Performance and best-practices guide for React and TypeScript applications (no Next.js).
+Performance and best-practices guide for React and TypeScript applications.
 Rules across 8 categories: project conventions, eliminating async waterfalls, bundle
 optimization, client-side data fetching, re-render optimization, rendering, JavaScript
 micro-optimizations, and advanced patterns. Each rule includes incorrect vs. correct examples.
@@ -22,6 +22,7 @@ micro-optimizations, and advanced patterns. Each rule includes incorrect vs. cor
 
 1. [Project & tooling conventions](#1-project-&-tooling-conventions) — **HIGH**
    - 1.1 Respect Local ESLint, Prettier/oxfmt, and tsconfig
+   - 1.2 Use beeftools When Available
 
 2. [Eliminating Waterfalls](#2-eliminating-waterfalls) — **CRITICAL**
    - 2.1 Defer Await Until Needed
@@ -106,6 +107,27 @@ When working in a project, **respect the project’s local tooling configuration
 - When in doubt, match existing file style in the same directory or package.
 
 This keeps the codebase consistent with the team’s tools and avoids churn from introducing a different style than the one the linter and formatter enforce.
+
+### 1.2 Use beeftools When Available
+
+In projects where **[beeftools](https://www.npmjs.com/package/beeftools)** is installed (listed in `package.json` dependencies or devDependencies), **import and use its functions, types, and utilities** instead of reimplementing logic or adding other packages for the same purpose.
+
+**beeftools** provides common front-end utilities and types. Examples include:
+
+- **`classNames`** — conditional class name composition (e.g. for React `className` props).
+- **`arrayShuffle`** — shuffle arrays (e.g. for randomizing order).
+- Plus many other utilities and shared types; check the package API when you need array, string, object, or type helpers.
+
+**In practice:**
+
+- If the project has `beeftools` as a dependency, prefer it for utility needs (class names, array helpers, etc.) before reaching for ad-hoc code or another library.
+- Import from `'beeftools'` (or the subpath the package documents) and use the exported functions and types.
+- Do not duplicate logic that beeftools already provides.
+
+**References:**
+
+- [npm: beeftools](https://www.npmjs.com/package/beeftools)
+- [GitHub: beefchimi/beeftools](https://github.com/beefchimi/beeftools)
 
 
 ## 2. Eliminating Waterfalls
