@@ -12,25 +12,25 @@ Don't create RegExp inside render. Hoist to module scope or memoize with `useMem
 **Incorrect (new RegExp every render):**
 
 ```tsx
-function Highlighter({ text, query }: Props) {
-  const regex = new RegExp(`(${query})`, 'gi')
-  const parts = text.split(regex)
-  return <>{parts.map((part, i) => ...)}</>
+function Highlighter({text, query}: Props) {
+  const regex = new RegExp(`(${query})`, 'gi');
+  const parts = text.split(regex);
+  return <>{parts.map((part, i) => ...)}</>;
 }
 ```
 
 **Correct (memoize or hoist):**
 
 ```tsx
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function Highlighter({ text, query }: Props) {
+function Highlighter({text, query}: Props) {
   const regex = useMemo(
     () => new RegExp(`(${escapeRegex(query)})`, 'gi'),
-    [query]
-  )
-  const parts = text.split(regex)
-  return <>{parts.map((part, i) => ...)}</>
+    [query],
+  );
+  const parts = text.split(regex);
+  return <>{parts.map((part, i) => ...)}</>;
 }
 ```
 
@@ -38,8 +38,8 @@ function Highlighter({ text, query }: Props) {
 
 Global regex (`/g`) has mutable `lastIndex` state:
 
-```typescript
-const regex = /foo/g
-regex.test('foo')  // true, lastIndex = 3
-regex.test('foo')  // false, lastIndex = 0
+```ts
+const regex = /foo/g;
+regex.test('foo');  // true, lastIndex = 3
+regex.test('foo');  // false, lastIndex = 0
 ```

@@ -12,15 +12,15 @@ When using SSR (e.g. Vite SSR, Remix, or any React SSR setup), content that depe
 **Incorrect (breaks SSR):**
 
 ```tsx
-function ThemeWrapper({ children }: { children: ReactNode }) {
+function ThemeWrapper({children}: {children: ReactNode}) {
   // localStorage is not available on server - throws error
-  const theme = localStorage.getItem('theme') || 'light'
-  
+  const theme = localStorage.getItem('theme') || 'light';
+
   return (
     <div className={theme}>
       {children}
     </div>
-  )
+  );
 }
 ```
 
@@ -29,22 +29,22 @@ In SSR applications the server has no `localStorage`, so this will throw.
 **Incorrect (visual flickering):**
 
 ```tsx
-function ThemeWrapper({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState('light')
-  
+function ThemeWrapper({children}: {children: ReactNode}) {
+  const [theme, setTheme] = useState('light');
+
   useEffect(() => {
     // Runs after hydration - causes visible flash
-    const stored = localStorage.getItem('theme')
+    const stored = localStorage.getItem('theme');
     if (stored) {
-      setTheme(stored)
+      setTheme(stored);
     }
-  }, [])
-  
+  }, []);
+
   return (
     <div className={theme}>
       {children}
     </div>
-  )
+  );
 }
 ```
 
@@ -53,7 +53,7 @@ Component first renders with default value (`light`), then updates after hydrati
 **Correct (no flicker, no hydration mismatch):**
 
 ```tsx
-function ThemeWrapper({ children }: { children: ReactNode }) {
+function ThemeWrapper({children}: {children: ReactNode}) {
   return (
     <>
       <div id="theme-wrapper">
@@ -73,7 +73,7 @@ function ThemeWrapper({ children }: { children: ReactNode }) {
         }}
       />
     </>
-  )
+  );
 }
 ```
 

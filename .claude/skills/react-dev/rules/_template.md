@@ -11,13 +11,13 @@ Brief explanation of the rule and why it matters.
 
 **Incorrect (description of what's wrong):**
 
-```typescript
+```ts
 // Bad code example
 ```
 
 **Correct (description of what's right):**
 
-```typescript
+```ts
 // Good code example
 ```
 

@@ -13,12 +13,12 @@ Calling `useMemo` and comparing hook dependencies may consume more resources tha
 **Incorrect:**
 
 ```tsx
-function Header({ user, notifications }: Props) {
+function Header({user, notifications}: Props) {
   const isLoading = useMemo(() => {
-    return user.isLoading || notifications.isLoading
-  }, [user.isLoading, notifications.isLoading])
+    return user.isLoading || notifications.isLoading;
+  }, [user.isLoading, notifications.isLoading]);
 
-  if (isLoading) return <Skeleton />
+  if (isLoading) return <Skeleton />;
   // return some markup
 }
 ```
@@ -26,10 +26,10 @@ function Header({ user, notifications }: Props) {
 **Correct:**
 
 ```tsx
-function Header({ user, notifications }: Props) {
-  const isLoading = user.isLoading || notifications.isLoading
+function Header({user, notifications}: Props) {
+  const isLoading = user.isLoading || notifications.isLoading;
 
-  if (isLoading) return <Skeleton />
+  if (isLoading) return <Skeleton />;
   // return some markup
 }
 ```

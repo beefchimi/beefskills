@@ -1,35 +1,33 @@
 ---
-title: Barrel Files vs Third-Party Imports
-impact: CRITICAL
-impactDescription: faster builds and cold starts when consuming large libraries
-tags: bundle, imports, tree-shaking, barrel-files, component-library
+title: Prefer Barrel Imports; Avoid Over-Optimizing
+impact: MEDIUM
+impactDescription: cleaner code; tooling handles the rest
+tags: bundle, imports, barrel-files, component-library, vite, rolldown
 ---
 
-## Barrel Files vs Third-Party Imports
+## Prefer Barrel Imports; Avoid Over-Optimizing
 
-**Barrel files for your own code:** Using an `index.ts` (or similar) that re-exports from your components is recommended for component libraries and internal packages. It gives a single entry point and a clear public API. Consumers can import from your package root; your bundler will tree-shake based on what they use.
+**Barrel files are fine.** Using an `index.ts` (or similar) that re-exports from your components is recommended for component libraries and internal packages. It gives a single entry point and a clear public API. For third-party libraries, prefer the package’s public barrel import over fragile subpath or dist imports.
 
-**Third-party libraries:** When importing from large libraries (e.g. `lucide-react`, `@mui/material`, `react-icons`), avoid importing from the package's main barrel when it pulls in many modules. Prefer direct or subpath imports so the bundler can include only what you use and cold starts stay fast.
+**Avoid over-optimizing.** Do not use direct/dist subpath imports just to shave bytes or speed up cold starts. They are brittle (tied to package internals), harder to read, and often unnecessary. Upcoming improvements in tooling (e.g. Vite with Rolldown) greatly improve barrel file performance, so the historical downsides of barrel imports matter less and less.
 
-**Incorrect (imports entire library via barrel):**
-
-```tsx
-import { Check, X, Menu } from 'lucide-react'
-// Can load 1,500+ modules, slow dev and cold start
-
-import { Button, TextField } from '@mui/material'
-// Can load 2,000+ modules
-```
-
-**Correct (direct/subpath imports):**
+**Preferred (single-line barrel import):**
 
 ```tsx
-import Check from 'lucide-react/dist/esm/icons/check'
-import X from 'lucide-react/dist/esm/icons/x'
-import Menu from 'lucide-react/dist/esm/icons/menu'
+import {Check, X, Menu} from 'lucide-react';
 
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
+import {Button, TextField} from '@mui/material';
 ```
 
-Libraries commonly affected: `lucide-react`, `@mui/material`, `@mui/icons-material`, `@tabler/icons-react`, `react-icons`, `@headlessui/react`, `@radix-ui/react-*`, `lodash`, `date-fns`, `react-use`. For your own component library, keep using barrel files (e.g. `export * from './Button'`) for a clean public API.
+**Avoid (over-optimized, brittle subpath imports):**
+
+```tsx
+import Check from 'lucide-react/dist/esm/icons/check';
+import X from 'lucide-react/dist/esm/icons/x';
+import Menu from 'lucide-react/dist/esm/icons/menu';
+
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+```
+
+Use the package’s documented public API. Let the bundler and future tooling (e.g. Vite/Rolldown) handle tree-shaking and performance. For your own libraries, keep using barrel files (e.g. `export * from './Button'`) for a clean public API.

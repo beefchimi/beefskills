@@ -12,12 +12,12 @@ Preload heavy bundles before they're needed to reduce perceived latency.
 **Example (preload on hover/focus):**
 
 ```tsx
-function EditorButton({ onClick }: { onClick: () => void }) {
+function EditorButton({onClick}: {onClick: () => void}) {
   const preload = () => {
     if (typeof window !== 'undefined') {
-      void import('./monaco-editor')
+      void import('./monaco-editor');
     }
-  }
+  };
 
   return (
     <button
@@ -27,23 +27,25 @@ function EditorButton({ onClick }: { onClick: () => void }) {
     >
       Open Editor
     </button>
-  )
+  );
 }
 ```
 
 **Example (preload when feature flag is enabled):**
 
 ```tsx
-function FlagsProvider({ children, flags }: Props) {
+function FlagsProvider({children, flags}: Props) {
   useEffect(() => {
     if (flags.editorEnabled && typeof window !== 'undefined') {
-      void import('./monaco-editor').then(mod => mod.init())
+      void import('./monaco-editor').then((mod) => mod.init());
     }
-  }, [flags.editorEnabled])
+  }, [flags.editorEnabled]);
 
-  return <FlagsContext.Provider value={flags}>
-    {children}
-  </FlagsContext.Provider>
+  return (
+    <FlagsContext.Provider value={flags}>
+      {children}
+    </FlagsContext.Provider>
+  );
 }
 ```
 

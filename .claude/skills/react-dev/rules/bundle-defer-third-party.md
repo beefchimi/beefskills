@@ -12,36 +12,36 @@ Analytics, logging, and error tracking don't need to block initial render. Load 
 **Incorrect (blocks initial bundle):**
 
 ```tsx
-import { Analytics } from '@vercel/analytics/react'
+import {Analytics} from '@vercel/analytics/react';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <>
       {children}
       <Analytics />
     </>
-  )
+  );
 }
 ```
 
 **Correct (loads after mount):**
 
 ```tsx
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react';
 
-function AnalyticsLoader({ children }: { children: React.ReactNode }) {
-  const [Analytics, setAnalytics] = useState<React.ComponentType | null>(null)
+function AnalyticsLoader({children}: {children: React.ReactNode}) {
+  const [Analytics, setAnalytics] = useState<React.ComponentType | null>(null);
 
   useEffect(() => {
-    import('@vercel/analytics/react').then(mod => setAnalytics(() => mod.Analytics))
-  }, [])
+    import('@vercel/analytics/react').then((mod) => setAnalytics(() => mod.Analytics));
+  }, []);
 
   return (
     <>
       {children}
       {Analytics ? <Analytics /> : null}
     </>
-  )
+  );
 }
 ```
 

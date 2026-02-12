@@ -14,9 +14,9 @@ To address this issue, extract the default value into a constant.
 **Incorrect (`onClick` has different values on every rerender):**
 
 ```tsx
-const UserAvatar = memo(function UserAvatar({ onClick = () => {} }: { onClick?: () => void }) {
+const UserAvatar = memo(function UserAvatar({onClick = () => {}}: {onClick?: () => void}) {
   // ...
-})
+});
 
 // Used without optional onClick
 <UserAvatar />
@@ -27,9 +27,9 @@ const UserAvatar = memo(function UserAvatar({ onClick = () => {} }: { onClick?: 
 ```tsx
 const NOOP = () => {};
 
-const UserAvatar = memo(function UserAvatar({ onClick = NOOP }: { onClick?: () => void }) {
+const UserAvatar = memo(function UserAvatar({onClick = NOOP}: {onClick?: () => void}) {
   // ...
-})
+});
 
 // Used without optional onClick
 <UserAvatar />

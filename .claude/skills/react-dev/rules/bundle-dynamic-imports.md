@@ -12,28 +12,28 @@ Use `React.lazy()` and `<Suspense>` to lazy-load large components not needed on 
 **Incorrect (Monaco bundles with main chunk):**
 
 ```tsx
-import { MonacoEditor } from './monaco-editor'
+import {MonacoEditor} from './monaco-editor';
 
-function CodePanel({ code }: { code: string }) {
-  return <MonacoEditor value={code} />
+function CodePanel({code}: {code: string}) {
+  return <MonacoEditor value={code} />;
 }
 ```
 
 **Correct (Monaco loads on demand):**
 
 ```tsx
-import { lazy, Suspense } from 'react'
+import {lazy, Suspense} from 'react';
 
 const MonacoEditor = lazy(() =>
-  import('./monaco-editor').then(m => ({ default: m.MonacoEditor }))
-)
+  import('./monaco-editor').then((m) => ({default: m.MonacoEditor})),
+);
 
-function CodePanel({ code }: { code: string }) {
+function CodePanel({code}: {code: string}) {
   return (
     <Suspense fallback={<div>Loading editor…</div>}>
       <MonacoEditor value={code} />
     </Suspense>
-  )
+  );
 }
 ```
 

@@ -11,25 +11,25 @@ Multiple `.find()` calls by the same key should use a Map.
 
 **Incorrect (O(n) per lookup):**
 
-```typescript
+```ts
 function processOrders(orders: Order[], users: User[]) {
-  return orders.map(order => ({
+  return orders.map((order) => ({
     ...order,
-    user: users.find(u => u.id === order.userId)
-  }))
+    user: users.find((u) => u.id === order.userId),
+  }));
 }
 ```
 
 **Correct (O(1) per lookup):**
 
-```typescript
+```ts
 function processOrders(orders: Order[], users: User[]) {
-  const userById = new Map(users.map(u => [u.id, u]))
+  const userById = new Map(users.map((u) => [u.id, u]));
 
-  return orders.map(order => ({
+  return orders.map((order) => ({
     ...order,
-    user: userById.get(order.userId)
-  }))
+    user: userById.get(order.userId),
+  }));
 }
 ```
 

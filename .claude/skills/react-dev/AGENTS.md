@@ -1,20 +1,15 @@
 # React / TypeScript Best Practices
 
 **Version 1.0.0**
-React/TypeScript (no Next.js)
+React/TypeScript
 
-> **Note:**
-> This document is for agents and LLMs when maintaining, generating, or refactoring
-> React and TypeScript codebases. It does not cover Next.js.
+> **Note:** This document is for agents and LLMs when maintaining, generating, or refactoring React and TypeScript codebases.
 
 ---
 
 ## Abstract
 
-Performance and best-practices guide for React and TypeScript applications (no Next.js).
-Rules across 7 categories: eliminating async waterfalls, bundle optimization, client-side
-data fetching, re-render optimization, rendering, JavaScript micro-optimizations, and
-advanced patterns. Each rule includes incorrect vs. correct examples.
+Performance and best-practices guide for React and TypeScript applications. Rules across 7 categories: eliminating async waterfalls, bundle optimization, client-side data fetching, re-render optimization, rendering, JavaScript micro-optimizations, and advanced patterns. Each rule includes incorrect vs. correct examples.
 
 ---
 
@@ -92,7 +87,7 @@ Move `await` operations into the branches where they're actually used to avoid b
 
 **Incorrect (blocks both branches):**
 
-```typescript
+```ts
 async function handleRequest(userId: string, skipProcessing: boolean) {
   const userData = await fetchUserData(userId)
   
@@ -108,7 +103,7 @@ async function handleRequest(userId: string, skipProcessing: boolean) {
 
 **Correct (only blocks when needed):**
 
-```typescript
+```ts
 async function handleRequest(userId: string, skipProcessing: boolean) {
   if (skipProcessing) {
     // Returns immediately without waiting
@@ -123,7 +118,7 @@ async function handleRequest(userId: string, skipProcessing: boolean) {
 
 **Another example (early return optimization):**
 
-```typescript
+```ts
 // Incorrect: always fetches permissions
 async function updateResource(resourceId: string, userId: string) {
   const permissions = await fetchPermissions(userId)
@@ -166,7 +161,7 @@ For operations with partial dependencies, use `better-all` to maximize paralleli
 
 **Incorrect (profile waits for config unnecessarily):**
 
-```typescript
+```ts
 const [user, config] = await Promise.all([
   fetchUser(),
   fetchConfig()
@@ -176,7 +171,7 @@ const profile = await fetchProfile(user.id)
 
 **Correct (config and profile run in parallel):**
 
-```typescript
+```ts
 import { all } from 'better-all'
 
 const { user, config, profile } = await all({
@@ -192,7 +187,7 @@ const { user, config, profile } = await all({
 
 We can also create all the promises first, and do `Promise.all()` at the end.
 
-```typescript
+```ts
 const userPromise = fetchUser()
 const profilePromise = userPromise.then(user => fetchProfile(user.id))
 
@@ -211,7 +206,7 @@ When async operations have no interdependencies, execute them concurrently using
 
 **Incorrect (sequential execution, 3 round trips):**
 
-```typescript
+```ts
 const user = await fetchUser()
 const posts = await fetchPosts()
 const comments = await fetchComments()
@@ -219,7 +214,7 @@ const comments = await fetchComments()
 
 **Correct (parallel execution, 1 round trip):**
 
-```typescript
+```ts
 const [user, posts, comments] = await Promise.all([
   fetchUser(),
   fetchPosts(),
@@ -230,23 +225,21 @@ const [user, posts, comments] = await Promise.all([
 
 ## 2. Bundle Size Optimization
 
-### 2.1 Barrel Files vs Third-Party Imports
+### 2.1 Prefer Barrel Imports; Avoid Over-Optimizing
 
-**Barrel files for your own code:** Using an `index.ts` (or similar) that re-exports from your components is recommended for component libraries and internal packages. It gives a single entry point and a clear public API. Consumers can import from your package root; your bundler will tree-shake based on what they use.
+**Barrel files are fine.** Using an `index.ts` (or similar) that re-exports from your components is recommended for component libraries and internal packages. It gives a single entry point and a clear public API. For third-party libraries, prefer the package's public barrel import over fragile subpath or dist imports.
 
-**Third-party libraries:** When importing from large libraries (e.g. `lucide-react`, `@mui/material`, `react-icons`), avoid importing from the package's main barrel when it pulls in many modules. Prefer direct or subpath imports so the bundler can include only what you use and cold starts stay fast.
+**Avoid over-optimizing.** Do not use direct/dist subpath imports just to shave bytes or speed up cold starts. They are brittle (tied to package internals), harder to read, and often unnecessary. Upcoming improvements in tooling (e.g. Vite with Rolldown) greatly improve barrel file performance, so the historical downsides of barrel imports matter less and less.
 
-**Incorrect (imports entire library via barrel):**
+**Preferred (single-line barrel import):**
 
 ```tsx
 import { Check, X, Menu } from 'lucide-react'
-// Can load 1,500+ modules, slow dev and cold start
 
 import { Button, TextField } from '@mui/material'
-// Can load 2,000+ modules
 ```
 
-**Correct (direct/subpath imports):**
+**Avoid (over-optimized, brittle subpath imports):**
 
 ```tsx
 import Check from 'lucide-react/dist/esm/icons/check'
@@ -257,7 +250,7 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 ```
 
-Libraries commonly affected: `lucide-react`, `@mui/material`, `@mui/icons-material`, `@tabler/icons-react`, `react-icons`, `@headlessui/react`, `@radix-ui/react-*`, `lodash`, `date-fns`, `react-use`. For your own component library, keep using barrel files (e.g. `export * from './Button'`) for a clean public API.
+Use the package's documented public API. Let the bundler and future tooling (e.g. Vite/Rolldown) handle tree-shaking and performance. For your own libraries, keep using barrel files (e.g. `export * from './Button'`) for a clean public API.
 
 ### 2.2 Conditional Module Loading
 
@@ -483,7 +476,7 @@ Add version prefix to keys and store only needed fields. Prevents schema conflic
 
 **Incorrect:**
 
-```typescript
+```ts
 // No version, stores everything, no error handling
 localStorage.setItem('userConfig', JSON.stringify(fullUserObject))
 const data = localStorage.getItem('userConfig')
@@ -491,7 +484,7 @@ const data = localStorage.getItem('userConfig')
 
 **Correct:**
 
-```typescript
+```ts
 const VERSION = 'v2'
 
 function saveConfig(config: { theme: string; language: string }) {
@@ -526,7 +519,7 @@ function migrate() {
 
 **Store minimal fields from server responses:**
 
-```typescript
+```ts
 // User object has 20+ fields, only store what UI needs
 function cachePrefs(user: FullUser) {
   try {
@@ -548,7 +541,7 @@ Add `{ passive: true }` to touch and wheel event listeners to enable immediate s
 
 **Incorrect:**
 
-```typescript
+```ts
 useEffect(() => {
   const handleTouch = (e: TouchEvent) => console.log(e.touches[0].clientX)
   const handleWheel = (e: WheelEvent) => console.log(e.deltaY)
@@ -565,7 +558,7 @@ useEffect(() => {
 
 **Correct:**
 
-```typescript
+```ts
 useEffect(() => {
   const handleTouch = (e: TouchEvent) => console.log(e.touches[0].clientX)
   const handleWheel = (e: WheelEvent) => console.log(e.deltaY)
@@ -1500,7 +1493,7 @@ Reference: [useTransition](https://react.dev/reference/react/useTransition)
 Avoid interleaving style writes with layout reads. When you read a layout property (like `offsetWidth`, `getBoundingClientRect()`, or `getComputedStyle()`) between style changes, the browser is forced to trigger a synchronous reflow.
 
 **This is OK (browser batches style changes):**
-```typescript
+```ts
 function updateElementStyles(element: HTMLElement) {
   // Each line invalidates style, but browser batches the recalculation
   element.style.width = '100px'
@@ -1511,7 +1504,7 @@ function updateElementStyles(element: HTMLElement) {
 ```
 
 **Incorrect (interleaved reads and writes force reflows):**
-```typescript
+```ts
 function layoutThrashing(element: HTMLElement) {
   element.style.width = '100px'
   const width = element.offsetWidth  // Forces reflow
@@ -1521,7 +1514,7 @@ function layoutThrashing(element: HTMLElement) {
 ```
 
 **Correct (batch writes, then read once):**
-```typescript
+```ts
 function updateElementStyles(element: HTMLElement) {
   // Batch all writes together
   element.style.width = '100px'
@@ -1535,7 +1528,7 @@ function updateElementStyles(element: HTMLElement) {
 ```
 
 **Correct (batch reads, then writes):**
-```typescript
+```ts
 function avoidThrashing(element: HTMLElement) {
   // Read phase - all layout queries first
   const rect1 = element.getBoundingClientRect()
@@ -1557,7 +1550,7 @@ function avoidThrashing(element: HTMLElement) {
   border: 1px solid black;
 }
 ```
-```typescript
+```ts
 function updateElementStyles(element: HTMLElement) {
   element.classList.add('highlighted-box')
   
@@ -1600,7 +1593,7 @@ Use a module-level Map to cache function results when the same function is calle
 
 **Incorrect (redundant computation):**
 
-```typescript
+```ts
 function ProjectList({ projects }: { projects: Project[] }) {
   return (
     <div>
@@ -1617,7 +1610,7 @@ function ProjectList({ projects }: { projects: Project[] }) {
 
 **Correct (cached results):**
 
-```typescript
+```ts
 // Module-level cache
 const slugifyCache = new Map<string, string>()
 
@@ -1646,7 +1639,7 @@ function ProjectList({ projects }: { projects: Project[] }) {
 
 **Simpler pattern for single-value functions:**
 
-```typescript
+```ts
 let isLoggedInCache: boolean | null = null
 
 function isLoggedIn(): boolean {
@@ -1672,7 +1665,7 @@ Cache object property lookups in hot paths.
 
 **Incorrect (3 lookups × N iterations):**
 
-```typescript
+```ts
 for (let i = 0; i < arr.length; i++) {
   process(obj.config.settings.value)
 }
@@ -1680,7 +1673,7 @@ for (let i = 0; i < arr.length; i++) {
 
 **Correct (1 lookup total):**
 
-```typescript
+```ts
 const value = obj.config.settings.value
 const len = arr.length
 for (let i = 0; i < len; i++) {
@@ -1694,7 +1687,7 @@ for (let i = 0; i < len; i++) {
 
 **Incorrect (reads storage on every call):**
 
-```typescript
+```ts
 function getTheme() {
   return localStorage.getItem('theme') ?? 'light'
 }
@@ -1703,7 +1696,7 @@ function getTheme() {
 
 **Correct (Map cache):**
 
-```typescript
+```ts
 const storageCache = new Map<string, string | null>()
 
 function getLocalStorage(key: string) {
@@ -1723,7 +1716,7 @@ Use a Map (not a hook) so it works everywhere: utilities, event handlers, not ju
 
 **Cookie caching:**
 
-```typescript
+```ts
 let cookieCache: Record<string, string> | null = null
 
 function getCookie(name: string) {
@@ -1740,7 +1733,7 @@ function getCookie(name: string) {
 
 If storage can change externally (another tab, server-set cookies), invalidate cache:
 
-```typescript
+```ts
 window.addEventListener('storage', (e) => {
   if (e.key) storageCache.delete(e.key)
 })
@@ -1758,7 +1751,7 @@ Multiple `.filter()` or `.map()` calls iterate the array multiple times. Combine
 
 **Incorrect (3 iterations):**
 
-```typescript
+```ts
 const admins = users.filter(u => u.isAdmin)
 const testers = users.filter(u => u.isTester)
 const inactive = users.filter(u => !u.isActive)
@@ -1766,7 +1759,7 @@ const inactive = users.filter(u => !u.isActive)
 
 **Correct (1 iteration):**
 
-```typescript
+```ts
 const admins: User[] = []
 const testers: User[] = []
 const inactive: User[] = []
@@ -1784,7 +1777,7 @@ Return early when result is determined to skip unnecessary processing.
 
 **Incorrect (processes all items even after finding answer):**
 
-```typescript
+```ts
 function validateUsers(users: User[]) {
   let hasError = false
   let errorMessage = ''
@@ -1807,7 +1800,7 @@ function validateUsers(users: User[]) {
 
 **Correct (returns immediately on first error):**
 
-```typescript
+```ts
 function validateUsers(users: User[]) {
   for (const user of users) {
     if (!user.email) {
@@ -1855,7 +1848,7 @@ function Highlighter({ text, query }: Props) {
 
 Global regex (`/g`) has mutable `lastIndex` state:
 
-```typescript
+```ts
 const regex = /foo/g
 regex.test('foo')  // true, lastIndex = 3
 regex.test('foo')  // false, lastIndex = 0
@@ -1867,7 +1860,7 @@ Multiple `.find()` calls by the same key should use a Map.
 
 **Incorrect (O(n) per lookup):**
 
-```typescript
+```ts
 function processOrders(orders: Order[], users: User[]) {
   return orders.map(order => ({
     ...order,
@@ -1878,7 +1871,7 @@ function processOrders(orders: Order[], users: User[]) {
 
 **Correct (O(1) per lookup):**
 
-```typescript
+```ts
 function processOrders(orders: Order[], users: User[]) {
   const userById = new Map(users.map(u => [u.id, u]))
 
@@ -1900,7 +1893,7 @@ In real-world applications, this optimization is especially valuable when the co
 
 **Incorrect (always runs expensive comparison):**
 
-```typescript
+```ts
 function hasChanges(current: string[], original: string[]) {
   // Always sorts and joins, even when lengths differ
   return current.sort().join() !== original.sort().join()
@@ -1911,7 +1904,7 @@ Two O(n log n) sorts run even when `current.length` is 5 and `original.length` i
 
 **Correct (O(1) length check first):**
 
-```typescript
+```ts
 function hasChanges(current: string[], original: string[]) {
   // Early return if lengths differ
   if (current.length !== original.length) {
@@ -1941,7 +1934,7 @@ Finding the smallest or largest element only requires a single pass through the 
 
 **Incorrect (O(n log n) - sort to find latest):**
 
-```typescript
+```ts
 interface Project {
   id: string
   name: string
@@ -1958,7 +1951,7 @@ Sorts the entire array just to find the maximum value.
 
 **Incorrect (O(n log n) - sort for oldest and newest):**
 
-```typescript
+```ts
 function getOldestAndNewest(projects: Project[]) {
   const sorted = [...projects].sort((a, b) => a.updatedAt - b.updatedAt)
   return { oldest: sorted[0], newest: sorted[sorted.length - 1] }
@@ -1969,7 +1962,7 @@ Still sorts unnecessarily when only min/max are needed.
 
 **Correct (O(n) - single loop):**
 
-```typescript
+```ts
 function getLatestProject(projects: Project[]) {
   if (projects.length === 0) return null
   
@@ -2003,7 +1996,7 @@ Single pass through the array, no copying, no sorting.
 
 **Alternative (Math.min/Math.max for small arrays):**
 
-```typescript
+```ts
 const numbers = [5, 2, 8, 1, 9]
 const min = Math.min(...numbers)
 const max = Math.max(...numbers)
@@ -2017,14 +2010,14 @@ Convert arrays to Set/Map for repeated membership checks.
 
 **Incorrect (O(n) per check):**
 
-```typescript
+```ts
 const allowedIds = ['a', 'b', 'c', ...]
 items.filter(item => allowedIds.includes(item.id))
 ```
 
 **Correct (O(1) per check):**
 
-```typescript
+```ts
 const allowedIds = new Set(['a', 'b', 'c', ...])
 items.filter(item => allowedIds.has(item.id))
 ```
@@ -2035,7 +2028,7 @@ items.filter(item => allowedIds.has(item.id))
 
 **Incorrect (mutates original array):**
 
-```typescript
+```ts
 function UserList({ users }: { users: User[] }) {
   // Mutates the users prop array!
   const sorted = useMemo(
@@ -2048,7 +2041,7 @@ function UserList({ users }: { users: User[] }) {
 
 **Correct (creates new array):**
 
-```typescript
+```ts
 function UserList({ users }: { users: User[] }) {
   // Creates new sorted array, original unchanged
   const sorted = useMemo(
@@ -2068,7 +2061,7 @@ function UserList({ users }: { users: User[] }) {
 
 `.toSorted()` is available in all modern browsers (Chrome 110+, Safari 16+, Firefox 115+, Node.js 20+). For older environments, use spread operator:
 
-```typescript
+```ts
 // Fallback for older browsers
 const sorted = [...items].sort((a, b) => a.value - b.value)
 ```

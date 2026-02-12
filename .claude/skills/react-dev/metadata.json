@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "abstract": "Performance and best-practices guide for React and TypeScript applications (no Next.js). Contains rules across 7 categories—eliminating async waterfalls, bundle optimization, client-side data fetching, re-render optimization, rendering, JavaScript micro-optimizations, and advanced patterns—with detailed explanations and incorrect vs. correct examples for refactoring and code generation.",
+  "abstract": "Performance and best-practices guide for React and TypeScript applications. Contains rules across 7 categories—eliminating async waterfalls, bundle optimization, client-side data fetching, re-render optimization, rendering, JavaScript micro-optimizations, and advanced patterns—with detailed explanations and incorrect vs. correct examples for refactoring and code generation.",
   "references": [
     "https://react.dev",
     "https://swr.vercel.app",
