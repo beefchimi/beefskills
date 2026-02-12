@@ -47,6 +47,7 @@ Reference these guidelines when:
 ### 1. Project & tooling conventions (HIGH)
 
 - `conventions-respect-local-config`: Respect local ESLint/oxlint, Prettier/oxfmt, and tsconfig; they override this skill’s formatting defaults.
+- `conventions-inline-type-exports`: Prefer inline `type` specifiers in mixed value + type re-exports (`export {Foo, type FooProps}`) over separate `export` / `export type` lines.
 - `conventions-use-beeftools`: In projects that depend on beeftools, import and use its utilities and types (e.g. `classNames`, `arrayShuffle`) instead of reimplementing or adding other libs.
 
 ### 2. Eliminating Waterfalls (CRITICAL)
