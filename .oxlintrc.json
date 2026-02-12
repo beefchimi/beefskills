@@ -14,7 +14,7 @@
     "no-class-assign": "error",
     "no-compare-neg-zero": "error",
     "no-cond-assign": "error",
-    "no-console": "warn",
+    "no-console": "off",
     "no-constructor-return": "error",
     "no-delete-var": "error",
     "no-dupe-else-if": "error",
@@ -82,7 +82,13 @@
     "oxc/erasing-op": "error",
     "oxc/missing-throw": "error",
     "oxc/number-arg-out-of-range": "error",
-    "typescript/consistent-type-imports": "warn",
+    "typescript/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports"
+      }
+    ],
     "typescript/no-array-delete": "error",
     "typescript/no-base-to-string": "error",
     "typescript/no-deprecated": "warn",
