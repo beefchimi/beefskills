@@ -19,6 +19,7 @@
   "scripts": {
     "clean": "rm -rf dist && rm -rf node_modules/.cache && rm -rf node_modules/.vite",
     "nuke": "npm run clean && rm -rf node_modules && rm -rf package-lock.json && npm cache clean --force",
+    "build:skills": "python3 .claude/skills/react-dev/build_agents.py",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "lint:force": "oxlint --fix-dangerously",

@@ -6,6 +6,7 @@ RULES_DIR = Path(__file__).parent / "rules"
 OUTPUT = Path(__file__).parent / "AGENTS.md"
 
 SECTION_ORDER = [
+    ("conventions", "Project & tooling conventions", "HIGH"),
     ("async", "Eliminating Waterfalls", "CRITICAL"),
     ("bundle", "Bundle Size Optimization", "CRITICAL"),
     ("client", "Client-Side Data Fetching", "MEDIUM-HIGH"),
@@ -63,9 +64,9 @@ def main():
     out.append("## Abstract")
     out.append("")
     out.append("Performance and best-practices guide for React and TypeScript applications (no Next.js).")
-    out.append("Rules across 7 categories: eliminating async waterfalls, bundle optimization, client-side")
-    out.append("data fetching, re-render optimization, rendering, JavaScript micro-optimizations, and")
-    out.append("advanced patterns. Each rule includes incorrect vs. correct examples.")
+    out.append("Rules across 8 categories: project conventions, eliminating async waterfalls, bundle")
+    out.append("optimization, client-side data fetching, re-render optimization, rendering, JavaScript")
+    out.append("micro-optimizations, and advanced patterns. Each rule includes incorrect vs. correct examples.")
     out.append("")
     out.append("---")
     out.append("")

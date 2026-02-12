@@ -1,6 +1,6 @@
 # Code snippet formatting (react-dev rules)
 
-Code blocks in this folder follow a consistent style.
+Code blocks in this folder follow a consistent style. **When working in a real project, the project’s local ESLint/oxlint, Prettier/oxfmt, and tsconfig override these conventions** (see `conventions-respect-local-config.md`).
 
 ## Conventions
 
