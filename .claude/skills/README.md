@@ -2,6 +2,11 @@
 
 This is a collection of Claude skills.
 
+## Accessibility Compliance
+
+From: <https://mcpmarket.com/tools/skills/accessibility-compliance-expert>
+Last updated: Feb 13 2026
+
 ## React Development
 
 Based on: <https://github.com/vercel-labs/agent-skills/tree/main>
