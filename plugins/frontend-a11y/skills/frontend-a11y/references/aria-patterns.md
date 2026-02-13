@@ -53,7 +53,7 @@ aria-live="polite|assertive|off"
 ### Accordion
 
 ```tsx
-function Accordion({ items }) {
+function Accordion({items}) {
   const [openIndex, setOpenIndex] = useState(-1);
 
   return (
@@ -76,12 +76,7 @@ function Accordion({ items }) {
                 <span aria-hidden="true">{isOpen ? '−' : '+'}</span>
               </button>
             </h3>
-            <div
-              id={panelId}
-              role="region"
-              aria-labelledby={headingId}
-              hidden={!isOpen}
-            >
+            <div id={panelId} role="region" aria-labelledby={headingId} hidden={!isOpen}>
               {item.content}
             </div>
           </div>
@@ -95,7 +90,7 @@ function Accordion({ items }) {
 ### Tabs
 
 ```tsx
-function Tabs({ tabs }) {
+function Tabs({tabs}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabListRef = useRef(null);
 
@@ -163,7 +158,7 @@ function Tabs({ tabs }) {
 ### Menu Button
 
 ```tsx
-function MenuButton({ label, items }) {
+function MenuButton({label, items}) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const buttonRef = useRef(null);
@@ -221,13 +216,7 @@ function MenuButton({ label, items }) {
       </button>
 
       {isOpen && (
-        <ul
-          ref={menuRef}
-          id={menuId}
-          role="menu"
-          aria-label={label}
-          onKeyDown={handleKeyDown}
-        >
+        <ul ref={menuRef} id={menuId} role="menu" aria-label={label} onKeyDown={handleKeyDown}>
           {items.map((item, index) => (
             <li
               key={index}
@@ -252,7 +241,7 @@ function MenuButton({ label, items }) {
 ### Combobox (Autocomplete)
 
 ```tsx
-function Combobox({ options, onSelect, placeholder }) {
+function Combobox({options, onSelect, placeholder}) {
   const [inputValue, setInputValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -268,9 +257,7 @@ function Combobox({ options, onSelect, placeholder }) {
       case 'ArrowDown':
         e.preventDefault();
         setIsOpen(true);
-        setActiveIndex((prev) =>
-          Math.min(prev + 1, filteredOptions.length - 1),
-        );
+        setActiveIndex((prev) => Math.min(prev + 1, filteredOptions.length - 1));
         break;
       case 'ArrowUp':
         e.preventDefault();
@@ -304,9 +291,7 @@ function Combobox({ options, onSelect, placeholder }) {
         role="combobox"
         aria-expanded={isOpen}
         aria-controls={listboxId}
-        aria-activedescendant={
-          activeIndex >= 0 ? `option-${activeIndex}` : undefined
-        }
+        aria-activedescendant={activeIndex >= 0 ? `option-${activeIndex}` : undefined}
         aria-autocomplete="list"
         value={inputValue}
         placeholder={placeholder}
@@ -344,7 +329,7 @@ function Combobox({ options, onSelect, placeholder }) {
 ### Alert Dialog
 
 ```tsx
-function AlertDialog({ isOpen, onConfirm, onCancel, title, message }) {
+function AlertDialog({isOpen, onConfirm, onCancel, title, message}) {
   const confirmRef = useRef(null);
   const dialogId = useId();
   const titleId = `${dialogId}-title`;
@@ -360,12 +345,7 @@ function AlertDialog({ isOpen, onConfirm, onCancel, title, message }) {
 
   return (
     <FocusTrap>
-      <div
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={descId}
-      >
+      <div role="alertdialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descId}>
         <div className="backdrop" onClick={onCancel} />
 
         <div className="dialog">
@@ -388,7 +368,7 @@ function AlertDialog({ isOpen, onConfirm, onCancel, title, message }) {
 ### Toolbar
 
 ```tsx
-function Toolbar({ items }) {
+function Toolbar({items}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const toolbarRef = useRef(null);
 
@@ -418,12 +398,7 @@ function Toolbar({ items }) {
   };
 
   return (
-    <div
-      ref={toolbarRef}
-      role="toolbar"
-      aria-label="Text formatting"
-      onKeyDown={handleKeyDown}
-    >
+    <div ref={toolbarRef} role="toolbar" aria-label="Text formatting" onKeyDown={handleKeyDown}>
       {items.map((item, index) => (
         <button
           key={index}
@@ -446,7 +421,7 @@ function Toolbar({ items }) {
 
 ```tsx
 // Status messages that don't interrupt
-function SearchStatus({ count, query }) {
+function SearchStatus({count, query}) {
   return (
     <div role="status" aria-live="polite" aria-atomic="true">
       {count} results found for "{query}"
@@ -455,7 +430,7 @@ function SearchStatus({ count, query }) {
 }
 
 // Progress indicator
-function LoadingStatus({ progress }) {
+function LoadingStatus({progress}) {
   return (
     <div role="status" aria-live="polite">
       Loading: {progress}% complete
@@ -468,7 +443,7 @@ function LoadingStatus({ progress }) {
 
 ```tsx
 // Important errors that should interrupt
-function ErrorAlert({ message }) {
+function ErrorAlert({message}) {
   return (
     <div role="alert" aria-live="assertive">
       Error: {message}
@@ -477,7 +452,7 @@ function ErrorAlert({ message }) {
 }
 
 // Form validation summary
-function ValidationSummary({ errors }) {
+function ValidationSummary({errors}) {
   if (errors.length === 0) return null;
 
   return (
@@ -497,7 +472,7 @@ function ValidationSummary({ errors }) {
 
 ```tsx
 // Chat messages or activity log
-function ChatLog({ messages }) {
+function ChatLog({messages}) {
   return (
     <div role="log" aria-live="polite" aria-relevant="additions">
       {messages.map((msg) => (

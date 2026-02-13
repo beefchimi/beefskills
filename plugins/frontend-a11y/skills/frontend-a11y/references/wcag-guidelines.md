@@ -244,7 +244,7 @@ Content must not be lost when user adjusts text spacing.
 
 ```tsx
 // Tooltip pattern
-function Tooltip({ content, children }) {
+function Tooltip({content, children}) {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -285,7 +285,7 @@ All functionality must be operable via keyboard.
 
 ```tsx
 // Custom interactive element
-function CustomButton({ onClick, children }) {
+function CustomButton({onClick, children}) {
   return (
     <div
       role="button"
@@ -304,7 +304,7 @@ function CustomButton({ onClick, children }) {
 }
 
 // Better: just use a button
-function BetterButton({ onClick, children }) {
+function BetterButton({onClick, children}) {
   return <button onClick={onClick}>{children}</button>;
 }
 ```
@@ -313,7 +313,7 @@ function BetterButton({ onClick, children }) {
 
 ```tsx
 // Modal with proper focus management
-function Modal({ isOpen, onClose, children }) {
+function Modal({isOpen, onClose, children}) {
   const closeButtonRef = useRef(null);
 
   // Return focus on close
@@ -502,7 +502,7 @@ Don't automatically change context on input.
 #### 3.3.1 Error Identification (Level A)
 
 ```tsx
-function FormField({ id, label, error, ...props }) {
+function FormField({id, label, error, ...props}) {
   return (
     <div>
       <label htmlFor={id}>{label}</label>
@@ -573,7 +573,7 @@ Content must be robust enough for assistive technologies.
 
 ```tsx
 // Custom components must expose name, role, and value
-function CustomCheckbox({ checked, onChange, label }) {
+function CustomCheckbox({checked, onChange, label}) {
   return (
     <button
       role="checkbox"
@@ -587,7 +587,7 @@ function CustomCheckbox({ checked, onChange, label }) {
 }
 
 // Custom slider
-function CustomSlider({ value, min, max, label, onChange }) {
+function CustomSlider({value, min, max, label, onChange}) {
   return (
     <div
       role="slider"
@@ -601,7 +601,7 @@ function CustomSlider({ value, min, max, label, onChange }) {
         if (e.key === 'ArrowLeft') onChange(Math.max(value - 1, min));
       }}
     >
-      <div style={{ width: `${((value - min) / (max - min)) * 100}%` }} />
+      <div style={{width: `${((value - min) / (max - min)) * 100}%`}} />
     </div>
   );
 }

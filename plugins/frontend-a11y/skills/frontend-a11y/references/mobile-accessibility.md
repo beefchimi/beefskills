@@ -32,7 +32,7 @@ Mobile accessibility ensures apps work for users with disabilities on iOS and An
 
 ```tsx
 // Ensure adequate spacing between touch targets
-function ButtonGroup({ buttons }) {
+function ButtonGroup({buttons}) {
   return (
     <div className="flex gap-3">
       {' '}
@@ -47,7 +47,7 @@ function ButtonGroup({ buttons }) {
 }
 
 // Expanding hit area without changing visual size
-function IconButton({ icon, label, onClick }) {
+function IconButton({icon, label, onClick}) {
   return (
     <button
       onClick={onClick}
@@ -65,10 +65,10 @@ function IconButton({ icon, label, onClick }) {
 ### React Native Accessibility Props
 
 ```tsx
-import { View, Text, TouchableOpacity, AccessibilityInfo } from 'react-native';
+import {View, Text, TouchableOpacity, AccessibilityInfo} from 'react-native';
 
 // Basic accessible button
-function AccessibleButton({ onPress, title, hint }) {
+function AccessibleButton({onPress, title, hint}) {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -83,15 +83,15 @@ function AccessibleButton({ onPress, title, hint }) {
 }
 
 // Complex component with grouped content
-function ProductCard({ product }) {
+function ProductCard({product}) {
   return (
     <View
       accessible={true}
       accessibilityLabel={`${product.name}, ${product.price}, ${product.rating} stars`}
       accessibilityRole="button"
       accessibilityActions={[
-        { name: 'activate', label: 'View details' },
-        { name: 'addToCart', label: 'Add to cart' },
+        {name: 'activate', label: 'View details'},
+        {name: 'addToCart', label: 'Add to cart'},
       ]}
       onAccessibilityAction={(event) => {
         switch (event.nativeEvent.actionName) {
@@ -349,13 +349,13 @@ binding.counter.announceForAccessibility("Count updated to $count")
 
 ```tsx
 // React Native: Provide alternatives to complex gestures
-function SwipeableCard({ item, onDelete }) {
+function SwipeableCard({item, onDelete}) {
   const [showDelete, setShowDelete] = useState(false);
 
   return (
     <View
       accessible={true}
-      accessibilityActions={[{ name: 'delete', label: 'Delete item' }]}
+      accessibilityActions={[{name: 'delete', label: 'Delete item'}]}
       onAccessibilityAction={(event) => {
         if (event.nativeEvent.actionName === 'delete') {
           onDelete(item);
@@ -364,10 +364,7 @@ function SwipeableCard({ item, onDelete }) {
     >
       <Swipeable
         renderRightActions={() => (
-          <TouchableOpacity
-            onPress={() => onDelete(item)}
-            accessibilityLabel="Delete"
-          >
+          <TouchableOpacity onPress={() => onDelete(item)} accessibilityLabel="Delete">
             <Text>Delete</Text>
           </TouchableOpacity>
         )}
@@ -379,7 +376,7 @@ function SwipeableCard({ item, onDelete }) {
       <TouchableOpacity
         accessibilityLabel={`Delete ${item.title}`}
         onPress={() => onDelete(item)}
-        style={{ position: 'absolute', right: 0 }}
+        style={{position: 'absolute', right: 0}}
       >
         <Text>Delete</Text>
       </TouchableOpacity>
@@ -392,7 +389,7 @@ function SwipeableCard({ item, onDelete }) {
 
 ```tsx
 // Respect reduced motion preference
-import { AccessibilityInfo } from 'react-native';
+import {AccessibilityInfo} from 'react-native';
 
 function AnimatedComponent() {
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -400,10 +397,7 @@ function AnimatedComponent() {
   useEffect(() => {
     AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotion);
 
-    const subscription = AccessibilityInfo.addEventListener(
-      'reduceMotionChanged',
-      setReduceMotion,
-    );
+    const subscription = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduceMotion);
 
     return () => subscription.remove();
   }, []);
@@ -411,7 +405,7 @@ function AnimatedComponent() {
   return (
     <Animated.View
       style={{
-        transform: reduceMotion ? [] : [{ translateX: animatedValue }],
+        transform: reduceMotion ? [] : [{translateX: animatedValue}],
         opacity: reduceMotion ? 1 : animatedOpacity,
       }}
     >

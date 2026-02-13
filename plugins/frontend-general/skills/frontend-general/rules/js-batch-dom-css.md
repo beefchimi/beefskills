@@ -26,9 +26,9 @@ function updateElementStyles(element: HTMLElement) {
 ```ts
 function layoutThrashing(element: HTMLElement) {
   element.style.width = '100px';
-  const width = element.offsetWidth;  // Forces reflow
+  const width = element.offsetWidth; // Forces reflow
   element.style.height = '200px';
-  const height = element.offsetHeight;  // Forces another reflow
+  const height = element.offsetHeight; // Forces another reflow
 }
 ```
 
@@ -101,11 +101,7 @@ function Box({isHighlighted}: {isHighlighted: boolean}) {
 
 // Correct: toggle class
 function Box({isHighlighted}: {isHighlighted: boolean}) {
-  return (
-    <div className={isHighlighted ? 'highlighted-box' : ''}>
-      Content
-    </div>
-  );
+  return <div className={isHighlighted ? 'highlighted-box' : ''}>Content</div>;
 }
 ```
 

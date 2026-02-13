@@ -26,7 +26,7 @@ export {MyComponent, type MyComponentProps} from './MyComponent';
 
 The inline `type` keyword gives the transpiler the same erasure signal in a single, more concise statement.
 
-**Exception — type-only modules:** When *every* specifier is a type, still use `export type` so the entire import is erased and no runtime module reference remains:
+**Exception — type-only modules:** When _every_ specifier is a type, still use `export type` so the entire import is erased and no runtime module reference remains:
 
 ```ts
 export type {SomeType, AnotherType} from './types';
@@ -54,8 +54,8 @@ Enable `verbatimModuleSyntax`. This is the single most important setting — Typ
 ```jsonc
 {
   "compilerOptions": {
-    "verbatimModuleSyntax": true
-  }
+    "verbatimModuleSyntax": true,
+  },
 }
 ```
 
@@ -70,11 +70,14 @@ Configure the `typescript/consistent-type-imports` rule with `fixStyle: "inline-
 {
   "plugins": ["typescript"],
   "rules": {
-    "typescript/consistent-type-imports": ["warn", {
-      "prefer": "type-imports",
-      "fixStyle": "inline-type-imports"
-    }]
-  }
+    "typescript/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports",
+      },
+    ],
+  },
 }
 ```
 
@@ -84,11 +87,14 @@ For ESLint with typescript-eslint, the equivalent is:
 // eslint.config.js (flat config)
 {
   "rules": {
-    "@typescript-eslint/consistent-type-imports": ["warn", {
-      "prefer": "type-imports",
-      "fixStyle": "inline-type-imports"
-    }]
-  }
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports",
+      },
+    ],
+  },
 }
 ```
 
