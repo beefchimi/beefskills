@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   // "ignorePatterns": ["dist/**"],
-  "plugins": ["unicorn", "typescript", "oxc"],
+  "plugins": ["import", "unicorn", "typescript", "oxc"],
   "rules": {
     "array-callback-return": "error",
     "default-case-last": "error",
@@ -83,12 +83,13 @@
     "oxc/missing-throw": "error",
     "oxc/number-arg-out-of-range": "error",
     "typescript/consistent-type-imports": [
-      "warn",
+      "error",
       {
         "prefer": "type-imports",
         "fixStyle": "inline-type-imports"
       }
     ],
+    "typescript/no-import-type-side-effects": "error",
     "typescript/no-array-delete": "error",
     "typescript/no-base-to-string": "error",
     "typescript/no-deprecated": "warn",
@@ -131,7 +132,8 @@
     "unicorn/prefer-node-protocol": "warn",
     "unicorn/prefer-optional-catch-binding": "warn",
     "unicorn/prefer-set-size": "error",
-    "unicorn/throw-new-error": "error"
+    "unicorn/throw-new-error": "error",
+    "import/no-cycle": "error"
 
     // Redundant with TypeScript compiler checks (tsconfig.json):
     // "constructor-super": "error",
