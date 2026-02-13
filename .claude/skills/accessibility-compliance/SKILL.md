@@ -5,7 +5,7 @@ description: Implement WCAG 2.2 compliant interfaces with mobile accessibility, 
 
 # Accessibility Compliance
 
-Master accessibility implementation to create inclusive experiences that work for everyone, including users with disabilities.
+Master accessibility implementation to create inclusive experiences that work for everyone, including users with disabilities. For performance patterns that affect rendering and interaction, see the `frontend-general` and `frontend-react` skills if available.
 
 ## When to Use This Skill
 
@@ -78,13 +78,13 @@ Master accessibility implementation to create inclusive experiences that work fo
 
 ```tsx
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
+  variant?: 'primary' | 'secondary';
   isLoading?: boolean;
 }
 
 function AccessibleButton({
   children,
-  variant = "primary",
+  variant = 'primary',
   isLoading = false,
   disabled,
   ...props
@@ -99,11 +99,11 @@ function AccessibleButton({
       aria-disabled={disabled || isLoading}
       className={cn(
         // Visible focus ring
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
         // Minimum touch target size (44x44px)
-        "min-h-[44px] min-w-[44px]",
-        variant === "primary" && "bg-primary text-primary-foreground",
-        (disabled || isLoading) && "opacity-50 cursor-not-allowed",
+        'min-h-[44px] min-w-[44px]',
+        variant === 'primary' && 'bg-primary text-primary-foreground',
+        (disabled || isLoading) && 'opacity-50 cursor-not-allowed',
       )}
       {...props}
     >
@@ -122,10 +122,9 @@ function AccessibleButton({
 
 ### Pattern 2: Accessible Modal Dialog
 
-```tsx
-import * as React from "react";
-import { FocusTrap } from "@headlessui/react";
+Use the native `<dialog>` element -- it provides built-in focus trapping, Escape key handling, and `aria-modal` behavior without third-party dependencies.
 
+```tsx
 interface DialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -133,69 +132,47 @@ interface DialogProps {
   children: React.ReactNode;
 }
 
-function AccessibleDialog({ isOpen, onClose, title, children }: DialogProps) {
+function AccessibleDialog({isOpen, onClose, title, children}: DialogProps) {
+  const dialogRef = React.useRef<HTMLDialogElement>(null);
   const titleId = React.useId();
   const descriptionId = React.useId();
 
-  // Close on Escape key
   React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
-  // Prevent body scroll when open
-  React.useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      dialog.showModal();
+    } else {
+      dialog.close();
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
+      onClose={onClose}
+      className="backdrop:bg-black/50 bg-background rounded-lg shadow-lg max-w-md w-full p-6"
     >
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black/50"
-        aria-hidden="true"
+      <h2 id={titleId} className="text-lg font-semibold">
+        {title}
+      </h2>
+      <div id={descriptionId}>{children}</div>
+      <button
         onClick={onClose}
-      />
-
-      {/* Focus trap container */}
-      <FocusTrap>
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <div className="bg-background rounded-lg shadow-lg max-w-md w-full p-6">
-            <h2 id={titleId} className="text-lg font-semibold">
-              {title}
-            </h2>
-            <div id={descriptionId}>{children}</div>
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4"
-              aria-label="Close dialog"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </FocusTrap>
-    </div>
+        className="absolute top-4 right-4"
+        aria-label="Close dialog"
+      >
+        <X className="h-4 w-4" />
+      </button>
+    </dialog>
   );
 }
 ```
+
+The native `<dialog>` element with `showModal()` automatically handles focus trapping, Escape to close, scroll locking, and the backdrop -- no manual effects or third-party `FocusTrap` components needed.
 
 ### Pattern 3: Accessible Form
 
@@ -244,10 +221,10 @@ function AccessibleForm() {
           required
           aria-required="true"
           aria-invalid={!!errors.email}
-          aria-describedby={errors.email ? "email-error" : "email-hint"}
+          aria-describedby={errors.email ? 'email-error' : 'email-hint'}
           className={cn(
-            "w-full px-3 py-2 border rounded-md",
-            errors.email && "border-destructive",
+            'w-full px-3 py-2 border rounded-md',
+            errors.email && 'border-destructive',
           )}
         />
         {errors.email ? (
@@ -278,10 +255,10 @@ function SkipLink() {
       href="#main-content"
       className={cn(
         // Hidden by default, visible on focus
-        "sr-only focus:not-sr-only",
-        "focus:absolute focus:top-4 focus:left-4 focus:z-50",
-        "focus:bg-background focus:px-4 focus:py-2 focus:rounded-md",
-        "focus:ring-2 focus:ring-primary",
+        'sr-only focus:not-sr-only',
+        'focus:absolute focus:top-4 focus:left-4 focus:z-50',
+        'focus:bg-background focus:px-4 focus:py-2 focus:rounded-md',
+        'focus:ring-2 focus:ring-primary',
       )}
     >
       Skip to main content
@@ -309,11 +286,13 @@ function Layout({ children }) {
 
 ```tsx
 function useAnnounce() {
-  const [message, setMessage] = React.useState("");
+  const [message, setMessage] = React.useState('');
+  const [priority, setPriority] = React.useState<'polite' | 'assertive'>('polite');
 
   const announce = React.useCallback(
-    (text: string, priority: "polite" | "assertive" = "polite") => {
-      setMessage(""); // Clear first to ensure re-announcement
+    (text: string, level: 'polite' | 'assertive' = 'polite') => {
+      setMessage(''); // Clear first to ensure re-announcement
+      setPriority(level);
       setTimeout(() => setMessage(text), 100);
     },
     [],
@@ -321,8 +300,8 @@ function useAnnounce() {
 
   const Announcer = () => (
     <div
-      role="status"
-      aria-live="polite"
+      role={priority === 'assertive' ? 'alert' : 'status'}
+      aria-live={priority}
       aria-atomic="true"
       className="sr-only"
     >
