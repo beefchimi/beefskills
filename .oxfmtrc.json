@@ -3,6 +3,11 @@
   "ignorePatterns": [".claude/", ".zed/", "src/pages/experiment/snapshots/*.json"],
   "bracketSpacing": false,
   "singleQuote": true,
+  // NOTE: oxfmt's `experimentalSortImports` handles import ordering
+  // and grouping, but does NOT enforce inline vs. top-level type
+  // import style. That is handled by oxlint rules:
+  // - `typescript/consistent-type-imports` (inline `type` for mixed imports)
+  // - `typescript/no-import-type-side-effects` (top-level `import type` for type-only imports)
   "experimentalSortImports": {
     "groups": [
       ["side-effect"],
