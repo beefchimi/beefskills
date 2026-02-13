@@ -3,14 +3,14 @@ name: frontend-react
 description: React-specific performance and best-practices guidelines for web applications and component libraries. Use when writing, reviewing, or refactoring React code, optimizing re-renders, implementing code-splitting with React.lazy/Suspense, client-side data fetching with SWR, or React rendering patterns.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: '1.0.0'
 ---
 
 # React Best Practices
 
 React-specific performance and best-practices guide. Contains rules across 5 categories, prioritized by impact for refactoring and code generation.
 
-For framework-agnostic patterns (async, JS performance, conventions, general bundle/rendering/DOM), see the `frontend-general` skill. For accessibility (ARIA, keyboard navigation, WCAG compliance), see the `accessibility-compliance` skill if available.
+For framework-agnostic patterns (async, JS performance, conventions, general bundle/rendering/DOM), see the `frontend-general` skill. For accessibility (ARIA, keyboard navigation, WCAG compliance), see the `frontend-a11y` skill if available.
 
 ## Code snippet style
 
@@ -34,13 +34,13 @@ Reference these guidelines when:
 
 ## Rule Categories by Priority
 
-| Priority | Category | Impact | Prefix |
-|----------|----------|--------|--------|
-| 1 | Bundle Size Optimization | CRITICAL | `bundle-` |
-| 2 | Client-Side Data Fetching | MEDIUM-HIGH | `client-` |
-| 3 | Re-render Optimization | MEDIUM | `rerender-` |
-| 4 | Rendering Performance | MEDIUM | `rendering-` |
-| 5 | Advanced Patterns | LOW | `advanced-` |
+| Priority | Category                  | Impact      | Prefix       |
+| -------- | ------------------------- | ----------- | ------------ |
+| 1        | Bundle Size Optimization  | CRITICAL    | `bundle-`    |
+| 2        | Client-Side Data Fetching | MEDIUM-HIGH | `client-`    |
+| 3        | Re-render Optimization    | MEDIUM      | `rerender-`  |
+| 4        | Rendering Performance     | MEDIUM      | `rendering-` |
+| 5        | Advanced Patterns         | LOW         | `advanced-`  |
 
 ## Quick Reference
 

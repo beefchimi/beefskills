@@ -3,14 +3,14 @@ name: frontend-general
 description: Frontend and TypeScript performance and best-practices guidelines for web applications. Use when writing, reviewing, or refactoring frontend/TypeScript code, async patterns, bundle optimization, DOM performance, or JavaScript micro-optimizations. Framework-agnostic — applies to React, Vue, Svelte, vanilla JS, etc.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: '1.0.0'
 ---
 
 # Frontend / TypeScript Best Practices
 
 Performance and best-practices guide for frontend and TypeScript applications. Contains framework-agnostic rules across 6 categories, prioritized by impact for refactoring and code generation.
 
-For React-specific patterns (hooks, re-renders, hydration, Suspense, etc.), see the `frontend-react` skill. For accessibility (ARIA, keyboard navigation, WCAG compliance), see the `accessibility-compliance` skill if available.
+For React-specific patterns (hooks, re-renders, hydration, Suspense, etc.), see the `frontend-react` skill. For accessibility (ARIA, keyboard navigation, WCAG compliance), see the `frontend-a11y` skill if available.
 
 ## Code snippet style
 
@@ -33,14 +33,14 @@ Reference these guidelines when:
 
 ## Rule Categories by Priority
 
-| Priority | Category | Impact | Prefix |
-|----------|----------|--------|--------|
-| 1 | Project & tooling conventions | HIGH | `conventions-` |
-| 2 | Eliminating Waterfalls | CRITICAL | `async-` |
-| 3 | Bundle Size Optimization | CRITICAL | `bundle-` |
-| 4 | Client-Side Data Handling | MEDIUM-HIGH | `client-` |
-| 5 | Rendering Performance | MEDIUM | `rendering-` |
-| 6 | JavaScript Performance | LOW-MEDIUM | `js-` |
+| Priority | Category                      | Impact      | Prefix         |
+| -------- | ----------------------------- | ----------- | -------------- |
+| 1        | Project & tooling conventions | HIGH        | `conventions-` |
+| 2        | Eliminating Waterfalls        | CRITICAL    | `async-`       |
+| 3        | Bundle Size Optimization      | CRITICAL    | `bundle-`      |
+| 4        | Client-Side Data Handling     | MEDIUM-HIGH | `client-`      |
+| 5        | Rendering Performance         | MEDIUM      | `rendering-`   |
+| 6        | JavaScript Performance        | LOW-MEDIUM  | `js-`          |
 
 ## Quick Reference
 
