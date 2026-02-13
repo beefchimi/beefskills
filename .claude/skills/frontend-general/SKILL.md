@@ -1,14 +1,16 @@
 ---
-name: react-dev
-description: React and TypeScript performance and best-practices guidelines for web applications and component libraries. Use when writing, reviewing, or refactoring React/TypeScript code, client-side data fetching, bundle optimization, or performance.
+name: frontend-general
+description: Frontend and TypeScript performance and best-practices guidelines for web applications. Use when writing, reviewing, or refactoring frontend/TypeScript code, async patterns, bundle optimization, DOM performance, or JavaScript micro-optimizations. Framework-agnostic — applies to React, Vue, Svelte, vanilla JS, etc.
 license: MIT
 metadata:
   version: "1.0.0"
 ---
 
-# React / TypeScript Best Practices
+# Frontend / TypeScript Best Practices
 
-Performance and best-practices guide for React and TypeScript applications. Contains rules across 8 categories, prioritized by impact for refactoring and code generation.
+Performance and best-practices guide for frontend and TypeScript applications. Contains framework-agnostic rules across 6 categories, prioritized by impact for refactoring and code generation.
+
+For React-specific patterns (hooks, re-renders, hydration, Suspense, etc.), see the `frontend-react` skill.
 
 ## Code snippet style
 
@@ -23,11 +25,11 @@ Code in rule files follows this style for consistency. **In a real project, loca
 
 Reference these guidelines when:
 
-- Writing new React components or TypeScript UI code.
-- Implementing client-side data fetching.
+- Writing new frontend or TypeScript code.
 - Reviewing code for performance issues.
-- Refactoring existing React/TypeScript code.
+- Refactoring existing frontend/TypeScript code.
 - Optimizing bundle size or load times.
+- Working with async patterns, DOM APIs, or event listeners.
 
 ## Rule Categories by Priority
 
@@ -36,17 +38,15 @@ Reference these guidelines when:
 | 1 | Project & tooling conventions | HIGH | `conventions-` |
 | 2 | Eliminating Waterfalls | CRITICAL | `async-` |
 | 3 | Bundle Size Optimization | CRITICAL | `bundle-` |
-| 4 | Client-Side Data Fetching | MEDIUM-HIGH | `client-` |
-| 5 | Re-render Optimization | MEDIUM | `rerender-` |
-| 6 | Rendering Performance | MEDIUM | `rendering-` |
-| 7 | JavaScript Performance | LOW-MEDIUM | `js-` |
-| 8 | Advanced Patterns | LOW | `advanced-` |
+| 4 | Client-Side Data Handling | MEDIUM-HIGH | `client-` |
+| 5 | Rendering Performance | MEDIUM | `rendering-` |
+| 6 | JavaScript Performance | LOW-MEDIUM | `js-` |
 
 ## Quick Reference
 
 ### 1. Project & tooling conventions (HIGH)
 
-- `conventions-respect-local-config`: Respect local ESLint/oxlint, Prettier/oxfmt, and tsconfig; they override this skill’s formatting defaults.
+- `conventions-respect-local-config`: Respect local ESLint/oxlint, Prettier/oxfmt, and tsconfig; they override this skill's formatting defaults.
 - `conventions-inline-type-exports`: Prefer inline `type` specifiers in mixed value + type re-exports (`export {Foo, type FooProps}`) over separate `export` / `export type` lines.
 - `conventions-use-beeftools`: In projects that depend on beeftools, import and use its utilities and types (e.g. `classNames`, `arrayShuffle`) instead of reimplementing or adding other libs.
 
@@ -59,46 +59,19 @@ Reference these guidelines when:
 ### 3. Bundle Size Optimization (CRITICAL)
 
 - `bundle-barrel-imports`: Prefer barrel imports; avoid over-optimizing with direct/dist subpath imports (tooling e.g. Vite/Rolldown improves barrel performance).
-- `bundle-dynamic-imports`: Use React.lazy() + Suspense for heavy components.
-- `bundle-defer-third-party`: Load analytics/logging after hydration via dynamic import.
-- `bundle-conditional`: Load modules only when feature is activated.
-- `bundle-preload`: Preload on hover/focus for perceived speed.
 
-### 4. Client-Side Data Fetching (MEDIUM-HIGH)
+### 4. Client-Side Data Handling (MEDIUM-HIGH)
 
-- `client-swr-dedup`: Use SWR for automatic request deduplication.
-- `client-event-listeners`: Deduplicate global event listeners.
 - `client-passive-event-listeners`: Use passive listeners for scroll.
 - `client-localstorage-schema`: Version and minimize localStorage data.
 
-### 5. Re-render Optimization (MEDIUM)
-
-- `rerender-defer-reads`: Don't subscribe to state only used in callbacks.
-- `rerender-memo`: Extract expensive work into memoized components.
-- `rerender-memo-with-default-value`: Hoist default non-primitive props.
-- `rerender-dependencies`: Use primitive dependencies in effects.
-- `rerender-derived-state`: Subscribe to derived booleans, not raw values.
-- `rerender-derived-state-no-effect`: Derive state during render, not effects.
-- `rerender-functional-setstate`: Use functional setState for stable callbacks.
-- `rerender-lazy-state-init`: Pass function to useState for expensive values.
-- `rerender-simple-expression-in-memo`: Avoid memo for simple primitives.
-- `rerender-move-effect-to-event`: Put interaction logic in event handlers.
-- `rerender-transitions`: Use startTransition for non-urgent updates.
-- `rerender-use-ref-transient-values`: Use refs for transient frequent values.
-
-### 6. Rendering Performance (MEDIUM)
+### 5. Rendering Performance (MEDIUM)
 
 - `rendering-animate-svg-wrapper`: Animate div wrapper, not SVG element.
 - `rendering-content-visibility`: Use content-visibility for long lists.
-- `rendering-hoist-jsx`: Extract static JSX outside components.
 - `rendering-svg-precision`: Reduce SVG coordinate precision.
-- `rendering-hydration-no-flicker`: Use inline script for client-only data (SSR).
-- `rendering-hydration-suppress-warning`: Suppress expected mismatches (SSR).
-- `rendering-activity`: Use Activity component for show/hide.
-- `rendering-conditional-render`: Use ternary, not && for conditionals.
-- `rendering-usetransition-loading`: Prefer useTransition for loading state.
 
-### 7. JavaScript Performance (LOW-MEDIUM)
+### 6. JavaScript Performance (LOW-MEDIUM)
 
 - `js-batch-dom-css`: Group CSS changes via classes or cssText.
 - `js-index-maps`: Build Map for repeated lookups.
@@ -112,12 +85,6 @@ Reference these guidelines when:
 - `js-min-max-loop`: Use loop for min/max instead of sort.
 - `js-set-map-lookups`: Use Set/Map for O(1) lookups.
 - `js-tosorted-immutable`: Use toSorted() for immutability.
-
-### 8. Advanced Patterns (LOW)
-
-- `advanced-event-handler-refs`: Store event handlers in refs.
-- `advanced-init-once`: Initialize app once per app load.
-- `advanced-use-latest`: useLatest for stable callback refs.
 
 ## How to Use
 

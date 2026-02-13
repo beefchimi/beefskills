@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "abstract": "React-specific performance and best-practices guide. Contains rules across 5 categories—bundle optimization with React.lazy/Suspense, client-side data fetching with SWR, re-render optimization, React rendering patterns (hydration, transitions, Activity), and advanced hook patterns—with detailed explanations and incorrect vs. correct examples for refactoring and code generation.",
+  "references": [
+    "https://react.dev",
+    "https://swr.vercel.app",
+    "https://github.com/shuding/better-all"
+  ]
+}

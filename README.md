@@ -29,7 +29,7 @@ Use this repo as a submodule so each project gets the same skills and you can up
    ln -s .claude/beefskills/.claude/skills .claude/skills
    ```
 
-   Result: `your-project/.claude/skills/react-dev` and `skill-creator` resolve into the submodule.
+   Result: `your-project/.claude/skills/*` resolve into the submodule.
 
 4. When cloning the project later, init submodules:
 

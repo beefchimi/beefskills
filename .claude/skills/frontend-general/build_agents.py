@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Compile rules/*.md into AGENTS.md. Excludes _sections.md and _template.md."""
+
 from pathlib import Path
 
 RULES_DIR = Path(__file__).parent / "rules"
@@ -9,12 +10,11 @@ SECTION_ORDER = [
     ("conventions", "Project & tooling conventions", "HIGH"),
     ("async", "Eliminating Waterfalls", "CRITICAL"),
     ("bundle", "Bundle Size Optimization", "CRITICAL"),
-    ("client", "Client-Side Data Fetching", "MEDIUM-HIGH"),
-    ("rerender", "Re-render Optimization", "MEDIUM"),
+    ("client", "Client-Side Data Handling", "MEDIUM-HIGH"),
     ("rendering", "Rendering Performance", "MEDIUM"),
     ("js", "JavaScript Performance", "LOW-MEDIUM"),
-    ("advanced", "Advanced Patterns", "LOW"),
 ]
+
 
 def strip_frontmatter(content: str) -> tuple[str, str]:
     """Return (title, body). Title is from first ## line after frontmatter."""
@@ -37,6 +37,7 @@ def strip_frontmatter(content: str) -> tuple[str, str]:
     body = "\n".join(rest_lines).strip()
     return title, body
 
+
 def main():
     by_prefix = {}
     for f in RULES_DIR.iterdir():
@@ -50,23 +51,35 @@ def main():
         by_prefix[prefix].sort(key=lambda p: p.name)
 
     out = []
-    out.append("# React / TypeScript Best Practices")
+    out.append("# Frontend / TypeScript Best Practices")
     out.append("")
     out.append("**Version 1.0.0**")
-    out.append("React/TypeScript")
+    out.append("Frontend/TypeScript")
     out.append("")
     out.append("> **Note:**")
-    out.append("> This document is for agents and LLMs when maintaining, generating, or refactoring")
-    out.append("> React and TypeScript codebases.")
+    out.append(
+        "> This document is for agents and LLMs when maintaining, generating, or refactoring"
+    )
+    out.append(
+        "> frontend and TypeScript codebases. These rules are framework-agnostic."
+    )
     out.append("")
     out.append("---")
     out.append("")
     out.append("## Abstract")
     out.append("")
-    out.append("Performance and best-practices guide for React and TypeScript applications.")
-    out.append("Rules across 8 categories: project conventions, eliminating async waterfalls, bundle")
-    out.append("optimization, client-side data fetching, re-render optimization, rendering, JavaScript")
-    out.append("micro-optimizations, and advanced patterns. Each rule includes incorrect vs. correct examples.")
+    out.append(
+        "Performance and best-practices guide for frontend and TypeScript applications."
+    )
+    out.append(
+        "Rules across 6 categories: project conventions, eliminating async waterfalls, bundle"
+    )
+    out.append(
+        "optimization, client-side data handling, rendering performance, and JavaScript"
+    )
+    out.append(
+        "micro-optimizations. Each rule includes incorrect vs. correct examples."
+    )
     out.append("")
     out.append("---")
     out.append("")
@@ -77,7 +90,9 @@ def main():
         files = by_prefix.get(prefix, [])
         if not files:
             continue
-        out.append(f"{sec_num}. [{section_title}](#{sec_num}-{section_title.lower().replace(' ', '-')}) — **{impact}**")
+        out.append(
+            f"{sec_num}. [{section_title}](#{sec_num}-{section_title.lower().replace(' ', '-')}) — **{impact}**"
+        )
         for r_num, f in enumerate(files, 1):
             content = f.read_text(encoding="utf-8")
             title, _ = strip_frontmatter(content)
@@ -104,6 +119,7 @@ def main():
 
     OUTPUT.write_text("\n".join(out), encoding="utf-8")
     print(f"Wrote {OUTPUT}")
+
 
 if __name__ == "__main__":
     main()

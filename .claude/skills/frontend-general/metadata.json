@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "abstract": "Performance and best-practices guide for frontend and TypeScript applications. Contains framework-agnostic rules across 6 categories—project conventions, eliminating async waterfalls, bundle optimization, client-side data handling, rendering performance, and JavaScript micro-optimizations—with detailed explanations and incorrect vs. correct examples for refactoring and code generation.",
+  "references": [
+    "https://github.com/shuding/better-all",
+    "https://github.com/isaacs/node-lru-cache"
+  ]
+}

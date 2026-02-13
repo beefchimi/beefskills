@@ -7,11 +7,17 @@ This is a collection of Claude skills.
 From: <https://mcpmarket.com/tools/skills/accessibility-compliance-expert>
 Last updated: Feb 13 2026
 
-## React Development
+## Frontend General
 
 Based on: <https://github.com/vercel-labs/agent-skills/tree/main>
-Last updated: Feb 12 2026
-Notes: The source code actually uses a `build_agents.py` script to combine the individual `rules` files into one big `AGENTS.md`.
+Last updated: Feb 13 2026
+Notes: Framework-agnostic rules split from the original Vercel skill. Uses `build_agents.py` to compile `rules/` into `AGENTS.md`.
+
+## Frontend React
+
+Based on: <https://github.com/vercel-labs/agent-skills/tree/main>
+Last updated: Feb 13 2026
+Notes: React-specific rules split from the original Vercel skill. Uses `build_agents.py` to compile `rules/` into `AGENTS.md`.
 
 ## Composition Patterns
 
