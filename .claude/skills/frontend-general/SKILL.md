@@ -10,7 +10,7 @@ metadata:
 
 Performance and best-practices guide for frontend and TypeScript applications. Contains framework-agnostic rules across 6 categories, prioritized by impact for refactoring and code generation.
 
-For React-specific patterns (hooks, re-renders, hydration, Suspense, etc.), see the `frontend-react` skill.
+For React-specific patterns (hooks, re-renders, hydration, Suspense, etc.), see the `frontend-react` skill. For accessibility (ARIA, keyboard navigation, WCAG compliance), see the `accessibility-compliance` skill if available.
 
 ## Code snippet style
 

@@ -10,7 +10,7 @@ metadata:
 
 React-specific performance and best-practices guide. Contains rules across 5 categories, prioritized by impact for refactoring and code generation.
 
-For framework-agnostic patterns (async, JS performance, conventions, general bundle/rendering/DOM), see the `frontend-general` skill.
+For framework-agnostic patterns (async, JS performance, conventions, general bundle/rendering/DOM), see the `frontend-general` skill. For accessibility (ARIA, keyboard navigation, WCAG compliance), see the `accessibility-compliance` skill if available.
 
 ## Code snippet style
 
