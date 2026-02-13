@@ -18,11 +18,15 @@ Linters like oxlint and ESLint can catch circular imports (`import/no-cycle`), b
 ```ts
 // user.ts
 import {formatEmail} from './email';
-export function getUser() { /* ... */ }
+export function getUser() {
+  /* ... */
+}
 
 // email.ts
 import {getUser} from './user';
-export function formatEmail() { /* ... */ }
+export function formatEmail() {
+  /* ... */
+}
 ```
 
 **Transitive cycle — three or more modules form a chain:**
@@ -39,7 +43,7 @@ export {Button} from './Button';
 export {Modal} from './Modal';
 
 // components/Modal.tsx — imports from its own barrel
-import {Button} from '.';  // cycle: index → Modal → index
+import {Button} from '.'; // cycle: index → Modal → index
 ```
 
 ### Pattern 1: Enforce a dependency direction
@@ -62,14 +66,16 @@ features/     ← UI features (imports from domain/ and shared/)
 
 ```ts
 // shared/format.ts
-import {getUserLocale} from '../domain/user';  // shared/ → domain/ = wrong direction
+import {getUserLocale} from '../domain/user'; // shared/ → domain/ = wrong direction
 ```
 
 **Correct (extract the shared dependency):**
 
 ```ts
 // shared/locale.ts
-export function getLocale() { /* ... */ }
+export function getLocale() {
+  /* ... */
+}
 
 // domain/user.ts
 import {getLocale} from '../shared/locale';
@@ -84,28 +90,40 @@ When two modules need each other, the shared dependency belongs in a separate mo
 ```ts
 // order.ts
 import {getCustomer} from './customer';
-export function getOrder() { /* ... */ }
-export function formatOrderId(id: string) { return `ORD-${id}`; }
+export function getOrder() {
+  /* ... */
+}
+export function formatOrderId(id: string) {
+  return `ORD-${id}`;
+}
 
 // customer.ts
 import {formatOrderId} from './order';
-export function getCustomer() { /* ... */ }
+export function getCustomer() {
+  /* ... */
+}
 ```
 
 **Correct (extract shared utility):**
 
 ```ts
 // format.ts
-export function formatOrderId(id: string) { return `ORD-${id}`; }
+export function formatOrderId(id: string) {
+  return `ORD-${id}`;
+}
 
 // order.ts
 import {getCustomer} from './customer';
 import {formatOrderId} from './format';
-export function getOrder() { /* ... */ }
+export function getOrder() {
+  /* ... */
+}
 
 // customer.ts
 import {formatOrderId} from './format';
-export function getCustomer() { /* ... */ }
+export function getCustomer() {
+  /* ... */
+}
 ```
 
 ### Pattern 3: Use type-only imports to break runtime cycles
@@ -114,7 +132,7 @@ If the cycle exists only because of type references, use `import type` to elimin
 
 ```ts
 // user.ts
-import type {Order} from './order';  // no runtime import — cycle broken
+import type {Order} from './order'; // no runtime import — cycle broken
 export interface User {
   recentOrders: Order[];
 }
@@ -130,14 +148,14 @@ Never import from a directory's `index.ts` within that same directory. Use direc
 
 ```ts
 // components/Modal.tsx
-import {Button} from '.';  // imports from components/index.ts — cycle
+import {Button} from '.'; // imports from components/index.ts — cycle
 ```
 
 **Correct:**
 
 ```ts
 // components/Modal.tsx
-import {Button} from './Button';  // direct sibling import — no cycle
+import {Button} from './Button'; // direct sibling import — no cycle
 ```
 
 ### When adding a new import

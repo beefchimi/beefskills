@@ -74,11 +74,15 @@ Linters like oxlint and ESLint can catch circular imports (`import/no-cycle`), b
 ```ts
 // user.ts
 import {formatEmail} from './email';
-export function getUser() { /* ... */ }
+export function getUser() {
+  /* ... */
+}
 
 // email.ts
 import {getUser} from './user';
-export function formatEmail() { /* ... */ }
+export function formatEmail() {
+  /* ... */
+}
 ```
 
 **Transitive cycle — three or more modules form a chain:**
@@ -95,7 +99,7 @@ export {Button} from './Button';
 export {Modal} from './Modal';
 
 // components/Modal.tsx — imports from its own barrel
-import {Button} from '.';  // cycle: index → Modal → index
+import {Button} from '.'; // cycle: index → Modal → index
 ```
 
 ### Pattern 1: Enforce a dependency direction
@@ -118,14 +122,16 @@ features/     ← UI features (imports from domain/ and shared/)
 
 ```ts
 // shared/format.ts
-import {getUserLocale} from '../domain/user';  // shared/ → domain/ = wrong direction
+import {getUserLocale} from '../domain/user'; // shared/ → domain/ = wrong direction
 ```
 
 **Correct (extract the shared dependency):**
 
 ```ts
 // shared/locale.ts
-export function getLocale() { /* ... */ }
+export function getLocale() {
+  /* ... */
+}
 
 // domain/user.ts
 import {getLocale} from '../shared/locale';
@@ -140,28 +146,40 @@ When two modules need each other, the shared dependency belongs in a separate mo
 ```ts
 // order.ts
 import {getCustomer} from './customer';
-export function getOrder() { /* ... */ }
-export function formatOrderId(id: string) { return `ORD-${id}`; }
+export function getOrder() {
+  /* ... */
+}
+export function formatOrderId(id: string) {
+  return `ORD-${id}`;
+}
 
 // customer.ts
 import {formatOrderId} from './order';
-export function getCustomer() { /* ... */ }
+export function getCustomer() {
+  /* ... */
+}
 ```
 
 **Correct (extract shared utility):**
 
 ```ts
 // format.ts
-export function formatOrderId(id: string) { return `ORD-${id}`; }
+export function formatOrderId(id: string) {
+  return `ORD-${id}`;
+}
 
 // order.ts
 import {getCustomer} from './customer';
 import {formatOrderId} from './format';
-export function getOrder() { /* ... */ }
+export function getOrder() {
+  /* ... */
+}
 
 // customer.ts
 import {formatOrderId} from './format';
-export function getCustomer() { /* ... */ }
+export function getCustomer() {
+  /* ... */
+}
 ```
 
 ### Pattern 3: Use type-only imports to break runtime cycles
@@ -170,7 +188,7 @@ If the cycle exists only because of type references, use `import type` to elimin
 
 ```ts
 // user.ts
-import type {Order} from './order';  // no runtime import — cycle broken
+import type {Order} from './order'; // no runtime import — cycle broken
 export interface User {
   recentOrders: Order[];
 }
@@ -186,14 +204,14 @@ Never import from a directory's `index.ts` within that same directory. Use direc
 
 ```ts
 // components/Modal.tsx
-import {Button} from '.';  // imports from components/index.ts — cycle
+import {Button} from '.'; // imports from components/index.ts — cycle
 ```
 
 **Correct:**
 
 ```ts
 // components/Modal.tsx
-import {Button} from './Button';  // direct sibling import — no cycle
+import {Button} from './Button'; // direct sibling import — no cycle
 ```
 
 ### When adding a new import
@@ -221,7 +239,7 @@ export {MyComponent, type MyComponentProps} from './MyComponent';
 
 The inline `type` keyword gives the transpiler the same erasure signal in a single, more concise statement.
 
-**Exception — type-only modules:** When *every* specifier is a type, still use `export type` so the entire import is erased and no runtime module reference remains:
+**Exception — type-only modules:** When _every_ specifier is a type, still use `export type` so the entire import is erased and no runtime module reference remains:
 
 ```ts
 export type {SomeType, AnotherType} from './types';
@@ -249,8 +267,8 @@ Enable `verbatimModuleSyntax`. This is the single most important setting — Typ
 ```jsonc
 {
   "compilerOptions": {
-    "verbatimModuleSyntax": true
-  }
+    "verbatimModuleSyntax": true,
+  },
 }
 ```
 
@@ -265,11 +283,14 @@ Configure the `typescript/consistent-type-imports` rule with `fixStyle: "inline-
 {
   "plugins": ["typescript"],
   "rules": {
-    "typescript/consistent-type-imports": ["warn", {
-      "prefer": "type-imports",
-      "fixStyle": "inline-type-imports"
-    }]
-  }
+    "typescript/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports",
+      },
+    ],
+  },
 }
 ```
 
@@ -279,11 +300,14 @@ For ESLint with typescript-eslint, the equivalent is:
 // eslint.config.js (flat config)
 {
   "rules": {
-    "@typescript-eslint/consistent-type-imports": ["warn", {
-      "prefer": "type-imports",
-      "fixStyle": "inline-type-imports"
-    }]
-  }
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports",
+      },
+    ],
+  },
 }
 ```
 
@@ -349,7 +373,6 @@ In projects where **[beeftools](https://www.npmjs.com/package/beeftools)** is in
 
 - [npm: beeftools](https://www.npmjs.com/package/beeftools)
 - [GitHub: beefchimi/beeftools](https://github.com/beefchimi/beeftools)
-
 
 ## 2. Eliminating Waterfalls
 
@@ -434,10 +457,7 @@ For operations with partial dependencies, use `better-all` to maximize paralleli
 **Incorrect (profile waits for config unnecessarily):**
 
 ```ts
-const [user, config] = await Promise.all([
-  fetchUser(),
-  fetchConfig(),
-]);
+const [user, config] = await Promise.all([fetchUser(), fetchConfig()]);
 const profile = await fetchProfile(user.id);
 ```
 
@@ -447,10 +467,14 @@ const profile = await fetchProfile(user.id);
 import {all} from 'better-all';
 
 const {user, config, profile} = await all({
-  async user() { return fetchUser() },
-  async config() { return fetchConfig() },
+  async user() {
+    return fetchUser();
+  },
+  async config() {
+    return fetchConfig();
+  },
   async profile() {
-    return fetchProfile((await this.$.user).id)
+    return fetchProfile((await this.$.user).id);
   },
 });
 ```
@@ -463,11 +487,7 @@ We can also create all the promises first, and do `Promise.all()` at the end.
 const userPromise = fetchUser();
 const profilePromise = userPromise.then((user) => fetchProfile(user.id));
 
-const [user, config, profile] = await Promise.all([
-  userPromise,
-  fetchConfig(),
-  profilePromise,
-]);
+const [user, config, profile] = await Promise.all([userPromise, fetchConfig(), profilePromise]);
 ```
 
 Reference: [https://github.com/shuding/better-all](https://github.com/shuding/better-all)
@@ -487,13 +507,8 @@ const comments = await fetchComments();
 **Correct (parallel execution, 1 round trip):**
 
 ```ts
-const [user, posts, comments] = await Promise.all([
-  fetchUser(),
-  fetchPosts(),
-  fetchComments(),
-]);
+const [user, posts, comments] = await Promise.all([fetchUser(), fetchPosts(), fetchComments()]);
 ```
-
 
 ## 3. Bundle Size Optimization
 
@@ -523,7 +538,6 @@ import TextField from '@mui/material/TextField';
 ```
 
 Use the package’s documented public API. Let the bundler and future tooling (e.g. Vite/Rolldown) handle tree-shaking and performance. For your own libraries, keep using barrel files (e.g. `export * from './Button'`) for a clean public API.
-
 
 ## 4. Client-Side Data Handling
 
@@ -580,10 +594,13 @@ function migrate() {
 // User object has 20+ fields, only store what UI needs
 function cachePrefs(user: FullUser) {
   try {
-    localStorage.setItem('prefs:v1', JSON.stringify({
-      theme: user.preferences.theme,
-      notifications: user.preferences.notifications,
-    }));
+    localStorage.setItem(
+      'prefs:v1',
+      JSON.stringify({
+        theme: user.preferences.theme,
+        notifications: user.preferences.notifications,
+      }),
+    );
   } catch {}
 }
 ```
@@ -634,7 +651,6 @@ useEffect(() => {
 
 **Don't use passive when:** implementing custom swipe gestures, custom zoom controls, or any listener that needs `preventDefault()`.
 
-
 ## 5. Rendering Performance
 
 ### 5.1 Animate SVG Wrapper Instead of SVG Element
@@ -646,12 +662,7 @@ Many browsers don't have hardware acceleration for CSS3 animations on SVG elemen
 ```tsx
 function LoadingSpinner() {
   return (
-    <svg
-      className="animate-spin"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
+    <svg className="animate-spin" width="24" height="24" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="10" stroke="currentColor" />
     </svg>
   );
@@ -664,11 +675,7 @@ function LoadingSpinner() {
 function LoadingSpinner() {
   return (
     <div className="animate-spin">
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-      >
+      <svg width="24" height="24" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10" stroke="currentColor" />
       </svg>
     </div>
@@ -732,7 +739,6 @@ Reduce SVG coordinate precision to decrease file size. The optimal precision dep
 npx svgo --precision=1 --multipass icon.svg
 ```
 
-
 ## 6. JavaScript Performance
 
 ### 6.1 Avoid Layout Thrashing
@@ -756,9 +762,9 @@ function updateElementStyles(element: HTMLElement) {
 ```ts
 function layoutThrashing(element: HTMLElement) {
   element.style.width = '100px';
-  const width = element.offsetWidth;  // Forces reflow
+  const width = element.offsetWidth; // Forces reflow
   element.style.height = '200px';
-  const height = element.offsetHeight;  // Forces another reflow
+  const height = element.offsetHeight; // Forces another reflow
 }
 ```
 
@@ -831,11 +837,7 @@ function Box({isHighlighted}: {isHighlighted: boolean}) {
 
 // Correct: toggle class
 function Box({isHighlighted}: {isHighlighted: boolean}) {
-  return (
-    <div className={isHighlighted ? 'highlighted-box' : ''}>
-      Content
-    </div>
-  );
+  return <div className={isHighlighted ? 'highlighted-box' : ''}>Content</div>;
 }
 ```
 
@@ -964,7 +966,7 @@ function getLocalStorage(key: string) {
 
 function setLocalStorage(key: string, value: string) {
   localStorage.setItem(key, value);
-  storageCache.set(key, value);  // keep cache in sync
+  storageCache.set(key, value); // keep cache in sync
 }
 ```
 
@@ -977,9 +979,7 @@ let cookieCache: Record<string, string> | null = null;
 
 function getCookie(name: string) {
   if (!cookieCache) {
-    cookieCache = Object.fromEntries(
-      document.cookie.split('; ').map((c) => c.split('=')),
-    );
+    cookieCache = Object.fromEntries(document.cookie.split('; ').map((c) => c.split('=')));
   }
   return cookieCache[name];
 }
@@ -1106,8 +1106,8 @@ Global regex (`/g`) has mutable `lastIndex` state:
 
 ```ts
 const regex = /foo/g;
-regex.test('foo');  // true, lastIndex = 3
-regex.test('foo');  // false, lastIndex = 0
+regex.test('foo'); // true, lastIndex = 3
+regex.test('foo'); // false, lastIndex = 0
 ```
 
 ### 6.8 Build Index Maps for Repeated Lookups
@@ -1179,6 +1179,7 @@ function hasChanges(current: string[], original: string[]) {
 ```
 
 This approach is more efficient because:
+
 - It avoids the overhead of sorting and joining the arrays when lengths differ
 - It avoids consuming memory for the joined strings (especially important for large arrays)
 - It avoids mutating the original arrays
@@ -1328,4 +1329,3 @@ const sorted = [...items].sort((a, b) => a.value - b.value);
 - `.toReversed()` - immutable reverse
 - `.toSpliced()` - immutable splice
 - `.with()` - immutable element replacement
-

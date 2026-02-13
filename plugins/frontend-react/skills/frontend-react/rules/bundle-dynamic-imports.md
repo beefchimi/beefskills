@@ -24,9 +24,7 @@ function CodePanel({code}: {code: string}) {
 ```tsx
 import {lazy, Suspense} from 'react';
 
-const MonacoEditor = lazy(() =>
-  import('./monaco-editor').then((m) => ({default: m.MonacoEditor})),
-);
+const MonacoEditor = lazy(() => import('./monaco-editor').then((m) => ({default: m.MonacoEditor})));
 
 function CodePanel({code}: {code: string}) {
   return (

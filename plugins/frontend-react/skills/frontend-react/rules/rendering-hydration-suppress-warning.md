@@ -7,7 +7,7 @@ tags: rendering, hydration, ssr
 
 ## Suppress Expected Hydration Mismatches
 
-In SSR applications, some values are intentionally different on server vs client (random IDs, dates, locale/timezone formatting). For these *expected* mismatches, wrap the dynamic text in an element with `suppressHydrationWarning` to prevent noisy warnings. Do not use this to hide real bugs. Don't overuse it.
+In SSR applications, some values are intentionally different on server vs client (random IDs, dates, locale/timezone formatting). For these _expected_ mismatches, wrap the dynamic text in an element with `suppressHydrationWarning` to prevent noisy warnings. Do not use this to hide real bugs. Don't overuse it.
 
 **Incorrect (known mismatch warnings):**
 
@@ -21,10 +21,6 @@ function Timestamp() {
 
 ```tsx
 function Timestamp() {
-  return (
-    <span suppressHydrationWarning>
-      {new Date().toLocaleString()}
-    </span>
-  );
+  return <span suppressHydrationWarning>{new Date().toLocaleString()}</span>;
 }
 ```

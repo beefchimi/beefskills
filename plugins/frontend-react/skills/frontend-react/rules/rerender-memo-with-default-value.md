@@ -19,7 +19,7 @@ const UserAvatar = memo(function UserAvatar({onClick = () => {}}: {onClick?: () 
 });
 
 // Used without optional onClick
-<UserAvatar />
+<UserAvatar />;
 ```
 
 **Correct (stable default value):**
@@ -32,5 +32,5 @@ const UserAvatar = memo(function UserAvatar({onClick = NOOP}: {onClick?: () => v
 });
 
 // Used without optional onClick
-<UserAvatar />
+<UserAvatar />;
 ```

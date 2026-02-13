@@ -68,7 +68,13 @@ Load large data or modules only when a feature is activated.
 **Example (lazy-load animation frames):**
 
 ```tsx
-function AnimationPlayer({enabled, setEnabled}: {enabled: boolean; setEnabled: React.Dispatch<React.SetStateAction<boolean>>}) {
+function AnimationPlayer({
+  enabled,
+  setEnabled,
+}: {
+  enabled: boolean;
+  setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [frames, setFrames] = useState<Frame[] | null>(null);
 
   useEffect(() => {
@@ -147,9 +153,7 @@ function CodePanel({code}: {code: string}) {
 ```tsx
 import {lazy, Suspense} from 'react';
 
-const MonacoEditor = lazy(() =>
-  import('./monaco-editor').then((m) => ({default: m.MonacoEditor})),
-);
+const MonacoEditor = lazy(() => import('./monaco-editor').then((m) => ({default: m.MonacoEditor})));
 
 function CodePanel({code}: {code: string}) {
   return (
@@ -179,11 +183,7 @@ function EditorButton({onClick}: {onClick: () => void}) {
   };
 
   return (
-    <button
-      onMouseEnter={preload}
-      onFocus={preload}
-      onClick={onClick}
-    >
+    <button onMouseEnter={preload} onFocus={preload} onClick={onClick}>
       Open Editor
     </button>
   );
@@ -200,16 +200,11 @@ function FlagsProvider({children, flags}: Props) {
     }
   }, [flags.editorEnabled]);
 
-  return (
-    <FlagsContext.Provider value={flags}>
-      {children}
-    </FlagsContext.Provider>
-  );
+  return <FlagsContext.Provider value={flags}>{children}</FlagsContext.Provider>;
 }
 ```
 
 The `typeof window !== 'undefined'` check avoids bundling preloaded modules in SSR builds when applicable.
-
 
 ## 2. Client-Side Data Fetching
 
@@ -275,8 +270,12 @@ function useKeyboardShortcut(key: string, callback: () => void) {
 
 function Profile() {
   // Multiple shortcuts will share the same listener
-  useKeyboardShortcut('p', () => { /* ... */ });
-  useKeyboardShortcut('k', () => { /* ... */ });
+  useKeyboardShortcut('p', () => {
+    /* ... */
+  });
+  useKeyboardShortcut('k', () => {
+    /* ... */
+  });
   // ...
 }
 ```
@@ -331,7 +330,6 @@ function UpdateButton() {
 ```
 
 Reference: [https://swr.vercel.app](https://swr.vercel.app)
-
 
 ## 3. Re-render Optimization
 
@@ -457,7 +455,7 @@ Subscribe to derived boolean state instead of continuous values to reduce re-ren
 
 ```tsx
 function Sidebar() {
-  const width = useWindowWidth();  // updates continuously
+  const width = useWindowWidth(); // updates continuously
   const isMobile = width < 768;
   return <nav className={isMobile ? 'mobile' : 'desktop'} />;
 }
@@ -483,14 +481,17 @@ function TodoList() {
   const [items, setItems] = useState(initialItems);
 
   // Callback must depend on items, recreated on every items change
-  const addItems = useCallback((newItems: Item[]) => {
-    setItems([...items, ...newItems]);
-  }, [items]);  // ❌ items dependency causes recreations
+  const addItems = useCallback(
+    (newItems: Item[]) => {
+      setItems([...items, ...newItems]);
+    },
+    [items],
+  ); // ❌ items dependency causes recreations
 
   // Risk of stale closure if dependency is forgotten
   const removeItem = useCallback((id: string) => {
     setItems(items.filter((item) => item.id !== id));
-  }, []);  // ❌ Missing items dependency - will use stale items!
+  }, []); // ❌ Missing items dependency - will use stale items!
 
   return <ItemsEditor items={items} onAdd={addItems} onRemove={removeItem} />;
 }
@@ -507,12 +508,12 @@ function TodoList() {
   // Stable callback, never recreated
   const addItems = useCallback((newItems: Item[]) => {
     setItems((curr) => [...curr, ...newItems]);
-  }, []);  // ✅ No dependencies needed
+  }, []); // ✅ No dependencies needed
 
   // Always uses latest state, no stale closure risk
   const removeItem = useCallback((id: string) => {
     setItems((curr) => curr.filter((item) => item.id !== id));
-  }, []);  // ✅ Safe and stable
+  }, []); // ✅ Safe and stable
 
   return <ItemsEditor items={items} onAdd={addItems} onRemove={removeItem} />;
 }
@@ -558,9 +559,7 @@ function FilteredList({items}: {items: Item[]}) {
 
 function UserProfile() {
   // JSON.parse runs on every render
-  const [settings, setSettings] = useState(
-    JSON.parse(localStorage.getItem('settings') || '{}'),
-  );
+  const [settings, setSettings] = useState(JSON.parse(localStorage.getItem('settings') || '{}'));
 
   return <SettingsForm settings={settings} onChange={setSettings} />;
 }
@@ -606,7 +605,7 @@ const UserAvatar = memo(function UserAvatar({onClick = () => {}}: {onClick?: () 
 });
 
 // Used without optional onClick
-<UserAvatar />
+<UserAvatar />;
 ```
 
 **Correct (stable default value):**
@@ -619,7 +618,7 @@ const UserAvatar = memo(function UserAvatar({onClick = NOOP}: {onClick?: () => v
 });
 
 // Used without optional onClick
-<UserAvatar />
+<UserAvatar />;
 ```
 
 ### 3.8 Extract to Memoized Components
@@ -829,7 +828,6 @@ function Tracker() {
 }
 ```
 
-
 ## 4. Rendering Performance
 
 ### 4.1 Use Activity Component for Show/Hide
@@ -860,11 +858,7 @@ Use explicit ternary operators (`? :`) instead of `&&` for conditional rendering
 
 ```tsx
 function Badge({count}: {count: number}) {
-  return (
-    <div>
-      {count && <span className="badge">{count}</span>}
-    </div>
-  );
+  return <div>{count && <span className="badge">{count}</span>}</div>;
 }
 
 // When count = 0, renders: <div>0</div>
@@ -875,11 +869,7 @@ function Badge({count}: {count: number}) {
 
 ```tsx
 function Badge({count}: {count: number}) {
-  return (
-    <div>
-      {count > 0 ? <span className="badge">{count}</span> : null}
-    </div>
-  );
+  return <div>{count > 0 ? <span className="badge">{count}</span> : null}</div>;
 }
 
 // When count = 0, renders: <div></div>
@@ -898,27 +888,17 @@ function LoadingSkeleton() {
 }
 
 function Container() {
-  return (
-    <div>
-      {loading && <LoadingSkeleton />}
-    </div>
-  );
+  return <div>{loading && <LoadingSkeleton />}</div>;
 }
 ```
 
 **Correct (reuses same element):**
 
 ```tsx
-const loadingSkeleton = (
-  <div className="animate-pulse h-20 bg-gray-200" />
-);
+const loadingSkeleton = <div className="animate-pulse h-20 bg-gray-200" />;
 
 function Container() {
-  return (
-    <div>
-      {loading && loadingSkeleton}
-    </div>
-  );
+  return <div>{loading && loadingSkeleton}</div>;
 }
 ```
 
@@ -937,11 +917,7 @@ function ThemeWrapper({children}: {children: ReactNode}) {
   // localStorage is not available on server - throws error
   const theme = localStorage.getItem('theme') || 'light';
 
-  return (
-    <div className={theme}>
-      {children}
-    </div>
-  );
+  return <div className={theme}>{children}</div>;
 }
 ```
 
@@ -961,11 +937,7 @@ function ThemeWrapper({children}: {children: ReactNode}) {
     }
   }, []);
 
-  return (
-    <div className={theme}>
-      {children}
-    </div>
-  );
+  return <div className={theme}>{children}</div>;
 }
 ```
 
@@ -977,9 +949,7 @@ Component first renders with default value (`light`), then updates after hydrati
 function ThemeWrapper({children}: {children: ReactNode}) {
   return (
     <>
-      <div id="theme-wrapper">
-        {children}
-      </div>
+      <div id="theme-wrapper">{children}</div>
       <script
         dangerouslySetInnerHTML={{
           __html: `
@@ -1004,7 +974,7 @@ Use this pattern for theme toggles, user preferences, and any client-only data t
 
 ### 4.5 Suppress Expected Hydration Mismatches
 
-In SSR applications, some values are intentionally different on server vs client (random IDs, dates, locale/timezone formatting). For these *expected* mismatches, wrap the dynamic text in an element with `suppressHydrationWarning` to prevent noisy warnings. Do not use this to hide real bugs. Don't overuse it.
+In SSR applications, some values are intentionally different on server vs client (random IDs, dates, locale/timezone formatting). For these _expected_ mismatches, wrap the dynamic text in an element with `suppressHydrationWarning` to prevent noisy warnings. Do not use this to hide real bugs. Don't overuse it.
 
 **Incorrect (known mismatch warnings):**
 
@@ -1018,11 +988,7 @@ function Timestamp() {
 
 ```tsx
 function Timestamp() {
-  return (
-    <span suppressHydrationWarning>
-      {new Date().toLocaleString()}
-    </span>
-  );
+  return <span suppressHydrationWarning>{new Date().toLocaleString()}</span>;
 }
 ```
 
@@ -1094,7 +1060,6 @@ function SearchResults() {
 - **Interrupt handling**: New transitions automatically cancel pending ones
 
 Reference: [useTransition](https://react.dev/reference/react/useTransition)
-
 
 ## 5. Advanced Patterns
 
@@ -1215,4 +1180,3 @@ function SearchInput({onSearch}: {onSearch: (q: string) => void}) {
   }, [query]);
 }
 ```
-
