@@ -1,5 +1,5 @@
 ---
-name: accessibility-compliance
+name: frontend-a11y
 description: Implement WCAG 2.2 compliant interfaces with mobile accessibility, inclusive design patterns, and assistive technology support. Use when auditing accessibility, implementing ARIA patterns, building for screen readers, or ensuring inclusive user experiences.
 ---
 
@@ -160,11 +160,7 @@ function AccessibleDialog({isOpen, onClose, title, children}: DialogProps) {
         {title}
       </h2>
       <div id={descriptionId}>{children}</div>
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4"
-        aria-label="Close dialog"
-      >
+      <button onClick={onClose} className="absolute top-4 right-4" aria-label="Close dialog">
         <X className="h-4 w-4" />
       </button>
     </dialog>
@@ -190,9 +186,7 @@ function AccessibleForm() {
           aria-live="assertive"
           className="bg-destructive/10 border border-destructive p-4 rounded-md mb-4"
         >
-          <h2 className="font-semibold text-destructive">
-            Please fix the following errors:
-          </h2>
+          <h2 className="font-semibold text-destructive">Please fix the following errors:</h2>
           <ul className="list-disc list-inside mt-2">
             {Object.entries(errors).map(([field, message]) => (
               <li key={field}>
@@ -222,10 +216,7 @@ function AccessibleForm() {
           aria-required="true"
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? 'email-error' : 'email-hint'}
-          className={cn(
-            'w-full px-3 py-2 border rounded-md',
-            errors.email && 'border-destructive',
-          )}
+          className={cn('w-full px-3 py-2 border rounded-md', errors.email && 'border-destructive')}
         />
         {errors.email ? (
           <p id="email-error" className="text-sm text-destructive" role="alert">
@@ -267,7 +258,7 @@ function SkipLink() {
 }
 
 // In layout
-function Layout({ children }) {
+function Layout({children}) {
   return (
     <>
       <SkipLink />
@@ -289,14 +280,11 @@ function useAnnounce() {
   const [message, setMessage] = React.useState('');
   const [priority, setPriority] = React.useState<'polite' | 'assertive'>('polite');
 
-  const announce = React.useCallback(
-    (text: string, level: 'polite' | 'assertive' = 'polite') => {
-      setMessage(''); // Clear first to ensure re-announcement
-      setPriority(level);
-      setTimeout(() => setMessage(text), 100);
-    },
-    [],
-  );
+  const announce = React.useCallback((text: string, level: 'polite' | 'assertive' = 'polite') => {
+    setMessage(''); // Clear first to ensure re-announcement
+    setPriority(level);
+    setTimeout(() => setMessage(text), 100);
+  }, []);
 
   const Announcer = () => (
     <div
@@ -309,12 +297,12 @@ function useAnnounce() {
     </div>
   );
 
-  return { announce, Announcer };
+  return {announce, Announcer};
 }
 
 // Usage
-function SearchResults({ results, isLoading }) {
-  const { announce, Announcer } = useAnnounce();
+function SearchResults({results, isLoading}) {
+  const {announce, Announcer} = useAnnounce();
 
   React.useEffect(() => {
     if (!isLoading && results) {

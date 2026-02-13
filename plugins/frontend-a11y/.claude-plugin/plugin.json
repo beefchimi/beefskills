@@ -1,0 +1,5 @@
+{
+  "name": "frontend-a11y",
+  "description": "WCAG 2.2 compliant interfaces with ARIA patterns, keyboard navigation, and mobile accessibility.",
+  "version": "1.0.0"
+}
