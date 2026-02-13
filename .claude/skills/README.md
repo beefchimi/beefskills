@@ -19,11 +19,20 @@ Based on: <https://github.com/vercel-labs/agent-skills/tree/main>
 Last updated: Feb 13 2026
 Notes: React-specific rules split from the original Vercel skill. Uses `build_agents.py` to compile `rules/` into `AGENTS.md`.
 
-## Composition Patterns
-
-Consider adding something like: <https://github.com/vercel-labs/agent-skills/tree/main/skills/composition-patterns>
-
 ## Skill Creator
 
 From: <https://github.com/anthropics/skills/tree/main/skills/skill-creator>
 Last updated: Feb 12 2026
+
+---
+
+## Composition Patterns
+
+Consider adding something like: <https://github.com/vercel-labs/agent-skills/tree/main/skills/composition-patterns>
+
+## Shopify Patterns
+
+Consider the following:
+
+- <https://github.com/shopify-playground/shopify-themes-skill>
+- <https://github.com/shopify-playground/polaris-skills>
