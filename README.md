@@ -124,7 +124,18 @@ Edit the skill files directly, run `npm run build:skills` if applicable, then co
 
 ### Versioning
 
-Bump the `version` field in both `plugin.json` and the corresponding entry in `marketplace.json` when making significant changes to a plugin.
+**How updates work:** The repo is the source of truth. When you merge to `main`, users get that code when they run `/plugin update` (or marketplace update). There is no separate publish step. The `version` field in plugin manifests is for **semantic versioning** (so users and tools can see “what changed”); nothing in the repo auto-updates it.
+
+**Where `version` lives (per plugin):**
+
+| Location | Example |
+| -------- | ------- |
+| `plugins/<name>/.claude-plugin/plugin.json` | Plugin manifest |
+| `.claude-plugin/marketplace.json` | Entry in `plugins[]` for that plugin |
+| `plugins/<name>/skills/<name>/metadata.json` | Skill metadata (if present) |
+| `plugins/<name>/skills/<name>/SKILL.md` | YAML frontmatter `version:` (if present) |
+
+**To bump a plugin version:** Run `npm run bump:version -- frontend-general 1.1.0` (plugin name and new version). That updates the plugin manifest and marketplace entry. If you also use skill metadata or SKILL frontmatter, update those to match when you care about them being in sync.
 
 ### Scripts
 
@@ -132,6 +143,7 @@ Bump the `version` field in both `plugin.json` and the corresponding entry in `m
 | ---------------------- | -------------------------------------------------------------------- |
 | `npm run build:skills` | Regenerate `AGENTS.md` for all plugins that have a `build_agents.py` |
 | `npm run audit:quotes` | Check `.md` files for the docs-fancy-quotes rule (prose vs code)     |
+| `npm run bump:version -- <plugin> <ver>` | Bump plugin version in `plugin.json` and `marketplace.json` |
 | `npm run lint`         | Run oxlint                                                           |
 | `npm run format`       | Check formatting with oxfmt                                          |
 
