@@ -2,7 +2,7 @@
 
 ## Overview
 
-ARIA (Accessible Rich Internet Applications) provides attributes to enhance accessibility when native HTML semantics are insufficient. The first rule of ARIA is: don't use ARIA if native HTML can do the job.
+ARIA (Accessible Rich Internet Applications) provides attributes to enhance accessibility when native HTML semantics are insufficient. The first rule of ARIA is: don’t use ARIA if native HTML can do the job.
 
 ## ARIA Fundamentals
 

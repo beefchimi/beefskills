@@ -3,7 +3,7 @@ name: frontend-react
 description: React-specific performance and best-practices guidelines for web applications and component libraries. Use when writing, reviewing, or refactoring React code, optimizing re-renders, implementing code-splitting with React.lazy/Suspense, client-side data fetching with SWR, or React rendering patterns.
 license: MIT
 metadata:
-  version: '1.0.0'
+  version: ’1.0.0’
 ---
 
 # React Best Practices
@@ -14,7 +14,7 @@ For framework-agnostic patterns (async, JS performance, conventions, general bun
 
 ## Code snippet style
 
-Code in rule files follows this style for consistency. **In a real project, local ESLint/oxlint, Prettier/oxfmt, and tsconfig override these defaults** (see `frontend-general` skill's `conventions-respect-local-config`).
+Code in rule files follows this style for consistency. **In a real project, local ESLint/oxlint, Prettier/oxfmt, and tsconfig override these defaults** (see `frontend-general` skill’s `conventions-respect-local-config`).
 
 - **Braces:** No spaces inside `{}` for imports, destructuring, and object literals (e.g. `import {x} from 'y';`, `const {a, b} = obj;`, `{passive: true}`).
 - **Semicolons:** Statement-ending semicolons used.
@@ -58,7 +58,7 @@ Reference these guidelines when:
 
 ### 3. Re-render Optimization (MEDIUM)
 
-- `rerender-defer-reads`: Don't subscribe to state only used in callbacks.
+- `rerender-defer-reads`: Don’t subscribe to state only used in callbacks.
 - `rerender-memo`: Extract expensive work into memoized components.
 - `rerender-memo-with-default-value`: Hoist default non-primitive props.
 - `rerender-dependencies`: Use primitive dependencies in effects.

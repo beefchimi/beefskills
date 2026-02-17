@@ -12,7 +12,7 @@ Frontend/TypeScript
 ## Abstract
 
 Performance and best-practices guide for frontend and TypeScript applications.
-Rules across 6 categories: project conventions, eliminating async waterfalls, bundle
+Rules across 7 categories: project conventions, eliminating async waterfalls, bundle
 optimization, client-side data handling, rendering performance, and JavaScript
 micro-optimizations. Each rule includes incorrect vs. correct examples.
 
@@ -57,13 +57,16 @@ micro-optimizations. Each rule includes incorrect vs. correct examples.
    - 6.11 Use Set/Map for O(1) Lookups
    - 6.12 Use toSorted() Instead of sort() for Immutability
 
+7. [Documentation](#7-documentation) — **MEDIUM**
+   - 7.1 Use Fancy Quotes in Documentation Prose, Not in Code
+
 ---
 
 ## 1. Project & tooling conventions
 
 ### 1.1 Identify and Avoid Circular Dependencies
 
-Circular dependencies occur when module A imports from module B, and module B (directly or transitively) imports from module A. This causes partially-initialized modules at runtime — imports resolve to `undefined`, classes are used before they're defined, and bugs surface far from their cause.
+Circular dependencies occur when module A imports from module B, and module B (directly or transitively) imports from module A. This causes partially-initialized modules at runtime — imports resolve to `undefined`, classes are used before they’re defined, and bugs surface far from their cause.
 
 Linters like oxlint and ESLint can catch circular imports (`import/no-cycle`), but the linter only flags the symptom. This rule covers the structural patterns that **prevent** cycles from forming in the first place.
 
@@ -198,7 +201,7 @@ This only works when the import is used purely for type annotations. If you need
 
 ### Pattern 4: Avoid importing from your own barrel
 
-Never import from a directory's `index.ts` within that same directory. Use direct relative imports instead.
+Never import from a directory’s `index.ts` within that same directory. Use direct relative imports instead.
 
 **Incorrect:**
 
@@ -216,11 +219,11 @@ import {Button} from './Button'; // direct sibling import — no cycle
 
 ### When adding a new import
 
-Before adding an import, consider: does the target module (or anything it imports) already depend on the current module? If unsure, trace the import chain or rely on the linter's `import/no-cycle` rule to catch it. Structuring code with a clear dependency direction (Pattern 1) makes this question easy to answer.
+Before adding an import, consider: does the target module (or anything it imports) already depend on the current module? If unsure, trace the import chain or rely on the linter’s `import/no-cycle` rule to catch it. Structuring code with a clear dependency direction (Pattern 1) makes this question easy to answer.
 
 ### 1.2 Prefer Inline `type` Specifiers in Re-exports
 
-When re-exporting both values and types from a module, use a single export statement with inline `type` specifiers instead of separate `export` and `export type` lines. Modern transpilers (Vite, Rolldown, esbuild) and TypeScript's `verbatimModuleSyntax` / `isolatedModules` all handle inline `type` annotations correctly.
+When re-exporting both values and types from a module, use a single export statement with inline `type` specifiers instead of separate `export` and `export type` lines. Modern transpilers (Vite, Rolldown, esbuild) and TypeScript’s `verbatimModuleSyntax` / `isolatedModules` all handle inline `type` annotations correctly.
 
 **Incorrect (separate export lines for mixed value + type re-exports):**
 
@@ -229,7 +232,7 @@ export {MyComponent} from './MyComponent';
 export type {MyComponentProps} from './MyComponent';
 ```
 
-This pattern was necessary for older single-file transpilers that couldn't distinguish types from values without a dedicated `export type` statement. It is no longer needed.
+This pattern was necessary for older single-file transpilers that couldn’t distinguish types from values without a dedicated `export type` statement. It is no longer needed.
 
 **Correct (combined with inline `type` specifier):**
 
@@ -323,7 +326,7 @@ Reference: [TypeScript 4.5 — Inline type modifiers](https://www.typescriptlang
 
 ### 1.3 Read and Respect Local ESLint, Prettier/oxfmt, and tsconfig
 
-When starting work in a project, **actively read the project's tooling configuration before writing code.** These files are the source of truth for that codebase and inform every code decision — style, strictness, module resolution, and enforced rules.
+When starting work in a project, **actively read the project’s tooling configuration before writing code.** These files are the source of truth for that codebase and inform every code decision — style, strictness, module resolution, and enforced rules.
 
 ### Step 1: Read the config files
 
@@ -335,23 +338,23 @@ At the beginning of a task (or when first encountering an unfamiliar project), r
 
 Pay attention to:
 
-- Which lint rules are enabled, warned, or errored — these represent the project's enforced standards.
+- Which lint rules are enabled, warned, or errored — these represent the project’s enforced standards.
 - Formatting preferences (quotes, semicolons, trailing commas, print width, etc.).
 - TypeScript strictness flags (`strict`, `noUncheckedIndexedAccess`, `verbatimModuleSyntax`, etc.).
 - Path aliases and module resolution strategy.
 
 ### Step 2: Let configs guide your code
 
-**Local preferences override this skill's own formatting conventions.** The rules in this skill (including the style described in `_formatting.md`) are defaults for documentation and for projects that do not already define their own. If the project has an `.oxlintrc.json`, use its rules. If it uses Prettier with a different quote or semicolon style, follow that. If `tsconfig` enables stricter options, respect them.
+**Local preferences override this skill’s own formatting conventions.** The rules in this skill (including the style described in `_formatting.md`) are defaults for documentation and for projects that do not already define their own. If the project has an `.oxlintrc.json`, use its rules. If it uses Prettier with a different quote or semicolon style, follow that. If `tsconfig` enables stricter options, respect them.
 
 **In practice:**
 
 - Before applying formatting or style changes, check for existing config files in the repo root (or monorepo package root).
-- Prefer running the project's formatter (e.g. `oxfmt`, `prettier --write`) over hand-editing to match a different style.
+- Prefer running the project’s formatter (e.g. `oxfmt`, `prettier --write`) over hand-editing to match a different style.
 - When in doubt, match existing file style in the same directory or package.
 - If a lint rule already enforces a pattern (e.g. `import/no-cycle` for circular dependencies), trust the linter as the enforcement layer — focus on writing code that satisfies the rule rather than re-documenting what the linter already checks.
 
-This keeps the codebase consistent with the team's tools and avoids churn from introducing a different style than the one the linter and formatter enforce.
+This keeps the codebase consistent with the team’s tools and avoids churn from introducing a different style than the one the linter and formatter enforce.
 
 ### 1.4 Use beeftools When Available
 
@@ -374,11 +377,12 @@ In projects where **[beeftools](https://www.npmjs.com/package/beeftools)** is in
 - [npm: beeftools](https://www.npmjs.com/package/beeftools)
 - [GitHub: beefchimi/beeftools](https://github.com/beefchimi/beeftools)
 
+
 ## 2. Eliminating Waterfalls
 
 ### 2.1 Defer Await Until Needed
 
-Move `await` operations into the branches where they're actually used to avoid blocking code paths that don't need them.
+Move `await` operations into the branches where they’re actually used to avoid blocking code paths that don’t need them.
 
 **Incorrect (blocks both branches):**
 
@@ -510,6 +514,7 @@ const comments = await fetchComments();
 const [user, posts, comments] = await Promise.all([fetchUser(), fetchPosts(), fetchComments()]);
 ```
 
+
 ## 3. Bundle Size Optimization
 
 ### 3.1 Prefer Barrel Imports; Avoid Over-Optimizing
@@ -538,6 +543,7 @@ import TextField from '@mui/material/TextField';
 ```
 
 Use the package’s documented public API. Let the bundler and future tooling (e.g. Vite/Rolldown) handle tree-shaking and performance. For your own libraries, keep using barrel files (e.g. `export * from './Button'`) for a clean public API.
+
 
 ## 4. Client-Side Data Handling
 
@@ -647,15 +653,16 @@ useEffect(() => {
 }, []);
 ```
 
-**Use passive when:** tracking/analytics, logging, any listener that doesn't call `preventDefault()`.
+**Use passive when:** tracking/analytics, logging, any listener that doesn’t call `preventDefault()`.
 
-**Don't use passive when:** implementing custom swipe gestures, custom zoom controls, or any listener that needs `preventDefault()`.
+**Don’t use passive when:** implementing custom swipe gestures, custom zoom controls, or any listener that needs `preventDefault()`.
+
 
 ## 5. Rendering Performance
 
 ### 5.1 Animate SVG Wrapper Instead of SVG Element
 
-Many browsers don't have hardware acceleration for CSS3 animations on SVG elements. Wrap SVG in a `<div>` and animate the wrapper instead.
+Many browsers don’t have hardware acceleration for CSS3 animations on SVG elements. Wrap SVG in a `<div>` and animate the wrapper instead.
 
 **Incorrect (animating SVG directly - no hardware acceleration):**
 
@@ -738,6 +745,7 @@ Reduce SVG coordinate precision to decrease file size. The optimal precision dep
 ```bash
 npx svgo --precision=1 --multipass icon.svg
 ```
+
 
 ## 6. JavaScript Performance
 
@@ -1073,7 +1081,7 @@ function validateUsers(users: User[]) {
 
 ### 6.7 Hoist RegExp Creation
 
-Don't create RegExp inside render. Hoist to module scope or memoize with `useMemo()`.
+Don’t create RegExp inside render. Hoist to module scope or memoize with `useMemo()`.
 
 **Incorrect (new RegExp every render):**
 
@@ -1311,7 +1319,7 @@ function UserList({users}: {users: User[]}) {
 
 **Why this matters in React:**
 
-1. Props/state mutations break React's immutability model - React expects props and state to be treated as read-only
+1. Props/state mutations break React’s immutability model - React expects props and state to be treated as read-only
 2. Causes stale closure bugs - Mutating arrays inside closures (callbacks, effects) can lead to unexpected behavior
 
 **Browser support (fallback for older browsers):**
@@ -1329,3 +1337,41 @@ const sorted = [...items].sort((a, b) => a.value - b.value);
 - `.toReversed()` - immutable reverse
 - `.toSpliced()` - immutable splice
 - `.with()` - immutable element replacement
+
+
+## 7. Documentation
+
+### 7.1 Use Fancy Quotes in Documentation Prose, Not in Code
+
+When authoring or editing **documentation** (`.md` files), use typographic (curly) quotes and apostrophes in **prose**, and keep straight quotes in **code snippets**. This applies to any markdown file: READMEs, guides, skill docs, and comments that are documentation.
+
+### When authoring documentation
+
+- **Prose (outside code):** Prefer opening and closing “fancy” double quotes (`“` and `”`) instead of straight `"`. Prefer “fancy” apostrophes (`‘` and `’`) instead of straight `'`.
+- **Code (inside backticks):** Use straight quotes only. Inline code (single backticks) and fenced code blocks (triple backticks) must follow the syntax of the language being documented. Do not use fancy quotes or apostrophes inside code.
+
+### When editing documentation
+
+- **Do not replace** existing fancy quotes or apostrophes with straight ones in prose. Leave typographic punctuation as-is.
+- **Do not introduce** fancy quotes or apostrophes inside code snippets; code must keep straight quotes so it remains valid and copy-pasteable.
+
+### Examples
+
+**Prose — use fancy quotes:**
+
+- Prefer: The feature is “experimental” and may change.
+- Avoid: The feature is "experimental" and may change.
+
+**Prose — use fancy apostrophes:**
+
+- Prefer: It’s important to check the project’s config.
+- Avoid: It's important to check the project's config.
+
+**Code — keep straight quotes (HTML/JS/TS, etc.):**
+
+- In HTML snippets use straight double quotes: `<button type="button" />`.
+- In JavaScript/TypeScript use straight quotes for strings: `const thing = 'some string';` or `const other = "double";`.
+- Fenced blocks must stay valid for the language: use `"` and `'` as the language requires.
+
+**Summary:** Fancy quotes and apostrophes belong in the explanatory text; backtick-delimited and fenced code must use only straight quotes so the snippet stays syntactically correct and copy-pasteable.
+

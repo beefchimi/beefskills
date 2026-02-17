@@ -7,7 +7,7 @@ tags: bundle, third-party, analytics, defer
 
 ## Defer Non-Critical Third-Party Libraries
 
-Analytics, logging, and error tracking don't need to block initial render. Load them after the app has mounted or on first user interaction using dynamic `import()`.
+Analytics, logging, and error tracking don’t need to block initial render. Load them after the app has mounted or on first user interaction using dynamic `import()`.
 
 **Incorrect (blocks initial bundle):**
 

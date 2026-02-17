@@ -1,6 +1,6 @@
 # Code snippet formatting (frontend-react rules)
 
-Code blocks in this folder follow a consistent style. **When working in a real project, the project's local ESLint/oxlint, Prettier/oxfmt, and tsconfig override these conventions** (see the `frontend-general` skill's `conventions-respect-local-config` rule).
+Code blocks in this folder follow a consistent style. **When working in a real project, the project’s local ESLint/oxlint, Prettier/oxfmt, and tsconfig override these conventions** (see the `frontend-general` skill’s `conventions-respect-local-config` rule).
 
 ## Conventions
 

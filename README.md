@@ -39,7 +39,7 @@ Or update all installed plugins at once:
 Based on: <https://github.com/vercel-labs/agent-skills/tree/main>
 Last updated: Feb 13 2026
 
-Frontend and TypeScript performance and best-practices guidelines. Framework-agnostic — applies to React, Vue, Svelte, vanilla JS, etc. Covers async patterns, bundle optimization, DOM performance, JS micro-optimizations, and project conventions.
+Frontend and TypeScript performance and best-practices guidelines. Framework-agnostic — applies to React, Vue, Svelte, vanilla JS, etc. Covers async patterns, bundle optimization, DOM performance, JS micro-optimizations, project conventions, and a documentation rule (fancy quotes in prose, straight in code).
 
 ### frontend-react
 
@@ -55,9 +55,9 @@ Last updated: Feb 13 2026
 
 WCAG 2.2 compliant interfaces with ARIA patterns, keyboard navigation, screen reader support, and mobile accessibility (iOS VoiceOver, Android TalkBack).
 
-## Recommended: Shopify's skill-architect
+## Recommended: Shopify’s skill-architect
 
-For authoring new skills or updating existing ones, install Shopify's `skill-architect`. For now, this may be internal-only and not published to the plugin marketplace.
+For authoring new skills or updating existing ones, install Shopify’s `skill-architect`. For now, this may be internal-only and not published to the plugin marketplace.
 
 ## Alternative: Manual Installation
 
@@ -72,9 +72,9 @@ cp -R plugins/frontend-general/skills/frontend-general ~/.claude/skills/
 
 ### Adding a new skill to an existing plugin
 
-1. Create a new `.md` file in the plugin's `skills/<plugin-name>/rules/` directory (for rule-based skills like `frontend-general`) or `skills/<plugin-name>/references/` (for reference-based skills like `frontend-a11y`).
+1. Create a new `.md` file in the plugin’s `skills/<plugin-name>/rules/` directory (for rule-based skills like `frontend-general`) or `skills/<plugin-name>/references/` (for reference-based skills like `frontend-a11y`).
 2. Follow the template in `rules/_template.md` if applicable.
-3. Add a quick reference entry in the plugin's `SKILL.md`.
+3. Add a quick reference entry in the plugin’s `SKILL.md`.
 4. Run `npm run build:skills` to regenerate any `AGENTS.md` files.
 5. Commit and push — consumers pick up changes via `/plugin update`.
 
@@ -124,21 +124,34 @@ Edit the skill files directly, run `npm run build:skills` if applicable, then co
 
 ### Versioning
 
-Bump the `version` field in both `plugin.json` and the corresponding entry in `marketplace.json` when making significant changes to a plugin.
+**How updates work:** The repo is the source of truth. When you merge to `main`, users get that code when they run `/plugin update` (or marketplace update). There is no separate publish step. The `version` field in plugin manifests is for **semantic versioning** (so users and tools can see “what changed”); nothing in the repo auto-updates it.
+
+**Where `version` lives (per plugin):**
+
+| Location | Example |
+| -------- | ------- |
+| `plugins/<name>/.claude-plugin/plugin.json` | Plugin manifest |
+| `.claude-plugin/marketplace.json` | Entry in `plugins[]` for that plugin |
+| `plugins/<name>/skills/<name>/metadata.json` | Skill metadata (if present) |
+| `plugins/<name>/skills/<name>/SKILL.md` | YAML frontmatter `version:` (if present) |
+
+**To bump a plugin version:** Run `npm run bump:version -- frontend-general 1.1.0` (plugin name and new version). That updates the plugin manifest and marketplace entry. If you also use skill metadata or SKILL frontmatter, update those to match when you care about them being in sync.
 
 ### Scripts
 
 | Command                | Description                                                          |
 | ---------------------- | -------------------------------------------------------------------- |
 | `npm run build:skills` | Regenerate `AGENTS.md` for all plugins that have a `build_agents.py` |
+| `npm run audit:quotes` | Check `.md` files for the docs-fancy-quotes rule (prose vs code)     |
+| `npm run bump:version -- <plugin> <ver>` | Bump plugin version in `plugin.json` and `marketplace.json` |
 | `npm run lint`         | Run oxlint                                                           |
 | `npm run format`       | Check formatting with oxfmt                                          |
 
 ## Future
 
-I will slowly add more skills and context as time goes on. One thing I want to cover more is "guiding principals". This can perhaps be assisted by curating quotes which align nicely with the practice of pairing with AI.
+I will slowly add more skills and context as time goes on. One thing I want to cover more is “guiding principals”. This can perhaps be assisted by curating quotes which align nicely with the practice of pairing with AI.
 
-> "However beautiful the strategy, you should occasionally look at the results."
+> “However beautiful the strategy, you should occasionally look at the results.”
 > — Winston Churchill
 
 ### Composition Patterns

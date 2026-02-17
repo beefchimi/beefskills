@@ -7,7 +7,7 @@ tags: conventions, imports, circular-dependencies, module-structure, architectur
 
 ## Identify and Avoid Circular Dependencies
 
-Circular dependencies occur when module A imports from module B, and module B (directly or transitively) imports from module A. This causes partially-initialized modules at runtime — imports resolve to `undefined`, classes are used before they're defined, and bugs surface far from their cause.
+Circular dependencies occur when module A imports from module B, and module B (directly or transitively) imports from module A. This causes partially-initialized modules at runtime — imports resolve to `undefined`, classes are used before they’re defined, and bugs surface far from their cause.
 
 Linters like oxlint and ESLint can catch circular imports (`import/no-cycle`), but the linter only flags the symptom. This rule covers the structural patterns that **prevent** cycles from forming in the first place.
 
@@ -142,7 +142,7 @@ This only works when the import is used purely for type annotations. If you need
 
 ### Pattern 4: Avoid importing from your own barrel
 
-Never import from a directory's `index.ts` within that same directory. Use direct relative imports instead.
+Never import from a directory’s `index.ts` within that same directory. Use direct relative imports instead.
 
 **Incorrect:**
 
@@ -160,4 +160,4 @@ import {Button} from './Button'; // direct sibling import — no cycle
 
 ### When adding a new import
 
-Before adding an import, consider: does the target module (or anything it imports) already depend on the current module? If unsure, trace the import chain or rely on the linter's `import/no-cycle` rule to catch it. Structuring code with a clear dependency direction (Pattern 1) makes this question easy to answer.
+Before adding an import, consider: does the target module (or anything it imports) already depend on the current module? If unsure, trace the import chain or rely on the linter’s `import/no-cycle` rule to catch it. Structuring code with a clear dependency direction (Pattern 1) makes this question easy to answer.

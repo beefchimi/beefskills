@@ -3,7 +3,7 @@ name: frontend-general
 description: Frontend and TypeScript performance and best-practices guidelines for web applications. Use when writing, reviewing, or refactoring frontend/TypeScript code, async patterns, bundle optimization, DOM performance, or JavaScript micro-optimizations. Framework-agnostic — applies to React, Vue, Svelte, vanilla JS, etc.
 license: MIT
 metadata:
-  version: '1.0.0'
+  version: ’1.0.0’
 ---
 
 # Frontend / TypeScript Best Practices
@@ -30,6 +30,7 @@ Reference these guidelines when:
 - Refactoring existing frontend/TypeScript code.
 - Optimizing bundle size or load times.
 - Working with async patterns, DOM APIs, or event listeners.
+- Writing or editing markdown documentation (`.md` files); see the `docs-` rules.
 
 ## Rule Categories by Priority
 
@@ -41,12 +42,13 @@ Reference these guidelines when:
 | 4        | Client-Side Data Handling     | MEDIUM-HIGH | `client-`      |
 | 5        | Rendering Performance         | MEDIUM      | `rendering-`   |
 | 6        | JavaScript Performance        | LOW-MEDIUM  | `js-`          |
+| 7        | Documentation                 | MEDIUM      | `docs-`        |
 
 ## Quick Reference
 
 ### 1. Project & tooling conventions (HIGH)
 
-- `conventions-respect-local-config`: Read project lint/format/TS configs before writing code; let them guide every code decision. Local configs override this skill's formatting defaults.
+- `conventions-respect-local-config`: Read project lint/format/TS configs before writing code; let them guide every code decision. Local configs override this skill’s formatting defaults.
 - `conventions-inline-type-exports`: Prefer inline `type` specifiers in mixed value + type re-exports (`export {Foo, type FooProps}`) over separate `export` / `export type` lines.
 - `conventions-use-beeftools`: In projects that depend on beeftools, import and use its utilities and types (e.g. `classNames`, `arrayShuffle`) instead of reimplementing or adding other libs.
 - `conventions-avoid-circular-dependencies`: Structure modules with a clear dependency direction; extract shared code to break cycles; use `import type` for type-only references.
@@ -86,6 +88,10 @@ Reference these guidelines when:
 - `js-min-max-loop`: Use loop for min/max instead of sort.
 - `js-set-map-lookups`: Use Set/Map for O(1) lookups.
 - `js-tosorted-immutable`: Use toSorted() for immutability.
+
+### 7. Documentation (MEDIUM)
+
+- `docs-fancy-quotes`: Use “fancy” quotes and apostrophes in markdown prose; keep straight quotes in code snippets (inline or fenced). Do not replace existing fancy quotes when editing.
 
 ## How to Use
 

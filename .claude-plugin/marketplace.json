@@ -5,32 +5,47 @@
   },
   "metadata": {
     "description": "Frontend development skills for Claude Code",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "frontend-general",
       "source": "./plugins/frontend-general",
       "description": "Frontend and TypeScript performance and best-practices guidelines. Framework-agnostic.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "license": "MIT",
-      "keywords": ["frontend", "typescript", "performance", "javascript"]
+      "keywords": [
+        "frontend",
+        "typescript",
+        "performance",
+        "javascript"
+      ]
     },
     {
       "name": "frontend-react",
       "source": "./plugins/frontend-react",
       "description": "React-specific performance and best-practices guidelines.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "license": "MIT",
-      "keywords": ["react", "performance", "hooks", "rendering"]
+      "keywords": [
+        "react",
+        "performance",
+        "hooks",
+        "rendering"
+      ]
     },
     {
       "name": "frontend-a11y",
       "source": "./plugins/frontend-a11y",
       "description": "WCAG 2.2 compliant interfaces with ARIA patterns, keyboard navigation, and mobile accessibility.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "license": "MIT",
-      "keywords": ["accessibility", "wcag", "aria", "a11y"]
+      "keywords": [
+        "accessibility",
+        "wcag",
+        "aria",
+        "a11y"
+      ]
     }
   ]
 }
