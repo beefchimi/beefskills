@@ -35,3 +35,8 @@ The section ID (in parentheses) is the filename prefix used to group rules.
 
 **Impact:** LOW-MEDIUM
 **Description:** Micro-optimizations for hot paths can add up to meaningful improvements.
+
+## 7. Documentation (docs)
+
+**Impact:** MEDIUM
+**Description:** Conventions for authoring and editing markdown documentation, including typography (quotes and apostrophes) in prose vs. code.

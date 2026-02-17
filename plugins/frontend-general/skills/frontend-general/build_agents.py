@@ -13,6 +13,7 @@ SECTION_ORDER = [
     ("client", "Client-Side Data Handling", "MEDIUM-HIGH"),
     ("rendering", "Rendering Performance", "MEDIUM"),
     ("js", "JavaScript Performance", "LOW-MEDIUM"),
+    ("docs", "Documentation", "MEDIUM"),
 ]
 
 
@@ -72,7 +73,7 @@ def main():
         "Performance and best-practices guide for frontend and TypeScript applications."
     )
     out.append(
-        "Rules across 6 categories: project conventions, eliminating async waterfalls, bundle"
+        "Rules across 7 categories: project conventions, eliminating async waterfalls, bundle"
     )
     out.append(
         "optimization, client-side data handling, rendering performance, and JavaScript"

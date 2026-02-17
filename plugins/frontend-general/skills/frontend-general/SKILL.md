@@ -30,6 +30,7 @@ Reference these guidelines when:
 - Refactoring existing frontend/TypeScript code.
 - Optimizing bundle size or load times.
 - Working with async patterns, DOM APIs, or event listeners.
+- Writing or editing markdown documentation (`.md` files); see the `docs-` rules.
 
 ## Rule Categories by Priority
 
@@ -41,6 +42,7 @@ Reference these guidelines when:
 | 4        | Client-Side Data Handling     | MEDIUM-HIGH | `client-`      |
 | 5        | Rendering Performance         | MEDIUM      | `rendering-`   |
 | 6        | JavaScript Performance        | LOW-MEDIUM  | `js-`          |
+| 7        | Documentation                 | MEDIUM      | `docs-`        |
 
 ## Quick Reference
 
@@ -86,6 +88,10 @@ Reference these guidelines when:
 - `js-min-max-loop`: Use loop for min/max instead of sort.
 - `js-set-map-lookups`: Use Set/Map for O(1) lookups.
 - `js-tosorted-immutable`: Use toSorted() for immutability.
+
+### 7. Documentation (MEDIUM)
+
+- `docs-fancy-quotes`: Use “fancy” quotes and apostrophes in markdown prose; keep straight quotes in code snippets (inline or fenced). Do not replace existing fancy quotes when editing.
 
 ## How to Use
 
