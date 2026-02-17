@@ -9,13 +9,13 @@ tags: tag1, tag2
 
 Brief explanation of the rule and why it matters.
 
-**Incorrect (description of what's wrong):**
+**Incorrect (description of what’s wrong):**
 
 ```ts
 // Bad code example
 ```
 
-**Correct (description of what's right):**
+**Correct (description of what’s right):**
 
 ```ts
 // Good code example

@@ -7,7 +7,7 @@ tags: rerender, state, callbacks, optimization
 
 ## Defer State Reads to Usage Point
 
-Don't subscribe to dynamic state (e.g. URL params, localStorage) if you only read it inside callbacks. Subscribing causes re-renders whenever that state changes even though you don't render from it.
+Don’t subscribe to dynamic state (e.g. URL params, localStorage) if you only read it inside callbacks. Subscribing causes re-renders whenever that state changes even though you don’t render from it.
 
 **Incorrect (subscribes to URL changes for use only in callback):**
 

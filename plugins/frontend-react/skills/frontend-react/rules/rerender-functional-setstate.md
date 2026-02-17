@@ -56,7 +56,7 @@ function TodoList() {
 
 **Benefits:**
 
-1. **Stable callback references** - Callbacks don't need to be recreated when state changes
+1. **Stable callback references** - Callbacks don’t need to be recreated when state changes
 2. **No stale closures** - Always operates on the latest state value
 3. **Fewer dependencies** - Simplifies dependency arrays and reduces memory leaks
 4. **Prevents bugs** - Eliminates the most common source of React closure bugs
@@ -72,6 +72,6 @@ function TodoList() {
 
 - Setting state to a static value: `setCount(0)`
 - Setting state from props/arguments only: `setName(newName)`
-- State doesn't depend on previous value
+- State doesn’t depend on previous value
 
 **Note:** If your project has [React Compiler](https://react.dev/learn/react-compiler) enabled, the compiler can automatically optimize some cases, but functional updates are still recommended for correctness and to prevent stale closure bugs.

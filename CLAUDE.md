@@ -2,7 +2,7 @@
 
 This repo is structured as a Claude Code plugin marketplace — skills live under `plugins/*/skills/`.
 
-When performing work in this codebase, know that there are various "skills" available.
+When performing work in this codebase, know that there are various “skills” available.
 
 ## Skills available
 
@@ -13,7 +13,7 @@ When performing work in this codebase, know that there are various "skills" avai
 ## How to use them
 
 - **Read the skill** when the task matches the description above (e.g. frontend/TS work → read `frontend-general`; React work → read `frontend-react`; accessibility → read `frontend-a11y`).
-- **Apply the skill's instructions** before answering or making changes; don't skip steps or assume the content.
+- **Apply the skill’s instructions** before answering or making changes; don’t skip steps or assume the content.
 
 ## Self improvement
 

@@ -94,7 +94,7 @@ The `typeof window !== 'undefined'` check avoids loading this module in SSR envi
 
 ### 1.2 Defer Non-Critical Third-Party Libraries
 
-Analytics, logging, and error tracking don't need to block initial render. Load them after the app has mounted or on first user interaction using dynamic `import()`.
+Analytics, logging, and error tracking don’t need to block initial render. Load them after the app has mounted or on first user interaction using dynamic `import()`.
 
 **Incorrect (blocks initial bundle):**
 
@@ -170,7 +170,7 @@ Reference: [React lazy](https://react.dev/reference/react/lazy)
 
 ### 1.4 Preload Based on User Intent
 
-Preload heavy bundles before they're needed to reduce perceived latency.
+Preload heavy bundles before they’re needed to reduce perceived latency.
 
 **Example (preload on hover/focus):**
 
@@ -205,6 +205,7 @@ function FlagsProvider({children, flags}: Props) {
 ```
 
 The `typeof window !== 'undefined'` check avoids bundling preloaded modules in SSR builds when applicable.
+
 
 ## 2. Client-Side Data Fetching
 
@@ -331,11 +332,12 @@ function UpdateButton() {
 
 Reference: [https://swr.vercel.app](https://swr.vercel.app)
 
+
 ## 3. Re-render Optimization
 
 ### 3.1 Defer State Reads to Usage Point
 
-Don't subscribe to dynamic state (e.g. URL params, localStorage) if you only read it inside callbacks. Subscribing causes re-renders whenever that state changes even though you don't render from it.
+Don’t subscribe to dynamic state (e.g. URL params, localStorage) if you only read it inside callbacks. Subscribing causes re-renders whenever that state changes even though you don’t render from it.
 
 **Incorrect (subscribes to URL changes for use only in callback):**
 
@@ -521,7 +523,7 @@ function TodoList() {
 
 **Benefits:**
 
-1. **Stable callback references** - Callbacks don't need to be recreated when state changes
+1. **Stable callback references** - Callbacks don’t need to be recreated when state changes
 2. **No stale closures** - Always operates on the latest state value
 3. **Fewer dependencies** - Simplifies dependency arrays and reduces memory leaks
 4. **Prevents bugs** - Eliminates the most common source of React closure bugs
@@ -537,7 +539,7 @@ function TodoList() {
 
 - Setting state to a static value: `setCount(0)`
 - Setting state from props/arguments only: `setName(newName)`
-- State doesn't depend on previous value
+- State doesn’t depend on previous value
 
 **Note:** If your project has [React Compiler](https://react.dev/learn/react-compiler) enabled, the compiler can automatically optimize some cases, but functional updates are still recommended for correctness and to prevent stale closure bugs.
 
@@ -763,7 +765,7 @@ function ScrollTracker() {
 
 ### 3.12 Use useRef for Transient Values
 
-When a value changes frequently and you don't want a re-render on every update (e.g., mouse trackers, intervals, transient flags), store it in `useRef` instead of `useState`. Keep component state for UI; use refs for temporary DOM-adjacent values. Updating a ref does not trigger a re-render.
+When a value changes frequently and you don’t want a re-render on every update (e.g., mouse trackers, intervals, transient flags), store it in `useRef` instead of `useState`. Keep component state for UI; use refs for temporary DOM-adjacent values. Updating a ref does not trigger a re-render.
 
 **Incorrect (renders every update):**
 
@@ -828,11 +830,12 @@ function Tracker() {
 }
 ```
 
+
 ## 4. Rendering Performance
 
 ### 4.1 Use Activity Component for Show/Hide
 
-If working in project that is using the most recent version of React, you can use React's `<Activity>` to preserve state/DOM for expensive components that frequently toggle visibility.
+If working in project that is using the most recent version of React, you can use React’s `<Activity>` to preserve state/DOM for expensive components that frequently toggle visibility.
 
 **Usage:**
 
@@ -854,7 +857,7 @@ Avoids expensive re-renders and state loss.
 
 Use explicit ternary operators (`? :`) instead of `&&` for conditional rendering when the condition can be `0`, `NaN`, or other falsy values that render.
 
-**Incorrect (renders "0" when count is 0):**
+**Incorrect (renders “0” when count is 0):**
 
 ```tsx
 function Badge({count}: {count: number}) {
@@ -974,7 +977,7 @@ Use this pattern for theme toggles, user preferences, and any client-only data t
 
 ### 4.5 Suppress Expected Hydration Mismatches
 
-In SSR applications, some values are intentionally different on server vs client (random IDs, dates, locale/timezone formatting). For these _expected_ mismatches, wrap the dynamic text in an element with `suppressHydrationWarning` to prevent noisy warnings. Do not use this to hide real bugs. Don't overuse it.
+In SSR applications, some values are intentionally different on server vs client (random IDs, dates, locale/timezone formatting). For these _expected_ mismatches, wrap the dynamic text in an element with `suppressHydrationWarning` to prevent noisy warnings. Do not use this to hide real bugs. Don’t overuse it.
 
 **Incorrect (known mismatch warnings):**
 
@@ -1061,11 +1064,12 @@ function SearchResults() {
 
 Reference: [useTransition](https://react.dev/reference/react/useTransition)
 
+
 ## 5. Advanced Patterns
 
 ### 5.1 Store Event Handlers in Refs
 
-Store callbacks in refs when used in effects that shouldn't re-subscribe on callback changes.
+Store callbacks in refs when used in effects that shouldn’t re-subscribe on callback changes.
 
 **Incorrect (re-subscribes on every render):**
 
@@ -1095,7 +1099,7 @@ function useWindowEvent(event: string, handler: (e) => void) {
 }
 ```
 
-**Alternative: use `useEffectEvent` if you're on latest React:**
+**Alternative: use `useEffectEvent` if you’re on latest React:**
 
 ```tsx
 import {useEffectEvent} from 'react';
@@ -1165,7 +1169,7 @@ function SearchInput({onSearch}: {onSearch: (q: string) => void}) {
 }
 ```
 
-**Correct (using React's useEffectEvent):**
+**Correct (using React’s useEffectEvent):**
 
 ```tsx
 import {useEffectEvent} from 'react';
@@ -1180,3 +1184,4 @@ function SearchInput({onSearch}: {onSearch: (q: string) => void}) {
   }, [query]);
 }
 ```
+

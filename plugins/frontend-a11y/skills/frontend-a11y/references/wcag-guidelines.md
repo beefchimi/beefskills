@@ -482,7 +482,7 @@ Content and interface must be understandable.
 
 #### 3.2.2 On Input (Level A)
 
-Don't automatically change context on input.
+Don’t automatically change context on input.
 
 ```tsx
 // Bad: Auto-submit on selection
@@ -524,7 +524,7 @@ function FormField({id, label, error, ...props}) {
 
 #### 3.3.7 Redundant Entry (Level A) - NEW
 
-Don't require users to re-enter previously provided information.
+Don’t require users to re-enter previously provided information.
 
 ```tsx
 // Auto-fill shipping address from billing

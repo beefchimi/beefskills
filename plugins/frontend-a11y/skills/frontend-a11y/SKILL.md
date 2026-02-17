@@ -355,7 +355,7 @@ const CONTRAST_REQUIREMENTS = {
 1. **Use Semantic HTML**: Prefer native elements over ARIA when possible
 2. **Test with Real Users**: Include people with disabilities in user testing
 3. **Keyboard First**: Design interactions to work without a mouse
-4. **Don't Disable Focus Styles**: Style them, don't remove them
+4. **Don’t Disable Focus Styles**: Style them, don’t remove them
 5. **Provide Text Alternatives**: All non-text content needs descriptions
 6. **Support Zoom**: Content should work at 200% zoom
 7. **Announce Changes**: Use live regions for dynamic content
@@ -370,7 +370,7 @@ const CONTRAST_REQUIREMENTS = {
 - **Auto-playing media**: Content that plays without user initiation
 - **Inaccessible custom controls**: Recreating native functionality poorly
 - **Missing skip links**: No way to bypass repetitive content
-- **Focus order issues**: Tab order doesn't match visual order
+- **Focus order issues**: Tab order doesn’t match visual order
 
 ## Testing Tools
 

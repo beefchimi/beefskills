@@ -7,7 +7,7 @@ tags: conventions, typescript, exports, imports, type-only, verbatimModuleSyntax
 
 ## Prefer Inline `type` Specifiers in Re-exports
 
-When re-exporting both values and types from a module, use a single export statement with inline `type` specifiers instead of separate `export` and `export type` lines. Modern transpilers (Vite, Rolldown, esbuild) and TypeScript's `verbatimModuleSyntax` / `isolatedModules` all handle inline `type` annotations correctly.
+When re-exporting both values and types from a module, use a single export statement with inline `type` specifiers instead of separate `export` and `export type` lines. Modern transpilers (Vite, Rolldown, esbuild) and TypeScript’s `verbatimModuleSyntax` / `isolatedModules` all handle inline `type` annotations correctly.
 
 **Incorrect (separate export lines for mixed value + type re-exports):**
 
@@ -16,7 +16,7 @@ export {MyComponent} from './MyComponent';
 export type {MyComponentProps} from './MyComponent';
 ```
 
-This pattern was necessary for older single-file transpilers that couldn't distinguish types from values without a dedicated `export type` statement. It is no longer needed.
+This pattern was necessary for older single-file transpilers that couldn’t distinguish types from values without a dedicated `export type` statement. It is no longer needed.
 
 **Correct (combined with inline `type` specifier):**
 
