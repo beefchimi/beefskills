@@ -1,8 +1,8 @@
 # Agent instructions
 
-This repo is structured as a Claude Code plugin marketplace — skills live under `plugins/*/skills/`.
+This repo is structured as a Claude Code plugin marketplace. Skills live under `plugins/*/skills/`.
 
-When performing work in this codebase, know that there are various “skills” available.
+When performing work in this codebase, you can reference these `plugins/*/skills/` skills for your own benefit. Additionally, we have some `~/.claude/` plugins and skills you may also utilize.
 
 ## Skills available
 
@@ -17,4 +17,4 @@ When performing work in this codebase, know that there are various “skills” 
 
 ## Self improvement
 
-If any of your work leads to the realization that an existing skill could be refined, improved, or removed - or if a new skill could be formalized - use the **skill-architect** skill (if globally installed) so structure and descriptions stay consistent.
+If any of your work leads to the realization that an existing skill could be refined, improved, or removed - or if a new skill could be formalized - please perform that work. There are some globally installed skills that could prove useful, such as: `claude-md-management` and `plugin-dev`.
