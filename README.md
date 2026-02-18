@@ -2,7 +2,11 @@
 
 A collection of Claude Code skills, distributed as a plugin marketplace.
 
-## Installation
+## Usage
+
+Here is how you can utilize this marketplace in your projects.
+
+### Installation
 
 Add this repo as a marketplace in Claude Code:
 
@@ -18,7 +22,18 @@ Then install the plugins you want:
 /plugin install frontend-a11y@beefskills
 ```
 
-## Updating
+#### Alternative: Manual Installation
+
+You can also copy individual skills directly to your `~/.claude/skills/` directory:
+
+```bash
+# Example: install frontend-general
+cp -R plugins/frontend-general/skills/frontend-general ~/.claude/skills/
+```
+
+Although its highly recommend that you use the official `/plugin` approach to managing your marketplaces and installed skills.
+
+### Updating
 
 To pull the latest changes for a specific plugin:
 
@@ -55,18 +70,17 @@ Last updated: Feb 13 2026
 
 WCAG 2.2 compliant interfaces with ARIA patterns, keyboard navigation, screen reader support, and mobile accessibility (iOS VoiceOver, Android TalkBack).
 
-## Recommended: Shopify’s skill-architect
+## Recommendations
 
-For authoring new skills or updating existing ones, install Shopify’s `skill-architect`. For now, this may be internal-only and not published to the plugin marketplace.
+Alongside these plugins, there are a few additional things you should do to improve your `Claude Code` experience.
 
-## Alternative: Manual Installation
+### Anthropic’s official plugins
 
-You can also copy individual skills directly to your `~/.claude/skills/` directory:
+For authoring new skills or updating existing ones, I recommend adding the `claude-plugins-official` marketplace from Anthropic. Then, you can install the `claude-md-management` and `plugin-dev` skills to aid Claude’s self improvement.
 
-```bash
-# Example: install frontend-general
-cp -R plugins/frontend-general/skills/frontend-general ~/.claude/skills/
-```
+### Global CLAUDE.md
+
+Having a `~/.claude/CLAUDE.md` that offers the tiniest bit of instruction for what plugins/skills are available can be really helpful for nudging Claude to use the tools available to it.
 
 ## Development
 
@@ -128,24 +142,24 @@ Edit the skill files directly, run `npm run build:skills` if applicable, then co
 
 **Where `version` lives (per plugin):**
 
-| Location | Example |
-| -------- | ------- |
-| `plugins/<name>/.claude-plugin/plugin.json` | Plugin manifest |
-| `.claude-plugin/marketplace.json` | Entry in `plugins[]` for that plugin |
-| `plugins/<name>/skills/<name>/metadata.json` | Skill metadata (if present) |
-| `plugins/<name>/skills/<name>/SKILL.md` | YAML frontmatter `version:` (if present) |
+| Location                                     | Example                                  |
+| -------------------------------------------- | ---------------------------------------- |
+| `plugins/<name>/.claude-plugin/plugin.json`  | Plugin manifest                          |
+| `.claude-plugin/marketplace.json`            | Entry in `plugins[]` for that plugin     |
+| `plugins/<name>/skills/<name>/metadata.json` | Skill metadata (if present)              |
+| `plugins/<name>/skills/<name>/SKILL.md`      | YAML frontmatter `version:` (if present) |
 
 **To bump a plugin version:** Run `npm run bump:version -- frontend-general 1.1.0` (plugin name and new version). That updates the plugin manifest and marketplace entry. If you also use skill metadata or SKILL frontmatter, update those to match when you care about them being in sync.
 
 ### Scripts
 
-| Command                | Description                                                          |
-| ---------------------- | -------------------------------------------------------------------- |
-| `npm run build:skills` | Regenerate `AGENTS.md` for all plugins that have a `build_agents.py` |
-| `npm run audit:quotes` | Check `.md` files for the docs-fancy-quotes rule (prose vs code)     |
-| `npm run bump:version -- <plugin> <ver>` | Bump plugin version in `plugin.json` and `marketplace.json` |
-| `npm run lint`         | Run oxlint                                                           |
-| `npm run format`       | Check formatting with oxfmt                                          |
+| Command                                  | Description                                                          |
+| ---------------------------------------- | -------------------------------------------------------------------- |
+| `npm run build:skills`                   | Regenerate `AGENTS.md` for all plugins that have a `build_agents.py` |
+| `npm run audit:quotes`                   | Check `.md` files for the docs-fancy-quotes rule (prose vs code)     |
+| `npm run bump:version -- <plugin> <ver>` | Bump plugin version in `plugin.json` and `marketplace.json`          |
+| `npm run lint`                           | Run oxlint                                                           |
+| `npm run format`                         | Check formatting with oxfmt                                          |
 
 ## Future
 
