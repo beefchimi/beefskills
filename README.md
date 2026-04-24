@@ -10,13 +10,13 @@ Here is how you can utilize this marketplace in your projects.
 
 Add this repo as a marketplace in Claude Code:
 
-```
+```bash
 /plugin marketplace add beefchimi/beefskills
 ```
 
 Then install the plugins you want:
 
-```
+```bash
 /plugin install frontend-general@beefskills
 /plugin install frontend-react@beefskills
 /plugin install frontend-a11y@beefskills
@@ -33,17 +33,25 @@ cp -R plugins/frontend-general/skills/frontend-general ~/.claude/skills/
 
 Although its highly recommend that you use the official `/plugin` approach to managing your marketplaces and installed skills.
 
+#### Alternative: pi Installation
+
+You can also install this as a `pi` skill:
+
+```bash
+pi install https://github.com/beefchimi/beefskills
+```
+
 ### Updating
 
 To pull the latest changes for a specific plugin:
 
-```
+```bash
 /plugin update frontend-general@beefskills
 ```
 
 Or update all installed plugins at once:
 
-```
+```bash
 /plugin update --all
 ```
 
@@ -89,14 +97,14 @@ Having a `~/.claude/CLAUDE.md` that offers the tiniest bit of instruction for wh
 1. Create a new `.md` file in the plugin’s `skills/<plugin-name>/rules/` directory (for rule-based skills like `frontend-general`) or `skills/<plugin-name>/references/` (for reference-based skills like `frontend-a11y`).
 2. Follow the template in `rules/_template.md` if applicable.
 3. Add a quick reference entry in the plugin’s `SKILL.md`.
-4. Run `npm run build:skills` to regenerate any `AGENTS.md` files.
+4. Run `pnpm build:skills` to regenerate any `AGENTS.md` files.
 5. Commit and push — consumers pick up changes via `/plugin update`.
 
 ### Adding a new plugin
 
 1. Create the plugin directory structure:
 
-   ```
+   ```sh
    plugins/<plugin-name>/
    ├── .claude-plugin/
    │   └── plugin.json
@@ -129,12 +137,12 @@ Having a `~/.claude/CLAUDE.md` that offers the tiniest bit of instruction for wh
    }
    ```
 
-5. If the plugin has individual rule files, add a `build_agents.py` script to compile them into `AGENTS.md`. Running `npm run build:skills` will automatically find and execute it.
+5. If the plugin has individual rule files, add a `build_agents.py` script to compile them into `AGENTS.md`. Running `pnpm build:skills` will automatically find and execute it.
 6. Commit and push.
 
 ### Updating a published skill
 
-Edit the skill files directly, run `npm run build:skills` if applicable, then commit and push. Consumers update via `/plugin update`.
+Edit the skill files directly, run `pnpm build:skills` if applicable, then commit and push. Consumers update via `/plugin update`.
 
 ### Versioning
 
@@ -149,17 +157,17 @@ Edit the skill files directly, run `npm run build:skills` if applicable, then co
 | `plugins/<name>/skills/<name>/metadata.json` | Skill metadata (if present)              |
 | `plugins/<name>/skills/<name>/SKILL.md`      | YAML frontmatter `version:` (if present) |
 
-**To bump a plugin version:** Run `npm run bump:version -- frontend-general 1.1.0` (plugin name and new version). That updates the plugin manifest and marketplace entry. If you also use skill metadata or SKILL frontmatter, update those to match when you care about them being in sync.
+**To bump a plugin version:** Run `pnpm bump:version frontend-general 1.1.0` (plugin name and new version). That updates the plugin manifest and marketplace entry. If you also use skill metadata or SKILL frontmatter, update those to match when you care about them being in sync.
 
 ### Scripts
 
-| Command                                  | Description                                                          |
-| ---------------------------------------- | -------------------------------------------------------------------- |
-| `npm run build:skills`                   | Regenerate `AGENTS.md` for all plugins that have a `build_agents.py` |
-| `npm run audit:quotes`                   | Check `.md` files for the docs-fancy-quotes rule (prose vs code)     |
-| `npm run bump:version -- <plugin> <ver>` | Bump plugin version in `plugin.json` and `marketplace.json`          |
-| `npm run lint`                           | Run oxlint                                                           |
-| `npm run format`                         | Check formatting with oxfmt                                          |
+| Command                            | Description                                                          |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| `pnpm build:skills`                | Regenerate `AGENTS.md` for all plugins that have a `build_agents.py` |
+| `pnpm audit:quotes`                | Check `.md` files for the docs-fancy-quotes rule (prose vs code)     |
+| `pnpm bump:version <plugin> <ver>` | Bump plugin version in `plugin.json` and `marketplace.json`          |
+| `pnpm lint`                        | Run oxlint                                                           |
+| `pnpm format`                      | Check formatting with oxfmt                                          |
 
 ## Future
 

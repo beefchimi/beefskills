@@ -16,9 +16,15 @@
     "url": "git+https://github.com/beefchimi/beefskills.git"
   },
   "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "pi": {
+    "skills": [
+      "./plugins/*/skills/*"
+    ]
+  },
   "scripts": {
     "clean": "rm -rf dist && rm -rf node_modules/.cache && rm -rf node_modules/.vite",
-    "nuke": "npm run clean && rm -rf node_modules && rm -rf package-lock.json && npm cache clean --force",
+    "nuke": "pnpm run clean && rm -rf node_modules && rm -rf pnpm-lock.yaml && pnpm store prune",
     "build:skills": "find plugins -name 'build_agents.py' -exec python3 {} \\;",
     "audit:quotes": "python3 scripts/audit_fancy_quotes.py",
     "bump:version": "python3 scripts/bump_plugin_version.py",
@@ -29,8 +35,8 @@
     "format:fix": "oxfmt"
   },
   "devDependencies": {
-    "oxfmt": "^0.32.0",
-    "oxlint": "^1.47.0",
-    "typescript": "^5.9.3"
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
+    "typescript": "^6.0.3"
   }
 }
