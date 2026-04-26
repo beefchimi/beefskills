@@ -8,7 +8,7 @@ browser: 69%
 
 ## Dialog Light Dismiss Without Click-Outside Listeners
 
-Allowing users to close a modal by clicking the backdrop (a.k.a. "light dismiss") traditionally requires JavaScript that listens for clicks on the `::backdrop` pseudo-element or checks whether the click target is outside the dialog bounds. The `closedby` attribute on `<dialog>` makes this behavior declarative — no event listeners, no coordinate math.
+Allowing users to close a modal by clicking the backdrop (a.k.a. “light dismiss”) traditionally requires JavaScript that listens for clicks on the `::backdrop` pseudo-element or checks whether the click target is outside the dialog bounds. The `closedby` attribute on `<dialog>` makes this behavior declarative — no event listeners, no coordinate math.
 
 **Avoid (JavaScript click-outside detection):**
 

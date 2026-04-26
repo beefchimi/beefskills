@@ -119,7 +119,7 @@ The browser automatically picks a contrasting color for the checkmark, radio dot
 
 ### When `accent-color` is not enough
 
-`accent-color` covers basic theming (brand color on active states). For fully custom form control designs (custom shapes, animations, multi-part sliders), you still need `appearance: none` rebuilds or the newer `appearance: base-select` (see `layout-base-select`). But for the common case of "match my brand color," `accent-color` is the right tool.
+`accent-color` covers basic theming (brand color on active states). For fully custom form control designs (custom shapes, animations, multi-part sliders), you still need `appearance: none` rebuilds or the newer `appearance: base-select` (see `layout-base-select`). But for the common case of “match my brand color”, `accent-color` is the right tool.
 
 ### Global accent color
 

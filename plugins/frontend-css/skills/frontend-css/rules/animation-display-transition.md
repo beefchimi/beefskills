@@ -15,24 +15,24 @@ Transitioning an element to and from `display: none` has been impossible in CSS 
 ```js
 // Wait for opacity transition to finish, then set display: none
 function hideElement(el) {
-  el.style.opacity = '0';
-  el.style.pointerEvents = 'none';
+  el.style.opacity = "0";
+  el.style.pointerEvents = "none";
 
   el.addEventListener(
-    'transitionend',
+    "transitionend",
     () => {
-      el.style.display = 'none';
+      el.style.display = "none";
     },
-    {once: true},
+    { once: true },
   );
 }
 
 function showElement(el) {
-  el.style.display = 'block';
+  el.style.display = "block";
   // Force reflow so the browser sees display change before opacity change
   el.offsetHeight;
-  el.style.opacity = '1';
-  el.style.pointerEvents = '';
+  el.style.opacity = "1";
+  el.style.pointerEvents = "";
 }
 ```
 
@@ -42,8 +42,8 @@ function showElement(el) {
   visibility: visible;
   pointer-events: auto;
   transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
+    opacity 200ms ease,
+    visibility 200ms ease;
 }
 
 .panel.hidden {
@@ -64,9 +64,9 @@ The `visibility` + `opacity` approach has a critical flaw: the element remains i
   opacity: 1;
   display: block;
   transition:
-    opacity 0.2s ease,
-    display 0.2s ease,
-    overlay 0.2s ease;
+    opacity 200ms ease,
+    display 200ms ease,
+    overlay 200ms ease;
   transition-behavior: allow-discrete;
 }
 
@@ -141,10 +141,10 @@ See `animation-starting-style` for more on entry animations.
   opacity: 0;
   transform: scale(0.95);
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    display 0.2s ease,
-    overlay 0.2s ease;
+    opacity 200ms ease,
+    transform 200ms ease,
+    display 200ms ease,
+    overlay 200ms ease;
   transition-behavior: allow-discrete;
 }
 
@@ -168,9 +168,9 @@ You can specify `allow-discrete` per-property in the `transition` shorthand:
 ```css
 .panel {
   transition:
-    opacity 0.2s ease,
-    display 0.2s ease allow-discrete,
-    overlay 0.2s ease allow-discrete;
+    opacity 200ms ease,
+    display 200ms ease allow-discrete,
+    overlay 200ms ease allow-discrete;
 }
 /* Only display and overlay are discrete — opacity transitions normally */
 ```

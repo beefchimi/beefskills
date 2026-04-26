@@ -8,25 +8,25 @@ browser: 48%
 
 ## Scroll Spy Without IntersectionObserver
 
-Highlighting the current section's link in a navigation bar ("scroll spy") traditionally requires setting up an `IntersectionObserver` in JavaScript — creating the observer, configuring thresholds, iterating entries, toggling `.active` classes, and cleaning up on unmount. The `:target-current` pseudo-class applies styles to the navigation link whose `href` matches the currently visible/scrolled-to section — no JavaScript, no observers, no class toggling.
+Highlighting the current section's link in a navigation bar (“scroll spy”) traditionally requires setting up an `IntersectionObserver` in JavaScript — creating the observer, configuring thresholds, iterating entries, toggling `.active` classes, and cleaning up on unmount. The `:target-current` pseudo-class applies styles to the navigation link whose `href` matches the currently visible/scrolled-to section — no JavaScript, no observers, no class toggling.
 
 **Avoid (JavaScript IntersectionObserver):**
 
 ```js
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('nav a');
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll("nav a");
 
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        navLinks.forEach((link) => link.classList.remove('active'));
+        navLinks.forEach((link) => link.classList.remove("active"));
         const activeLink = document.querySelector(`nav a[href="#${entry.target.id}"]`);
-        if (activeLink) activeLink.classList.add('active');
+        if (activeLink) activeLink.classList.add("active");
       }
     });
   },
-  {rootMargin: '-50% 0px', threshold: 0},
+  { rootMargin: "-50% 0px", threshold: 0 },
 );
 
 sections.forEach((section) => observer.observe(section));
@@ -75,7 +75,7 @@ Zero JavaScript. The browser tracks which section is in view and applies the pse
 
 ### How `:target-current` works
 
-The browser evaluates which fragment (`#id`) on the page is currently the "target" — either from the URL hash or from scroll position when using `scroll-snap` or native scroll tracking. The `:target-current` pseudo-class matches the `<a>` element whose `href` points to that fragment.
+The browser evaluates which fragment (`#id`) on the page is currently the “target” — either from the URL hash or from scroll position when using `scroll-snap` or native scroll tracking. The `:target-current` pseudo-class matches the `<a>` element whose `href` points to that fragment.
 
 ### Styling patterns
 
@@ -124,8 +124,8 @@ nav a:target-current {
   text-decoration: none;
   border-inline-start: 2px solid transparent;
   transition:
-    color 0.2s,
-    border-color 0.2s;
+    color 200ms,
+    border-color 200ms;
 }
 
 .toc a:target-current {
@@ -137,7 +137,7 @@ nav a:target-current {
 
 ### Combining with scroll snap
 
-`:target-current` works particularly well with scroll snap sections, where the browser has a clear notion of which section is "current":
+`:target-current` works particularly well with scroll snap sections, where the browser has a clear notion of which section is “current”:
 
 ```css
 .page {

@@ -32,3 +32,13 @@ Code blocks in this folder follow a consistent style. **When working in a real p
 8. **Units** — Use `rem` for typography, `px` or relative units for borders/shadows, and viewport-relative units (`dvh`, `svh`, `lvh`) over the legacy `vh`.
 
 9. **Comments** — Use `/* */` comments sparingly; prefer self-documenting property names and structure.
+
+10. **Motion** — Use `ms` units instead of `s` when authoring motion durations. If multiple properties are being animated, each with the same duration and timing-function, use long-hand `transition` or `animation` syntax:
+
+```css
+.card {
+  transition-property: opacity, background-color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+```

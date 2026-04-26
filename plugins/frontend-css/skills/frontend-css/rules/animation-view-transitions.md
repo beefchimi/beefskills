@@ -20,10 +20,10 @@ barba.init({
   transitions: [
     {
       leave(data) {
-        return gsap.to(data.current.container, {opacity: 0, duration: 0.3});
+        return gsap.to(data.current.container, { opacity: 0, duration: 0.3 });
       },
       enter(data) {
-        return gsap.from(data.next.container, {opacity: 0, duration: 0.3});
+        return gsap.from(data.next.container, { opacity: 0, duration: 0.3 });
       },
     },
   ],
@@ -100,7 +100,7 @@ Assign `view-transition-name` to elements that should animate independently (not
 }
 ```
 
-Named elements get their own transition group — the browser morphs them from old position/size to new position/size, producing a smooth "shared element" transition like iOS and Android native apps.
+Named elements get their own transition group — the browser morphs them from old position/size to new position/size, producing a smooth “shared element” transition like iOS and Android native apps.
 
 ### SPA state transitions
 

@@ -8,20 +8,20 @@ browser: 85%
 
 ## Entry Animations Without JavaScript Timing
 
-Animating an element's appearance when it first renders (e.g., fading in a card, sliding in a notification) traditionally required a two-step JavaScript hack: render the element in its "before" state, then use `requestAnimationFrame` or `setTimeout` to add a class that triggers the transition. This creates a flash of the initial state, is timing-dependent, and adds unnecessary JavaScript. The `@starting-style` at-rule defines the "before" state directly in CSS — the browser transitions from those values to the element's normal styles automatically on first render.
+Animating an element's appearance when it first renders (e.g., fading in a card, sliding in a notification) traditionally required a two-step JavaScript hack: render the element in its “before” state, then use `requestAnimationFrame` or `setTimeout` to add a class that triggers the transition. This creates a flash of the initial state, is timing-dependent, and adds unnecessary JavaScript. The `@starting-style` at-rule defines the “before” state directly in CSS — the browser transitions from those values to the element's normal styles automatically on first render.
 
 **Avoid (requestAnimationFrame class toggling):**
 
 ```js
 // Render element in hidden state, then trigger transition after paint
-const card = document.createElement('div');
-card.className = 'card';
+const card = document.createElement("div");
+card.className = "card";
 container.appendChild(card);
 
 // Must wait for the browser to paint the initial state
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
-    card.classList.add('visible');
+    card.classList.add("visible");
   });
 });
 // Double rAF is needed because single rAF isn't reliable across browsers
@@ -46,8 +46,8 @@ Or the `setTimeout` variant:
 
 ```js
 // Fragile — timing depends on browser, layout complexity, and device speed
-el.classList.add('card');
-setTimeout(() => el.classList.add('visible'), 50);
+el.classList.add("card");
+setTimeout(() => el.classList.add("visible"), 50);
 ```
 
 **Prefer (modern CSS — `@starting-style`):**
@@ -72,7 +72,7 @@ The element transitions from the `@starting-style` values to its normal computed
 
 ### How `@starting-style` works
 
-1. The browser reads the `@starting-style` block to determine the "from" values.
+1. The browser reads the `@starting-style` block to determine the “from” values.
 2. On the element's first style computation (insertion into the DOM, `display` changing from `none` to visible, etc.), the browser applies the starting values.
 3. The transition then runs from those starting values to the element's normal computed styles.
 
@@ -153,10 +153,10 @@ This gives you both entry and exit animations for elements that use `display: no
   opacity: 1;
   scale: 1;
   transition:
-    opacity 0.2s,
-    scale 0.2s,
-    overlay 0.2s,
-    display 0.2s;
+    opacity 200ms,
+    scale 200ms,
+    overlay 200ms,
+    display 200ms;
   transition-behavior: allow-discrete;
 
   @starting-style {

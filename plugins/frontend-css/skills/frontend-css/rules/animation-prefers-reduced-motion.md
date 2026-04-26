@@ -46,7 +46,7 @@ handleMotionPreference(mq);
 }
 ```
 
-No JavaScript, no event listeners, no class toggling. The browser applies these overrides automatically when the user has enabled "Reduce motion" in their OS settings (macOS, iOS, Windows, Android all support this).
+No JavaScript, no event listeners, no class toggling. The browser applies these overrides automatically when the user has enabled “Reduce motion” in their OS settings (macOS, iOS, Windows, Android all support this).
 
 ### Why `0.01ms` instead of `0s` or `none`
 

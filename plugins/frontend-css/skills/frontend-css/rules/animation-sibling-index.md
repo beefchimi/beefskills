@@ -43,8 +43,8 @@ li {
 Or the JavaScript workaround:
 
 ```js
-document.querySelectorAll('li').forEach((el, i) => {
-  el.style.setProperty('--i', i);
+document.querySelectorAll("li").forEach((el, i) => {
+  el.style.setProperty("--i", i);
 });
 // Must re-run on every DOM change
 ```
@@ -115,8 +115,8 @@ It can be used anywhere a `<number>` or `<integer>` is expected in a CSS value â
   opacity: 0;
   translate: 0 -8px;
   transition:
-    opacity 0.2s ease,
-    translate 0.2s ease;
+    opacity 200ms ease,
+    translate 200ms ease;
 }
 ```
 

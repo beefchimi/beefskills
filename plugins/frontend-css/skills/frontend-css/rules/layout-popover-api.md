@@ -23,20 +23,20 @@ Building a dropdown menu traditionally requires JavaScript for toggling visibili
 
 ```js
 // Open/close toggle
-btn.addEventListener('click', () => {
-  menu.classList.toggle('open');
+btn.addEventListener("click", () => {
+  menu.classList.toggle("open");
 });
 
 // Close on outside click
-document.addEventListener('click', (e) => {
+document.addEventListener("click", (e) => {
   if (!menu.contains(e.target) && e.target !== btn) {
-    menu.classList.remove('open');
+    menu.classList.remove("open");
   }
 });
 
 // Close on Escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') menu.classList.remove('open');
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") menu.classList.remove("open");
 });
 
 // Manually manage aria-expanded…
@@ -96,9 +96,9 @@ The browser automatically handles:
   /* Closed state — the browser handles hiding */
   opacity: 0;
   transition:
-    opacity 0.2s,
-    overlay 0.2s,
-    display 0.2s;
+    opacity 200ms,
+    overlay 200ms,
+    display 200ms;
   transition-behavior: allow-discrete;
 }
 

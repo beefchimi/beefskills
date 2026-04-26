@@ -711,7 +711,7 @@ Reference: [modern-css.com](https://modern-css.com) · [CSS Round Display spec �
 
 ### 1.7 Dialog Light Dismiss Without Click-Outside Listeners
 
-Allowing users to close a modal by clicking the backdrop (a.k.a. "light dismiss") traditionally requires JavaScript that listens for clicks on the `::backdrop` pseudo-element or checks whether the click target is outside the dialog bounds. The `closedby` attribute on `<dialog>` makes this behavior declarative — no event listeners, no coordinate math.
+Allowing users to close a modal by clicking the backdrop (a.k.a. “light dismiss”) traditionally requires JavaScript that listens for clicks on the `::backdrop` pseudo-element or checks whether the click target is outside the dialog bounds. The `closedby` attribute on `<dialog>` makes this behavior declarative — no event listeners, no coordinate math.
 
 **Avoid (JavaScript click-outside detection):**
 
@@ -1500,7 +1500,7 @@ Reference: [modern-css.com](https://modern-css.com)
 
 ### 1.18 Preventing Scroll Chaining Without JavaScript
 
-When a user scrolls to the end of a scrollable element (like a modal or sidebar), the browser "chains" the scroll to the parent — causing the page behind a modal to scroll. The old fix was intercepting `wheel` and `touchmove` events in JavaScript with `preventDefault()`, which blocks the main thread, fights passive listener defaults, and is fragile across input methods. `overscroll-behavior: contain` solves this declaratively with zero JavaScript.
+When a user scrolls to the end of a scrollable element (like a modal or sidebar), the browser “chains” the scroll to the parent — causing the page behind a modal to scroll. The old fix was intercepting `wheel` and `touchmove` events in JavaScript with `preventDefault()`, which blocks the main thread, fights passive listener defaults, and is fragile across input methods. `overscroll-behavior: contain` solves this declaratively with zero JavaScript.
 
 **Avoid (JavaScript wheel/touch event prevention):**
 
@@ -1515,7 +1515,7 @@ modal.addEventListener(
       e.preventDefault();
     }
   },
-  {passive: false}, // must opt out of passive to call preventDefault
+  { passive: false }, // must opt out of passive to call preventDefault
 );
 
 // Also need touchmove handling for mobile
@@ -1524,7 +1524,7 @@ modal.addEventListener(
   (e) => {
     /* similar logic */
   },
-  {passive: false},
+  { passive: false },
 );
 ```
 
@@ -1589,20 +1589,20 @@ Building a dropdown menu traditionally requires JavaScript for toggling visibili
 
 ```js
 // Open/close toggle
-btn.addEventListener('click', () => {
-  menu.classList.toggle('open');
+btn.addEventListener("click", () => {
+  menu.classList.toggle("open");
 });
 
 // Close on outside click
-document.addEventListener('click', (e) => {
+document.addEventListener("click", (e) => {
   if (!menu.contains(e.target) && e.target !== btn) {
-    menu.classList.remove('open');
+    menu.classList.remove("open");
   }
 });
 
 // Close on Escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') menu.classList.remove('open');
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") menu.classList.remove("open");
 });
 
 // Manually manage aria-expanded…
@@ -1662,9 +1662,9 @@ The browser automatically handles:
   /* Closed state — the browser handles hiding */
   opacity: 0;
   transition:
-    opacity 0.2s,
-    overlay 0.2s,
-    display 0.2s;
+    opacity 200ms,
+    overlay 200ms,
+    display 200ms;
   transition-behavior: allow-discrete;
 }
 
@@ -2507,7 +2507,7 @@ The element visually shrinks but its original bounding box remains, leaving a ga
 /* Use transform: scale() for animations — GPU-composited, no reflow */
 .card:hover {
   transform: scale(1.05);
-  transition: transform 0.2s ease;
+  transition: transform 200ms ease;
 }
 ```
 
@@ -3738,7 +3738,7 @@ Or CSS Modules (requires a bundler):
 
 ### Scoping with a lower boundary (donut scope)
 
-`@scope` supports an optional `to` clause that defines where the scope ends — creating a "donut" scope that styles the outer component without leaking into nested components:
+`@scope` supports an optional `to` clause that defines where the scope ends — creating a “donut” scope that styles the outer component without leaking into nested components:
 
 ```css
 @scope (.card) to (.card-slot) {
@@ -4819,29 +4819,29 @@ Loading separate font files for each weight (400, 500, 600, 700…) means multip
 
 ```css
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Regular.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Medium.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-SemiBold.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Bold.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -4854,8 +4854,8 @@ Loading separate font files for each weight (400, 500, 600, 700…) means multip
 
 ```css
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Variable.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Variable.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -4867,7 +4867,7 @@ One file, one request. The `font-weight: 100 900` range descriptor tells the bro
 
 ```css
 body {
-  font-family: 'MyFont', system-ui, sans-serif;
+  font-family: "MyFont", system-ui, sans-serif;
   font-weight: 400;
 }
 
@@ -4901,8 +4901,8 @@ Beyond weight, variable fonts can expose additional axes:
 
 ```css
 @font-face {
-  font-family: 'MyVar';
-  src: url('MyVar.woff2') format('woff2');
+  font-family: "MyVar";
+  src: url("MyVar.woff2") format("woff2");
   font-weight: 100 900;
   font-stretch: 75% 125%; /* width axis */
   font-style: oblique 0deg 12deg; /* slant axis */
@@ -4935,8 +4935,8 @@ h1 {
 /* Custom axes — use font-variation-settings */
 .display-text {
   font-variation-settings:
-    'GRAD' 88,
-    'CASL' 1;
+    "GRAD" 88,
+    "CASL" 1;
 }
 ```
 
@@ -4949,7 +4949,7 @@ Variable fonts unlock smooth CSS transitions and animations on typographic prope
 ```css
 .hover-weight {
   font-weight: 400;
-  transition: font-weight 0.2s ease;
+  transition: font-weight 200ms ease;
 }
 
 .hover-weight:hover {
@@ -4966,8 +4966,8 @@ Variable fonts unlock smooth CSS transitions and animations on typographic prope
 
 ```css
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Latin.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Latin.woff2") format("woff2");
   font-weight: 100 900;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153; /* Latin subset */
   font-display: swap;
@@ -4980,8 +4980,8 @@ Always pair variable fonts with `font-display: swap` (see `typo-font-display`) t
 
 ```css
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Variable.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Variable.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -5107,7 +5107,7 @@ The browser automatically picks a contrasting color for the checkmark, radio dot
 
 ### When `accent-color` is not enough
 
-`accent-color` covers basic theming (brand color on active states). For fully custom form control designs (custom shapes, animations, multi-part sliders), you still need `appearance: none` rebuilds or the newer `appearance: base-select` (see `layout-base-select`). But for the common case of "match my brand color," `accent-color` is the right tool.
+`accent-color` covers basic theming (brand color on active states). For fully custom form control designs (custom shapes, animations, multi-part sliders), you still need `appearance: none` rebuilds or the newer `appearance: base-select` (see `layout-base-select`). But for the common case of “match my brand color”, `accent-color` is the right tool.
 
 ### Global accent color
 
@@ -6850,25 +6850,25 @@ Reference: [modern-css.com](https://modern-css.com) · [MDN — :is()](https://d
 
 ### 5.5 Scroll Spy Without IntersectionObserver
 
-Highlighting the current section's link in a navigation bar ("scroll spy") traditionally requires setting up an `IntersectionObserver` in JavaScript — creating the observer, configuring thresholds, iterating entries, toggling `.active` classes, and cleaning up on unmount. The `:target-current` pseudo-class applies styles to the navigation link whose `href` matches the currently visible/scrolled-to section — no JavaScript, no observers, no class toggling.
+Highlighting the current section's link in a navigation bar (“scroll spy”) traditionally requires setting up an `IntersectionObserver` in JavaScript — creating the observer, configuring thresholds, iterating entries, toggling `.active` classes, and cleaning up on unmount. The `:target-current` pseudo-class applies styles to the navigation link whose `href` matches the currently visible/scrolled-to section — no JavaScript, no observers, no class toggling.
 
 **Avoid (JavaScript IntersectionObserver):**
 
 ```js
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('nav a');
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll("nav a");
 
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        navLinks.forEach((link) => link.classList.remove('active'));
+        navLinks.forEach((link) => link.classList.remove("active"));
         const activeLink = document.querySelector(`nav a[href="#${entry.target.id}"]`);
-        if (activeLink) activeLink.classList.add('active');
+        if (activeLink) activeLink.classList.add("active");
       }
     });
   },
-  {rootMargin: '-50% 0px', threshold: 0},
+  { rootMargin: "-50% 0px", threshold: 0 },
 );
 
 sections.forEach((section) => observer.observe(section));
@@ -6917,7 +6917,7 @@ Zero JavaScript. The browser tracks which section is in view and applies the pse
 
 ### How `:target-current` works
 
-The browser evaluates which fragment (`#id`) on the page is currently the "target" — either from the URL hash or from scroll position when using `scroll-snap` or native scroll tracking. The `:target-current` pseudo-class matches the `<a>` element whose `href` points to that fragment.
+The browser evaluates which fragment (`#id`) on the page is currently the “target” — either from the URL hash or from scroll position when using `scroll-snap` or native scroll tracking. The `:target-current` pseudo-class matches the `<a>` element whose `href` points to that fragment.
 
 ### Styling patterns
 
@@ -6966,8 +6966,8 @@ nav a:target-current {
   text-decoration: none;
   border-inline-start: 2px solid transparent;
   transition:
-    color 0.2s,
-    border-color 0.2s;
+    color 200ms,
+    border-color 200ms;
 }
 
 .toc a:target-current {
@@ -6979,7 +6979,7 @@ nav a:target-current {
 
 ### Combining with scroll snap
 
-`:target-current` works particularly well with scroll snap sections, where the browser has a clear notion of which section is "current":
+`:target-current` works particularly well with scroll snap sections, where the browser has a clear notion of which section is “current”:
 
 ```css
 .page {
@@ -7213,7 +7213,7 @@ input:not(:placeholder-shown):invalid {
 }
 ```
 
-This only works on inputs with a `placeholder` attribute, doesn't work on `<select>` or `<textarea>` without placeholders, and doesn't handle the "submitted but not yet interacted" case. `:user-invalid` handles all these cases natively and correctly.
+This only works on inputs with a `placeholder` attribute, doesn't work on `<select>` or `<textarea>` without placeholders, and doesn't handle the “submitted but not yet interacted” case. `:user-invalid` handles all these cases natively and correctly.
 
 🟡 Newly available (~85%). Supported in all modern browsers. Falls back gracefully — in unsupporting browsers, the validation styles simply don't appear (neutral borders), which is better than showing errors on page load.
 
@@ -7399,24 +7399,24 @@ Transitioning an element to and from `display: none` has been impossible in CSS 
 ```js
 // Wait for opacity transition to finish, then set display: none
 function hideElement(el) {
-  el.style.opacity = '0';
-  el.style.pointerEvents = 'none';
+  el.style.opacity = "0";
+  el.style.pointerEvents = "none";
 
   el.addEventListener(
-    'transitionend',
+    "transitionend",
     () => {
-      el.style.display = 'none';
+      el.style.display = "none";
     },
-    {once: true},
+    { once: true },
   );
 }
 
 function showElement(el) {
-  el.style.display = 'block';
+  el.style.display = "block";
   // Force reflow so the browser sees display change before opacity change
   el.offsetHeight;
-  el.style.opacity = '1';
-  el.style.pointerEvents = '';
+  el.style.opacity = "1";
+  el.style.pointerEvents = "";
 }
 ```
 
@@ -7426,8 +7426,8 @@ function showElement(el) {
   visibility: visible;
   pointer-events: auto;
   transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
+    opacity 200ms ease,
+    visibility 200ms ease;
 }
 
 .panel.hidden {
@@ -7448,9 +7448,9 @@ The `visibility` + `opacity` approach has a critical flaw: the element remains i
   opacity: 1;
   display: block;
   transition:
-    opacity 0.2s ease,
-    display 0.2s ease,
-    overlay 0.2s ease;
+    opacity 200ms ease,
+    display 200ms ease,
+    overlay 200ms ease;
   transition-behavior: allow-discrete;
 }
 
@@ -7525,10 +7525,10 @@ See `animation-starting-style` for more on entry animations.
   opacity: 0;
   transform: scale(0.95);
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    display 0.2s ease,
-    overlay 0.2s ease;
+    opacity 200ms ease,
+    transform 200ms ease,
+    display 200ms ease,
+    overlay 200ms ease;
   transition-behavior: allow-discrete;
 }
 
@@ -7552,9 +7552,9 @@ You can specify `allow-discrete` per-property in the `transition` shorthand:
 ```css
 .panel {
   transition:
-    opacity 0.2s ease,
-    display 0.2s ease allow-discrete,
-    overlay 0.2s ease allow-discrete;
+    opacity 200ms ease,
+    display 200ms ease allow-discrete,
+    overlay 200ms ease allow-discrete;
 }
 /* Only display and overlay are discrete — opacity transitions normally */
 ```
@@ -7571,6 +7571,10 @@ Discrete properties (like `display`, `content-visibility`) have no intermediate 
 | Exit (block → none)  | At the end of transition duration |
 
 🟡 Newly available (~85%). Supported in all modern browsers. Falls back gracefully — in unsupporting browsers, the element snaps to `display: none` without animation, which is functional if not smooth.
+
+## React
+
+When building React UI, this modern CSS technique is generally discouraged. Instead, we prefer to unmount components that are not visually rendered on the screen. Therefor, transitioning discrete properties like `display` are not necessary.
 
 Reference: [modern-css.com](https://modern-css.com) · [MDN — transition-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-behavior)
 
@@ -8249,7 +8253,7 @@ handleMotionPreference(mq);
 }
 ```
 
-No JavaScript, no event listeners, no class toggling. The browser applies these overrides automatically when the user has enabled "Reduce motion" in their OS settings (macOS, iOS, Windows, Android all support this).
+No JavaScript, no event listeners, no class toggling. The browser applies these overrides automatically when the user has enabled “Reduce motion” in their OS settings (macOS, iOS, Windows, Android all support this).
 
 ### Why `0.01ms` instead of `0s` or `none`
 
@@ -8365,29 +8369,29 @@ Reference: [modern-css.com](https://modern-css.com) · [MDN — prefers-reduced-
 
 ### 6.6 Sticky & Snapped Element Styling Without JavaScript
 
-Detecting when a sticky element is "stuck" or when a scroll-snap child is "snapped" traditionally requires JavaScript scroll event listeners that compare `getBoundingClientRect()` values on every frame — causing layout thrashing and main-thread work. The `@container scroll-state()` query lets you style elements based on their scroll-related state declaratively in CSS, with zero JavaScript.
+Detecting when a sticky element is “stuck” or when a scroll-snap child is “snapped” traditionally requires JavaScript scroll event listeners that compare `getBoundingClientRect()` values on every frame — causing layout thrashing and main-thread work. The `@container scroll-state()` query lets you style elements based on their scroll-related state declaratively in CSS, with zero JavaScript.
 
 **Avoid (JavaScript scroll position checks):**
 
 ```js
 // Check if sticky header is stuck
-const header = document.querySelector('.header');
+const header = document.querySelector(".header");
 
-window.addEventListener('scroll', () => {
+window.addEventListener("scroll", () => {
   const rect = header.getBoundingClientRect();
-  header.classList.toggle('stuck', rect.top <= 0);
+  header.classList.toggle("stuck", rect.top <= 0);
 });
 
 // Check if a snap child is currently snapped
-const items = document.querySelectorAll('.carousel > *');
-const carousel = document.querySelector('.carousel');
+const items = document.querySelectorAll(".carousel > *");
+const carousel = document.querySelector(".carousel");
 
-carousel.addEventListener('scroll', () => {
+carousel.addEventListener("scroll", () => {
   items.forEach((item) => {
     const rect = item.getBoundingClientRect();
     const containerRect = carousel.getBoundingClientRect();
     const isSnapped = Math.abs(rect.left - containerRect.left) < 2;
-    item.classList.toggle('snapped', isSnapped);
+    item.classList.toggle("snapped", isSnapped);
   });
 });
 // Runs on every scroll frame — layout thrashing, main-thread blocking
@@ -8433,7 +8437,7 @@ Detect when a `position: sticky` element is stuck to an edge of its scroll conta
   position: sticky;
   top: 0;
   container-type: scroll-state;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 200ms ease;
 }
 
 /* Stuck to the top edge */
@@ -9037,8 +9041,8 @@ li {
 Or the JavaScript workaround:
 
 ```js
-document.querySelectorAll('li').forEach((el, i) => {
-  el.style.setProperty('--i', i);
+document.querySelectorAll("li").forEach((el, i) => {
+  el.style.setProperty("--i", i);
 });
 // Must re-run on every DOM change
 ```
@@ -9109,8 +9113,8 @@ It can be used anywhere a `<number>` or `<integer>` is expected in a CSS value �
   opacity: 0;
   translate: 0 -8px;
   transition:
-    opacity 0.2s ease,
-    translate 0.2s ease;
+    opacity 200ms ease,
+    translate 200ms ease;
 }
 ```
 
@@ -9203,20 +9207,20 @@ Reference: [modern-css.com](https://modern-css.com) · [CSS Values Level 5 — s
 
 ### 6.10 Entry Animations Without JavaScript Timing
 
-Animating an element's appearance when it first renders (e.g., fading in a card, sliding in a notification) traditionally required a two-step JavaScript hack: render the element in its "before" state, then use `requestAnimationFrame` or `setTimeout` to add a class that triggers the transition. This creates a flash of the initial state, is timing-dependent, and adds unnecessary JavaScript. The `@starting-style` at-rule defines the "before" state directly in CSS — the browser transitions from those values to the element's normal styles automatically on first render.
+Animating an element's appearance when it first renders (e.g., fading in a card, sliding in a notification) traditionally required a two-step JavaScript hack: render the element in its “before” state, then use `requestAnimationFrame` or `setTimeout` to add a class that triggers the transition. This creates a flash of the initial state, is timing-dependent, and adds unnecessary JavaScript. The `@starting-style` at-rule defines the “before” state directly in CSS — the browser transitions from those values to the element's normal styles automatically on first render.
 
 **Avoid (requestAnimationFrame class toggling):**
 
 ```js
 // Render element in hidden state, then trigger transition after paint
-const card = document.createElement('div');
-card.className = 'card';
+const card = document.createElement("div");
+card.className = "card";
 container.appendChild(card);
 
 // Must wait for the browser to paint the initial state
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
-    card.classList.add('visible');
+    card.classList.add("visible");
   });
 });
 // Double rAF is needed because single rAF isn't reliable across browsers
@@ -9241,8 +9245,8 @@ Or the `setTimeout` variant:
 
 ```js
 // Fragile — timing depends on browser, layout complexity, and device speed
-el.classList.add('card');
-setTimeout(() => el.classList.add('visible'), 50);
+el.classList.add("card");
+setTimeout(() => el.classList.add("visible"), 50);
 ```
 
 **Prefer (modern CSS — `@starting-style`):**
@@ -9267,7 +9271,7 @@ The element transitions from the `@starting-style` values to its normal computed
 
 ### How `@starting-style` works
 
-1. The browser reads the `@starting-style` block to determine the "from" values.
+1. The browser reads the `@starting-style` block to determine the “from” values.
 2. On the element's first style computation (insertion into the DOM, `display` changing from `none` to visible, etc.), the browser applies the starting values.
 3. The transition then runs from those starting values to the element's normal computed styles.
 
@@ -9348,10 +9352,10 @@ This gives you both entry and exit animations for elements that use `display: no
   opacity: 1;
   scale: 1;
   transition:
-    opacity 0.2s,
-    scale 0.2s,
-    overlay 0.2s,
-    display 0.2s;
+    opacity 200ms,
+    scale 200ms,
+    overlay 200ms,
+    display 200ms;
   transition-behavior: allow-discrete;
 
   @starting-style {
@@ -9450,10 +9454,10 @@ barba.init({
   transitions: [
     {
       leave(data) {
-        return gsap.to(data.current.container, {opacity: 0, duration: 0.3});
+        return gsap.to(data.current.container, { opacity: 0, duration: 0.3 });
       },
       enter(data) {
-        return gsap.from(data.next.container, {opacity: 0, duration: 0.3});
+        return gsap.from(data.next.container, { opacity: 0, duration: 0.3 });
       },
     },
   ],
@@ -9530,7 +9534,7 @@ Assign `view-transition-name` to elements that should animate independently (not
 }
 ```
 
-Named elements get their own transition group — the browser morphs them from old position/size to new position/size, producing a smooth "shared element" transition like iOS and Android native apps.
+Named elements get their own transition group — the browser morphs them from old position/size to new position/size, producing a smooth “shared element” transition like iOS and Android native apps.
 
 ### SPA state transitions
 

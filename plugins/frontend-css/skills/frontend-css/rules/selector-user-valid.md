@@ -194,7 +194,7 @@ input:not(:placeholder-shown):invalid {
 }
 ```
 
-This only works on inputs with a `placeholder` attribute, doesn't work on `<select>` or `<textarea>` without placeholders, and doesn't handle the "submitted but not yet interacted" case. `:user-invalid` handles all these cases natively and correctly.
+This only works on inputs with a `placeholder` attribute, doesn't work on `<select>` or `<textarea>` without placeholders, and doesn't handle the “submitted but not yet interacted” case. `:user-invalid` handles all these cases natively and correctly.
 
 🟡 Newly available (~85%). Supported in all modern browsers. Falls back gracefully — in unsupporting browsers, the validation styles simply don't appear (neutral borders), which is better than showing errors on page load.
 

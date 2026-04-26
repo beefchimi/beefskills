@@ -73,7 +73,7 @@ Or CSS Modules (requires a bundler):
 
 ### Scoping with a lower boundary (donut scope)
 
-`@scope` supports an optional `to` clause that defines where the scope ends — creating a "donut" scope that styles the outer component without leaking into nested components:
+`@scope` supports an optional `to` clause that defines where the scope ends — creating a “donut” scope that styles the outer component without leaking into nested components:
 
 ```css
 @scope (.card) to (.card-slot) {

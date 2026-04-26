@@ -14,29 +14,29 @@ Loading separate font files for each weight (400, 500, 600, 700…) means multip
 
 ```css
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Regular.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Medium.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-SemiBold.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Bold.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -49,8 +49,8 @@ Loading separate font files for each weight (400, 500, 600, 700…) means multip
 
 ```css
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Variable.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Variable.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -62,7 +62,7 @@ One file, one request. The `font-weight: 100 900` range descriptor tells the bro
 
 ```css
 body {
-  font-family: 'MyFont', system-ui, sans-serif;
+  font-family: "MyFont", system-ui, sans-serif;
   font-weight: 400;
 }
 
@@ -96,8 +96,8 @@ Beyond weight, variable fonts can expose additional axes:
 
 ```css
 @font-face {
-  font-family: 'MyVar';
-  src: url('MyVar.woff2') format('woff2');
+  font-family: "MyVar";
+  src: url("MyVar.woff2") format("woff2");
   font-weight: 100 900;
   font-stretch: 75% 125%; /* width axis */
   font-style: oblique 0deg 12deg; /* slant axis */
@@ -130,8 +130,8 @@ h1 {
 /* Custom axes — use font-variation-settings */
 .display-text {
   font-variation-settings:
-    'GRAD' 88,
-    'CASL' 1;
+    "GRAD" 88,
+    "CASL" 1;
 }
 ```
 
@@ -144,7 +144,7 @@ Variable fonts unlock smooth CSS transitions and animations on typographic prope
 ```css
 .hover-weight {
   font-weight: 400;
-  transition: font-weight 0.2s ease;
+  transition: font-weight 200ms ease;
 }
 
 .hover-weight:hover {
@@ -161,8 +161,8 @@ Variable fonts unlock smooth CSS transitions and animations on typographic prope
 
 ```css
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Latin.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Latin.woff2") format("woff2");
   font-weight: 100 900;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153; /* Latin subset */
   font-display: swap;
@@ -175,8 +175,8 @@ Always pair variable fonts with `font-display: swap` (see `typo-font-display`) t
 
 ```css
 @font-face {
-  font-family: 'MyFont';
-  src: url('MyFont-Variable.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("MyFont-Variable.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }

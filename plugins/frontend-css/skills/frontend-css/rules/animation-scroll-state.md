@@ -8,29 +8,29 @@ browser: 50%
 
 ## Sticky & Snapped Element Styling Without JavaScript
 
-Detecting when a sticky element is "stuck" or when a scroll-snap child is "snapped" traditionally requires JavaScript scroll event listeners that compare `getBoundingClientRect()` values on every frame — causing layout thrashing and main-thread work. The `@container scroll-state()` query lets you style elements based on their scroll-related state declaratively in CSS, with zero JavaScript.
+Detecting when a sticky element is “stuck” or when a scroll-snap child is “snapped” traditionally requires JavaScript scroll event listeners that compare `getBoundingClientRect()` values on every frame — causing layout thrashing and main-thread work. The `@container scroll-state()` query lets you style elements based on their scroll-related state declaratively in CSS, with zero JavaScript.
 
 **Avoid (JavaScript scroll position checks):**
 
 ```js
 // Check if sticky header is stuck
-const header = document.querySelector('.header');
+const header = document.querySelector(".header");
 
-window.addEventListener('scroll', () => {
+window.addEventListener("scroll", () => {
   const rect = header.getBoundingClientRect();
-  header.classList.toggle('stuck', rect.top <= 0);
+  header.classList.toggle("stuck", rect.top <= 0);
 });
 
 // Check if a snap child is currently snapped
-const items = document.querySelectorAll('.carousel > *');
-const carousel = document.querySelector('.carousel');
+const items = document.querySelectorAll(".carousel > *");
+const carousel = document.querySelector(".carousel");
 
-carousel.addEventListener('scroll', () => {
+carousel.addEventListener("scroll", () => {
   items.forEach((item) => {
     const rect = item.getBoundingClientRect();
     const containerRect = carousel.getBoundingClientRect();
     const isSnapped = Math.abs(rect.left - containerRect.left) < 2;
-    item.classList.toggle('snapped', isSnapped);
+    item.classList.toggle("snapped", isSnapped);
   });
 });
 // Runs on every scroll frame — layout thrashing, main-thread blocking
@@ -76,7 +76,7 @@ Detect when a `position: sticky` element is stuck to an edge of its scroll conta
   position: sticky;
   top: 0;
   container-type: scroll-state;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 200ms ease;
 }
 
 /* Stuck to the top edge */

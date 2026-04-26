@@ -52,7 +52,7 @@ The element visually shrinks but its original bounding box remains, leaving a ga
 /* Use transform: scale() for animations — GPU-composited, no reflow */
 .card:hover {
   transform: scale(1.05);
-  transition: transform 0.2s ease;
+  transition: transform 200ms ease;
 }
 ```
 

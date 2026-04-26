@@ -8,7 +8,7 @@ browser: 96%
 
 ## Preventing Scroll Chaining Without JavaScript
 
-When a user scrolls to the end of a scrollable element (like a modal or sidebar), the browser "chains" the scroll to the parent — causing the page behind a modal to scroll. The old fix was intercepting `wheel` and `touchmove` events in JavaScript with `preventDefault()`, which blocks the main thread, fights passive listener defaults, and is fragile across input methods. `overscroll-behavior: contain` solves this declaratively with zero JavaScript.
+When a user scrolls to the end of a scrollable element (like a modal or sidebar), the browser “chains” the scroll to the parent — causing the page behind a modal to scroll. The old fix was intercepting `wheel` and `touchmove` events in JavaScript with `preventDefault()`, which blocks the main thread, fights passive listener defaults, and is fragile across input methods. `overscroll-behavior: contain` solves this declaratively with zero JavaScript.
 
 **Avoid (JavaScript wheel/touch event prevention):**
 
@@ -23,7 +23,7 @@ modal.addEventListener(
       e.preventDefault();
     }
   },
-  {passive: false}, // must opt out of passive to call preventDefault
+  { passive: false }, // must opt out of passive to call preventDefault
 );
 
 // Also need touchmove handling for mobile
@@ -32,7 +32,7 @@ modal.addEventListener(
   (e) => {
     /* similar logic */
   },
-  {passive: false},
+  { passive: false },
 );
 ```
 
