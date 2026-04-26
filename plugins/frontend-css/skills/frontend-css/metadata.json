@@ -1,0 +1,5 @@
+{
+  "version": "1.0.0",
+  "abstract": "Modern CSS best-practices guide distilled from modern-css.com. Contains 75 rules across 6 categories—layout, workflow, typography, color, selectors, and animation—each comparing legacy hacks with clean, native CSS replacements. Every rule includes old vs. modern code examples.",
+  "references": ["https://modern-css.com", "https://caniuse.com", "https://web.dev/baseline"]
+}

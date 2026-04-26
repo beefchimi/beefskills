@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": [".claude/", ".zed/", "src/pages/experiment/snapshots/*.json"],
+  "ignorePatterns": [".claude/", ".zed/"],
   "bracketSpacing": false,
   "singleQuote": true,
   // NOTE: oxfmt's `experimentalSortImports` handles import ordering

@@ -9,10 +9,11 @@ When performing work in this codebase, you can reference these `plugins/*/skills
 - **frontend-general**: Frontend and TypeScript performance and best practices. Framework-agnostic (React, Vue, Svelte, vanilla JS). Use when writing, reviewing, or refactoring frontend/TypeScript code (async patterns, bundle optimization, DOM performance, JS micro-optimizations, conventions).
 - **frontend-react**: React-specific performance and best practices. Use when writing, reviewing, or refactoring React code (re-renders, code-splitting, SWR data fetching, hydration, hooks).
 - **frontend-a11y**: WCAG 2.2 compliant interfaces with ARIA patterns, keyboard navigation, screen reader support, and mobile accessibility. Use when auditing accessibility, implementing inclusive design, or building for assistive technologies.
+- **frontend-css**: Modern CSS patterns and native replacements for legacy hacks, JavaScript workarounds, and preprocessor dependencies. Use when writing, reviewing, or refactoring CSS (layout, animation, color, typography, selectors, workflow modernization).
 
 ## How to use them
 
-- **Read the skill** when the task matches the description above (e.g. frontend/TS work → read `frontend-general`; React work → read `frontend-react`; accessibility → read `frontend-a11y`).
+- **Read the skill** when the task matches the description above (e.g. frontend/TS work → read `frontend-general`; React work → read `frontend-react`; accessibility → read `frontend-a11y`; CSS work → read `frontend-css`).
 - **Apply the skill’s instructions** before answering or making changes; don’t skip steps or assume the content.
 
 ## Self improvement
